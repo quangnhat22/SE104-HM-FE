@@ -14,16 +14,22 @@ jobs:
       - checkout
       - setup_remote_docker:
           version: 19.03.13
-          docker_layer_caching: true
       - run:
-          name: Build Docker image
+          name: Build Build-stage
           command: |
-            docker build -t dinhlockt02/hotelmanagement_frontend-prods .
+            docker pull dinhlockt02/hotelmanagement_frontend-prods:build || true
+            docker build --cache-from=dinhlockt02/hotelmanagement_frontend-prods:build --target build-stage -t dinhlockt02/hotelmanagement_frontend-prods:build .
+      - run:
+          name: Complete build docker image
+          command: |
+            docker pull dinhlockt02/hotelmanagement_frontend-prods:latest || true
+            docker build --cache-from=dinhlockt02/hotelmanagement_frontend-prods:build --cache-from=dinhlockt02/hotelmanagement_frontend-prods:latest -t dinhlockt02/hotelmanagement_frontend-prods:latest .
       - deploy:
           name: Push docker image
           command: |
             echo "$dockerhub_password" | docker login -u "$dockerhub_username" --password-stdin
-            docker push dinhlockt02/hotelmanagement_frontend-prods
+            docker push dinhlockt02/hotelmanagement_frontend-prods:build
+            docker push dinhlockt02/hotelmanagement_frontend-prods:latest
   deploy_vps:
     working_directory: ~/project
     resource_class: small
