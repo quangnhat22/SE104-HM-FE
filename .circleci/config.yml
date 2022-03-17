@@ -1,0 +1,43 @@
+# Use the latest 2.1 version of CircleCI pipeline process engine.
+# See: https://circleci.com/docs/2.0/configuration-reference
+version: 2.1
+
+# Define a job to be invoked later in a workflow.
+# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
+jobs:
+  build:
+    working_directory: /app
+    docker:
+      - image: docker:git
+    resource_class: small
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+          docker_layer_caching: true
+      - run:
+          name: Build Docker image
+          command: |
+            docker build -t dinhlockt02/hotelmanagement_frontend-prods .
+      - deploy:
+          name: Push docker image
+          command: |
+            echo "$dockerhub_password" | docker login -u "$dockerhub_username" --password-stdin
+            docker push dinhlockt02/hotelmanagement_frontend-prods
+  deploy_vps:
+    working_directory: ~/project
+    resource_class: small
+    docker:
+      - image: cimg/base:2022.03
+    steps:
+      - run: echo $AWS_KEY | base64 -d > aws_key.pem
+      - run: chmod 400 aws_key.pem
+      - run: cat aws_key.pem
+      - run: ssh -o "StrictHostKeyChecking=no" -i "aws_key.pem" $SSH_HOST "./deploy.sh"
+workflows:
+  build-workflow:
+    jobs:
+      - build
+      - deploy_vps:
+          requires:
+            - build
