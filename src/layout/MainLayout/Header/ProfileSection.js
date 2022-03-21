@@ -20,16 +20,24 @@ import { useNavigate } from "react-router-dom";
 import User1 from "../../../assets/images/users/user-round.svg";
 import MainCard from "../../../ui-component/cards/MainCard";
 import Transitions from "../../../ui-component/extended/Transitions";
+import showTextBasedOnTime from "../../../utils/showTextBasedOnTime";
 
 const ProfileSection = () => {
   const theme = useTheme();
+  // get infor from reducer
   const customization = useSelector((state) => state.customization);
-  const navigate = useNavigate();
+  const {userLogin} = useSelector(state => state.UserReducer);
 
+  const navigate = useNavigate();
+  
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [open, setOpen] = useState(false);
 
   const anchorRef = useRef(null);
+
+  // show text based on real time
+  const textHelloFromRealtime = showTextBasedOnTime();
+
   const handleLogout = async () => {
     console.log("Logout");
   };
@@ -86,7 +94,7 @@ const ProfileSection = () => {
         }}
         icon={
           <Avatar
-            src={User1}
+            src={userLogin?.avatar}
             sx={{
               ...theme.typography.mediumAvatar,
               margin: "8px 0 8px 8px !important",
@@ -144,16 +152,16 @@ const ProfileSection = () => {
                   <Box sx={{ px: 2, pt: 2 }}>
                     <Stack>
                       <Stack direction="row" spacing={0.5} alignItems="center">
-                        <Typography variant="h4">Good Morning,</Typography>
+                        <Typography variant="h4">{textHelloFromRealtime},</Typography>
                         <Typography
                           component="span"
                           variant="h4"
                           sx={{ fontWeight: 400 }}
                         >
-                          Johne Doe
+                          {userLogin?.fullName}
                         </Typography>
                       </Stack>
-                      <Typography variant="subtitle2">Project Admin</Typography>
+                      <Typography variant="subtitle2">{userLogin?.role}</Typography>
                     </Stack>
                   </Box>
                   <Box sx={{ px: 2, pb: 1 }}>

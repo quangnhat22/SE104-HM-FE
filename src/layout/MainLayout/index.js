@@ -9,8 +9,9 @@ import { styled, useTheme } from "@mui/material/styles";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
-import { SET_MENU } from "../../store/actions";
-import { drawerWidth } from "../../store/constant";
+import { SET_MENU } from "../../redux/actions/actions";
+import {drawerWidth} from "../../redux/constants/constant"
+
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 

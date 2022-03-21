@@ -14,7 +14,7 @@ import PropTypes from "prop-types";
 import { forwardRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { MENU_OPEN, SET_MENU } from "../../../../store/actions";
+import { MENU_OPEN, SET_MENU } from "../../../../redux/actions/actions";
 
 const NavItem = ({ item, level }) => {
   const theme = useTheme();

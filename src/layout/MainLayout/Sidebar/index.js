@@ -3,7 +3,7 @@ import { useTheme } from "@mui/material/styles";
 import PropTypes from "prop-types";
 import { BrowserView, MobileView } from "react-device-detect";
 import PerfectScrollbar from "react-perfect-scrollbar";
-import { drawerWidth } from "../../../store/constant";
+import { drawerWidth } from "../../../redux/constants/constant";
 import LogoSection from "../LogoSection";
 import MenuList from "./MenuList";
 
