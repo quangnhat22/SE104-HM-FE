@@ -44,6 +44,3 @@ workflows:
   build-workflow:
     jobs:
       - build
-      - deploy_vps:
-          requires:
-            - build
