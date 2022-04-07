@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
 import { SET_MENU } from "../../redux/actions/actions";
 import {drawerWidth} from "../../redux/constants/constant"
+import { ToastContainer } from "react-toastify";
+
 
 import Header from "./Header";
 import Sidebar from "./Sidebar";
@@ -106,6 +108,7 @@ const MainLayout = () => {
       {/* main content */}
       <Main theme={theme} open={leftDrawerOpened}>
         {/* breadcrumb */}
+        <ToastContainer />
         <Outlet />
       </Main>
       {/* <Customization /> */}
