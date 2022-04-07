@@ -16,7 +16,7 @@ import {
 import { useTheme } from '@mui/material/styles';
 import { Formik } from 'formik';
 import { useState } from 'react';
-import AnimateButton from '../ui-component/extended/AnimateButton';
+import AnimateButton from '../../ui-component/extended/AnimateButton';
 import * as Yup from 'yup';
 
 const Login = ({ ...others }) => {

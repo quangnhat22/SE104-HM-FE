@@ -2,7 +2,7 @@ import { Grid, Stack, Typography, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import Logo from '../ui-component/Logo';
-import AuthLogin from '../Login/AuthLogin';
+import AuthLogin from '../components/Login/AuthLogin';
 import AuthCardWrapper from '../ui-component/AuthCardWrapper';
 import AuthWrapper from '../ui-component/AuthWrapper';
 
