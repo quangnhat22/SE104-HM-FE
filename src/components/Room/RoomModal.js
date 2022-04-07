@@ -24,7 +24,7 @@ const roomTypes = [
 export default function RoomModal({ handleClose, type, room }) {
   const handleNewRoom = (values) => {
     toast.success("Thêm phòng thành công");
-    //handleClose();
+    handleClose();
   };
 
   const handleModifyRoom = (values) => {
