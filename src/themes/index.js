@@ -3,7 +3,6 @@ import colors from "../assets/scss/_themes-vars.module.scss";
 import componentStyleOverrides from "./compStyleOverride";
 import themePalette from "./palette";
 import themeTypography from "./typography";
-import "react-toastify/dist/ReactToastify.css";
 
 /**
  * Represent theme style and structure as per Material-UI
