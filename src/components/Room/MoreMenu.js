@@ -21,13 +21,13 @@ export default function MoreMenu({ room, handleModify, handleDelete }) {
         ) : (
           // </Link>
           <>
-            {/* <Link to="/booking/anv"> */}
-            <Tooltip title="Thuê phòng">
-              <IconButton variant="text" size="large" color="success">
-                <IconCirclePlus />
-              </IconButton>
-            </Tooltip>
-            {/* </Link> */}
+            <Link to="/booking/anv">
+              <Tooltip title="Thuê phòng">
+                <IconButton variant="text" size="large" color="success">
+                  <IconCirclePlus />
+                </IconButton>
+              </Tooltip>
+            </Link>
             <Tooltip title="Chỉnh sửa">
               <IconButton
                 variant="text"
