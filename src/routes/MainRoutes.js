@@ -8,6 +8,8 @@ const Room = Loadable(lazy(() => import("../pages/Room")));
 const CustomerSettings = Loadable(lazy(() => import('../pages/CustomerSettings')));
 const Booking = Loadable(lazy(() => import('../pages/Booking')));
 const Payment = Loadable(lazy(() => import('../pages/Payment')));
+const RoomSettings = Loadable(lazy(() => import('../pages/RoomSettings')));
+
 
 const MainRoutes = {
   path: "/",
@@ -36,6 +38,10 @@ const MainRoutes = {
     {
       path: '/customer-settings',
       element: <CustomerSettings />
+    },
+    {
+      path: '/room-settings',
+      element: <RoomSettings />
     },
   ],
 };

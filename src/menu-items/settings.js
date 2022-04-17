@@ -16,7 +16,7 @@ const settings = {
             children: [
                 {
                     id: 'roomSettings',
-                    title: 'Cài đặt phòng',
+                    title: 'Cài đặt loại phòng',
                     type: 'item',
                     url: '/room-settings',
                     target: false,
