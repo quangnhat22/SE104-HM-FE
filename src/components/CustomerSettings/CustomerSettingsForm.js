@@ -47,7 +47,7 @@ export default function CustomerSettingsForm() {
                 validationSchema={Yup.object().shape({
                     maxCustomerInRoom: Yup.number()
                         .typeError('Số không hợp lệ')
-                        .min(1, 'Gía trị không thể nhỏ hơn 1')
+                        .min(1, 'Giá trị không thể nhỏ hơn 1')
                         .required('Vui lòng nhập số lượng khách tối đa')
                 })}
                 onSubmit={async (values) => {
