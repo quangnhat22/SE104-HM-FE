@@ -29,6 +29,14 @@ const dashboard = {
           target: false,
           breadcrumbs: false,
         },
+        {
+          id: 'monthlyReport',
+          title: 'Báo cáo tháng',
+          type: 'item',
+          url: '/monthly-report',
+          target: false,
+          breadcrumbs: false
+        }
       ],
     },
   ],

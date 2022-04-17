@@ -1,4 +1,5 @@
 import MainLayout from "../layout/MainLayout";
+import MonthlyReport from '../pages/MonthlyReport';
 import { lazy } from "react";
 import Loadable from "../ui-component/Loadable";
 
@@ -17,6 +18,10 @@ const MainRoutes = {
     {
       path: "/room",
       element: <Room />,
+    },
+    {
+      path: '/monthly-report',
+      element: <MonthlyReport />
     },
     {
       path: '/booking/:id',
