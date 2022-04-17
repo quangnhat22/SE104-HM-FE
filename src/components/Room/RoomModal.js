@@ -44,7 +44,7 @@ export default function RoomModal({ handleClose, type, room }) {
             roomName: room ? room.room : "",
             roomType: room ? room.type : roomTypes[0].type,
             roomPrice: room ? room.price : roomTypes[0].price,
-            note: "",
+            note: room ? room.note : "",
             submit: null,
           }}
           validationSchema={Yup.object().shape({
