@@ -7,9 +7,10 @@ import {
   TableCell,
   TableContainer,
   TablePagination,
-  TableRow,
+  TableRow
 } from "@mui/material";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import CustomTableHead from "../../ui-component/CustomTableHead";
 import Search from "../../ui-component/Search";
 import SearchNotFound from "../../ui-component/SearchNotFound";
@@ -21,7 +22,7 @@ export default function RoomList({ data, columns, searchField }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [filterName, setFilterName] = useState("");
-  const [order, setOrder] = useState("    ");
+  const [order, setOrder] = useState("");
   const [orderBy, setOrderBy] = useState("number");
   const [openNew, setOpenNew] = useState(false);
   const [openModify, setOpenModify] = useState(false);
@@ -32,18 +33,17 @@ export default function RoomList({ data, columns, searchField }) {
     setOpenModify(false);
   };
 
-  const handleNew = () => {
+  const handleNewRoom = () => {
     setOpenNew(true);
   };
 
   const handleModify = (room) => {
     setModifyingRoom(room);
     setOpenModify(true);
-    console.log(room);
   };
 
   const handleDelete = (room) => {
-    console.log(room);
+    toast.success("Xóa phòng thành công!")
   };
 
   const handleRequestSort = (event, property) => {
@@ -84,7 +84,7 @@ export default function RoomList({ data, columns, searchField }) {
           setFilterName={handleFilterByName}
         />
         <Button
-          onClick={handleNew}
+          onClick={handleNewRoom}
           variant="outlined"
           sx={{ ml: 2, py: "12px", borderRadius: 3 }}
         >
