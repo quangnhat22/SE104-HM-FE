@@ -78,12 +78,6 @@ export default function RoomSettings() {
           roomType={modifyingRoomType}
         />
       )}
-
-      <Box sx={{ display: "flex", justifyContent: "end" }}>
-        <Button variant="outlined" sx={{ mt: 4 }}>
-          Xác nhận
-        </Button>
-      </Box>
     </Paper>
   );
 }
