@@ -3,21 +3,38 @@ import {
   IconCirclePlus,
   IconCreditCard,
   IconPencil,
-  IconTrash,
+  IconTrash
 } from "@tabler/icons";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import AlertModal from "../../ui-component/AlertModal";
 
 export default function MoreMenu({ room, handleModify, handleDelete }) {
+  const [openDelete, setOpenDelete] = useState(false);
+
+  const handleClose = () => {
+    setOpenDelete(false);
+  };
+
+  const handleOpen = () => {
+    setOpenDelete(true);
+  };
+
+  const handleDeleteRoom = (room) => {
+    handleClose();
+    handleDelete(room);
+  };
+
   return (
     <>
       <Box sx={{ display: "flex", justifyContent: "right" }}>
         {room.status ? (
           <Link to="/payment">
-          <Tooltip title="Thanh toán" size="large">
-            <IconButton variant="text" color="success">
-              <IconCreditCard />
-            </IconButton>
-          </Tooltip>
+            <Tooltip title="Thanh toán" size="large">
+              <IconButton variant="text" color="success">
+                <IconCreditCard />
+              </IconButton>
+            </Tooltip>
           </Link>
         ) : (
           <>
@@ -43,7 +60,7 @@ export default function MoreMenu({ room, handleModify, handleDelete }) {
                 size="large"
                 variant="text"
                 color="error"
-                onClick={() => handleDelete(room)}
+                onClick={() => handleOpen()}
               >
                 <IconTrash color="#F44336" />
               </IconButton>
@@ -51,6 +68,13 @@ export default function MoreMenu({ room, handleModify, handleDelete }) {
           </>
         )}
       </Box>
+      {openDelete && (
+        <AlertModal
+          content="Bạn có chắc muốn xóa phòng?"
+          handleClose={handleClose}
+          action={() => handleDeleteRoom(room)}
+        />
+      )}
     </>
   );
 }
