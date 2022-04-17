@@ -30,13 +30,22 @@ const dashboard = {
           breadcrumbs: false,
         },
         {
+
           id: 'monthlyReport',
           title: 'Báo cáo tháng',
           type: 'item',
           url: '/monthly-report',
           target: false,
           breadcrumbs: false
-        }
+        },
+        {
+          id: 'payment',
+          title: 'Thanh toán',
+          type: 'item',
+          url: '/payment',
+          target: false,
+          breadcrumbs: false
+        },
       ],
     },
   ],
