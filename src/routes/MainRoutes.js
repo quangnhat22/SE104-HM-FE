@@ -5,6 +5,7 @@ import Loadable from "../ui-component/Loadable";
 const TestPage = Loadable(lazy(() => import("../pages/TestPage")));
 const Room = Loadable(lazy(() => import("../pages/Room")));
 const Booking = Loadable(lazy(() => import('../pages/Booking')));
+const Payment = Loadable(lazy(() => import('../pages/Payment')));
 
 const MainRoutes = {
   path: "/",
@@ -21,6 +22,10 @@ const MainRoutes = {
     {
       path: '/booking/:id',
       element: <Booking />
+    },
+    {
+      path: '/payment',
+      element: <Payment />
     },
   ],
 };

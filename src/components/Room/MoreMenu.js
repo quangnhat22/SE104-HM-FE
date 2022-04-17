@@ -12,14 +12,14 @@ export default function MoreMenu({ room, handleModify, handleDelete }) {
     <>
       <Box sx={{ display: "flex", justifyContent: "right" }}>
         {room.status ? (
-          // <Link to="/payment">
+          <Link to="/payment">
           <Tooltip title="Thanh toán" size="large">
             <IconButton variant="text" color="success">
               <IconCreditCard />
             </IconButton>
           </Tooltip>
+          </Link>
         ) : (
-          // </Link>
           <>
             <Link to="/booking/anv">
               <Tooltip title="Thuê phòng">

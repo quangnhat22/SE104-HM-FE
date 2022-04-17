@@ -29,6 +29,14 @@ const dashboard = {
           target: false,
           breadcrumbs: false,
         },
+        {
+          id: 'payment',
+          title: 'Thanh toán',
+          type: 'item',
+          url: '/payment',
+          target: false,
+          breadcrumbs: false
+      },
       ],
     },
   ],
