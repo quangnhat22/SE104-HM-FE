@@ -9,7 +9,7 @@ const CustomerSettings = Loadable(lazy(() => import('../pages/CustomerSettings')
 const Booking = Loadable(lazy(() => import('../pages/Booking')));
 const Payment = Loadable(lazy(() => import('../pages/Payment')));
 const RoomSettings = Loadable(lazy(() => import('../pages/RoomSettings')));
-const SurchageRateSetting = Loadable(lazy(() => import('../pages/SurchageRateSetting')));
+const SurchargeRateSetting = Loadable(lazy(() => import('../pages/SurchargeRateSetting')));
 
 
 const MainRoutes = {
@@ -46,7 +46,7 @@ const MainRoutes = {
     },
     {
       path: '/surcharge-rate-settings',
-      element: <SurchageRateSetting />
+      element: <SurchargeRateSetting />
    },
   ],
 };
