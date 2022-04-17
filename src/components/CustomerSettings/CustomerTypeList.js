@@ -4,7 +4,7 @@ import CustomTableHead from '../../ui-component/CustomTableHead';
 import applySortFilter from '../../utils/table-sort-filter';
 import MoreMenu from './MoreMenu';
 
-export default function CustomerTypeList({ data, columns }) {
+export default function CustomerTypeList({ data, columns, handleModify, handleDelete }) {
     const [order, setOrder] = useState('');
     const [orderBy, setOrderBy] = useState('number');
 
@@ -27,7 +27,7 @@ export default function CustomerTypeList({ data, columns }) {
                                 const value = row[column.id];
                                 return column.id === 'more' ? (
                                     <TableCell align="center" key={row.id}>
-                                        <MoreMenu />
+                                        <MoreMenu customerType={row} handleModify={handleModify} handleDelete={handleDelete} />
                                     </TableCell>
                                 ) : (
                                     <TableCell key={column.id} align={column.align}>
