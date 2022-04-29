@@ -1,24 +1,9 @@
 import { Box, Button, Paper, Typography } from "@mui/material";
 import { useState } from "react";
 import { IconPlus } from "@tabler/icons";
-import RoomTypeList from "../components/RoomSettings/RoomTypeList";
 import RoomTypeModal from "../components/RoomSettings/RoomTypeModal";
 import { toast } from "react-toastify";
-
-const columns = [
-  { id: "number", label: "STT", minWidth: 50, align: "center" },
-  { id: "roomType", label: "Loại phòng", minWidth: 150 },
-  {
-    id: "roomPrice",
-    label: "Đơn giá",
-    minWidth: 120,
-  },
-  {
-    id: "more",
-    label: "",
-    minWidth: 170,
-  },
-];
+import TableRoomType from "../components/Table/TableRoomType";
 
 function createData(id, number, roomType, roomPrice) {
   return { id, number, roomType, roomPrice };
@@ -58,7 +43,11 @@ export default function RoomSettings() {
         Cài đặt loại phòng
       </Typography>
 
-      <RoomTypeList columns={columns} data={typeList} handleModify={handleModify} handleDelete={handleDelete}/>
+      <TableRoomType
+        data={typeList}
+        handleModify={handleModify}
+        handleDelete={handleDelete}
+      />
 
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <Button
