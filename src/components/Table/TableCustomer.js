@@ -1,21 +1,41 @@
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableRow
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
 } from "@mui/material";
 import { useState } from "react";
 import CustomTableHead from "../../ui-component/CustomTableHead";
 import applySortFilter from "../../utils/table-sort-filter";
-import MoreMenu from "./MoreMenu";
+import MoreMenu from "../Booking/MoreMenu";
 
-export default function CustomerList({
-  data,
-  columns,
-  handleModify,
-  handleDelete,
-}) {
+const columns = [
+  { id: "number", label: "STT", minWidth: 50, align: "center" },
+  { id: "name", label: "Khách hàng", minWidth: 150 },
+  {
+    id: "type",
+    label: "Loại khách",
+    minWidth: 120,
+  },
+  {
+    id: "idNumber",
+    label: "CMND/CCCD",
+    minWidth: 100,
+  },
+  {
+    id: "address",
+    label: "Địa chỉ",
+    minWidth: 170,
+  },
+  {
+    id: "more",
+    label: "",
+    minWidth: 170,
+  },
+];
+
+export default function TableCustomer({ data, handleModify, handleDelete }) {
   const [order, setOrder] = useState("");
   const [orderBy, setOrderBy] = useState("number");
 
