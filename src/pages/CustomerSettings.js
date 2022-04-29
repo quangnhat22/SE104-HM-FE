@@ -2,19 +2,8 @@ import { Box, Button, Paper, Typography } from "@mui/material";
 import { IconPlus } from "@tabler/icons";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import CustomerTypeList from "../components/CustomerSettings/CustomerTypeList";
 import CustomerTypeModal from "../components/CustomerSettings/CustomerTypeModal";
-
-const columns = [
-  { id: "number", label: "STT", minWidth: 50, align: "center" },
-  { id: "customerType", label: "Loại khách hàng", minWidth: 180 },
-  { id: "surchargeFactor", label: "Hệ số phụ thu", minWidth: 150 },
-  {
-    id: "more",
-    label: "",
-    minWidth: 170,
-  },
-];
+import TableCustomerType from "../components/Table/TableCustomerType";
 
 function createData(id, number, customerType, surchargeFactor) {
   return { id, number, customerType, surchargeFactor };
@@ -56,8 +45,7 @@ export default function CustomerSettings() {
         Cài đặt khách hàng
       </Typography>
 
-      <CustomerTypeList
-        columns={columns}
+      <TableCustomerType
         data={typeList}
         handleModify={handleModify}
         handleDelete={handleDelete}
