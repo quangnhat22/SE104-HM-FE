@@ -1,49 +1,62 @@
 import {
-  Box,
-  Button,
   Chip,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TablePagination,
-  TableRow
+  TableRow,
 } from "@mui/material";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import CustomTableHead from "../../ui-component/CustomTableHead";
-import Search from "../../ui-component/Search";
 import SearchNotFound from "../../ui-component/SearchNotFound";
+import MoreMenu from "../Room/MoreMenu";
 import applySortFilter from "../../utils/table-sort-filter";
-import MoreMenu from "./MoreMenu";
-import RoomModal from "./RoomModal";
 
-export default function RoomList({ data, columns, searchField }) {
+const columns = [
+  { id: "number", label: "STT", minWidth: 50, align: "center" },
+  { id: "room", label: "Phòng", minWidth: 150 },
+  {
+    id: "roomType",
+    label: "Loại phòng",
+    minWidth: 120,
+  },
+  {
+    id: "price",
+    label: "Đơn giá",
+    minWidth: 100,
+  },
+  {
+    id: "note",
+    label: "Ghi chú",
+    minWidth: 170,
+  },
+  {
+    id: "status",
+    label: "Trạng thái",
+    minWidth: 90,
+  },
+  {
+    id: "more",
+    label: "",
+    minWidth: 170,
+  },
+];
+
+export default function TableRoom({
+  data,
+  searchField,
+  filterName,
+  handleModify,
+}) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [filterName, setFilterName] = useState("");
   const [order, setOrder] = useState("");
   const [orderBy, setOrderBy] = useState("number");
-  const [openNew, setOpenNew] = useState(false);
-  const [openModify, setOpenModify] = useState(false);
-  const [modifyingRoom, setModifyingRoom] = useState();
-
-  const handleClose = () => {
-    setOpenNew(false);
-    setOpenModify(false);
-  };
-
-  const handleNewRoom = () => {
-    setOpenNew(true);
-  };
-
-  const handleModify = (room) => {
-    setModifyingRoom(room);
-    setOpenModify(true);
-  };
 
   const handleDelete = (room) => {
-    toast.success("Xóa phòng thành công!")
+    toast.success("Xóa phòng thành công!");
   };
 
   const handleRequestSort = (event, property) => {
@@ -61,10 +74,6 @@ export default function RoomList({ data, columns, searchField }) {
     setPage(0);
   };
 
-  const handleFilterByName = (event) => {
-    setFilterName(event.target.value);
-  };
-
   const filteredData = applySortFilter(
     data,
     order,
@@ -77,30 +86,6 @@ export default function RoomList({ data, columns, searchField }) {
 
   return (
     <>
-      <Box sx={{ display: "flex" }}>
-        <Search
-          placeholder="Tìm phòng"
-          filterName={filterName}
-          setFilterName={handleFilterByName}
-        />
-        <Button
-          onClick={handleNewRoom}
-          variant="outlined"
-          sx={{ ml: 2, py: "12px", borderRadius: 3 }}
-        >
-          Thêm phòng
-        </Button>
-      </Box>
-
-      {openNew && <RoomModal handleClose={handleClose} type="new" />}
-      {openModify && (
-        <RoomModal
-          handleClose={handleClose}
-          type="modify"
-          room={modifyingRoom}
-        />
-      )}
-
       <TableContainer sx={{ maxHeight: 460 }}>
         <Table stickyHeader aria-label="sticky table">
           <CustomTableHead
