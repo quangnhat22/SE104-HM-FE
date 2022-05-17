@@ -1,28 +1,27 @@
-const initialState = [
-    { 
-        id: '',
-        nameRoom: '',
-        typeRoom: '',
-        price: 0,
-        note: '',
-        status: '',
-        customers: [
-            {
-                id: '',
-                citizenIdentification: '',
-                name: '',
-                typeCustomer: '',
-                address: ''
-            }
-        ]
-    }
-]
+import * as ActionTypes from "../constants/constant";
 
-export default (state = initialState, action) => {
+const initialState = {
+  roomList: [
+    {
+      MaPhong: "",
+      TenPhong: "",
+      MaLoaiPhong: "",
+      GhiChu: null,
+      MaTinhTrang: "",
+      TenLoaiPhong: "",
+      DonGia: "",
+      TenTinhTrang: "",
+    },
+  ],
+};
+
+export const RoomReducer = (state = initialState, action) => {
   switch (action.type) {
-
-
-  default:
-    return state
+    case ActionTypes.GET_ROOM_LIST:
+      state.roomList = action.roomList
+      console.log(state.roomList)
+      return {...state}
+    default:
+      return state;
   }
-}
+};

@@ -1,5 +1,6 @@
 import {
   Chip,
+  CircularProgress,
   Table,
   TableBody,
   TableCell,
@@ -15,10 +16,10 @@ import MoreMenu from "../Room/MoreMenu";
 import applySortFilter from "../../utils/table-sort-filter";
 
 const columns = [
-  { id: "number", label: "STT", minWidth: 50, align: "center" },
-  { id: "room", label: "Phòng", minWidth: 150 },
+  { id: "MaPhong", label: "Mã Phòng", minWidth: 50, align: "center" },
+  { id: "TenPhong", label: "Tên Phòng", minWidth: 150 },
   {
-    id: "roomType",
+    id: "TenLoaiPhong",
     label: "Loại phòng",
     minWidth: 120,
   },
@@ -28,12 +29,12 @@ const columns = [
     minWidth: 100,
   },
   {
-    id: "note",
+    id: "GhiChu",
     label: "Ghi chú",
     minWidth: 170,
   },
   {
-    id: "status",
+    id: "TenTinhTrang",
     label: "Trạng thái",
     minWidth: 90,
   },
@@ -86,6 +87,7 @@ export default function TableRoom({
 
   return (
     <>
+
       <TableContainer sx={{ maxHeight: 460 }}>
         <Table stickyHeader aria-label="sticky table">
           <CustomTableHead
@@ -113,7 +115,7 @@ export default function TableRoom({
                             />
                           </TableCell>
                         );
-                      case "status":
+                      case "TenTinhTrang":
                         return (
                           <TableCell align="left" key="more">
                             {value ? (

@@ -1,0 +1,2 @@
+export const FETCH_LIST_ROOM_SAGA = "FECTH_LIST_ROOM_SAGA";
+export const ADD_NEW_ROOM_SAGA = "ADD_NEW_ROOM_SAGA";

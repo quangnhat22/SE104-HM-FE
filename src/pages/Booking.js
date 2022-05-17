@@ -65,7 +65,7 @@ export default function Booking() {
       </Typography>
       <Formik
         initialValues={{
-          roomName: id,
+          TenPhong: id,
           startDate: new Date().toISOString().slice(0, 10),
           submit: null,
         }}
@@ -87,19 +87,19 @@ export default function Booking() {
               <Grid item xs={12} sm={6}>
                 <FormControl
                   fullWidth
-                  error={Boolean(touched.roomName && errors.roomName)}
+                  error={Boolean(touched.TenPhong && errors.TenPhong)}
                   sx={{ mb: 3 }}
                 >
                   <TextField
                     label="Tên phòng"
-                    value={values.roomName}
-                    name="roomName"
+                    value={values.TenPhong}
+                    name="TenPhong"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     disabled
                   />
-                  {touched.roomName && errors.roomName && (
-                    <FormHelperText error>{errors.roomName}</FormHelperText>
+                  {touched.TenPhong && errors.TenPhong && (
+                    <FormHelperText error>{errors.TenPhong}</FormHelperText>
                   )}
                 </FormControl>
               </Grid>

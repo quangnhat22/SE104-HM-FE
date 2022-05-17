@@ -12,7 +12,7 @@ import MoreMenu from "../Payment/MoreMenu";
 
 const columns = [
   { id: "number", label: "STT", minWidth: 50, align: "center" },
-  { id: "roomName", label: "Phòng", minWidth: 150 },
+  { id: "TenPhong", label: "Phòng", minWidth: 150 },
   {
     id: "numberOfRentalDays",
     label: "Số ngày thuê",

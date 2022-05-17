@@ -14,6 +14,9 @@ import { Formik } from "formik";
 import { toast } from "react-toastify";
 import numberWithCommas from "../../utils/number-with-commas";
 import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import * as ActionTypes from "../../redux/constants/constant";
+import * as SagaActionTypes from "../../redux/constants/constantSaga"
 
 const roomTypes = [
   { id: 1, type: "A", price: 150000 },
@@ -22,7 +25,11 @@ const roomTypes = [
 ];
 
 export default function RoomModal({ handleClose, type, room }) {
+  const dispatch = useDispatch();
+
   const handleNewRoom = (values) => {
+    console.log(values);
+    //dispatch({type: SagaActionTypes.ADD_NEW_ROOM_SAGA})
     toast.success("Thêm phòng thành công");
     handleClose();
   };
@@ -41,14 +48,14 @@ export default function RoomModal({ handleClose, type, room }) {
       <DialogContent>
         <Formik
           initialValues={{
-            roomName: room ? room.room : "",
+            TenPhong: room ? room.room : "",
             roomType: room ? room.type : roomTypes[0].type,
             roomPrice: room ? room.price : roomTypes[0].price,
             note: room ? room.note : "",
             submit: null,
           }}
           validationSchema={Yup.object().shape({
-            roomName: Yup.string().required("Vui lòng nhập tên phòng"),
+            TenPhong: Yup.string().required("Vui lòng nhập tên phòng"),
           })}
           onSubmit={async (values) => {
             if (type === "new") handleNewRoom(values);
@@ -67,18 +74,18 @@ export default function RoomModal({ handleClose, type, room }) {
             <form noValidate onSubmit={handleSubmit}>
               <FormControl
                 fullWidth
-                error={Boolean(touched.roomName && errors.roomName)}
+                error={Boolean(touched.TenPhong && errors.TenPhong)}
                 sx={{ mb: 3, mt: 1 }}
               >
                 <TextField
                   label="Tên phòng"
-                  value={values.roomName}
-                  name="roomName"
+                  value={values.TenPhong}
+                  name="TenPhong"
                   onBlur={handleBlur}
                   onChange={handleChange}
                 />
-                {touched.roomName && errors.roomName && (
-                  <FormHelperText error>{errors.roomName}</FormHelperText>
+                {touched.TenPhong && errors.TenPhong && (
+                  <FormHelperText error>{errors.TenPhong}</FormHelperText>
                 )}
               </FormControl>
 

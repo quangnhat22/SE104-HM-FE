@@ -2,11 +2,11 @@ import { Autocomplete, Box, Button, Dialog, DialogContent, DialogTitle, FormCont
 import { Formik } from 'formik';
 
 const roomList = [
-    { id: 1, roomName: 'A010' },
-    { id: 2, roomName: 'A011' },
-    { id: 3, roomName: 'A012' },
-    { id: 4, roomName: 'A013' },
-    { id: 5, roomName: 'A014' }
+    { id: 1, TenPhong: 'A010' },
+    { id: 2, TenPhong: 'A011' },
+    { id: 3, TenPhong: 'A012' },
+    { id: 4, TenPhong: 'A013' },
+    { id: 5, TenPhong: 'A014' }
 ];
 
 export default function AddRoomModal({ handleClose }) {
@@ -16,7 +16,7 @@ export default function AddRoomModal({ handleClose }) {
             <DialogContent>
                 <Formik
                     initialValues={{
-                        roomName: roomList[0].roomName
+                        TenPhong: roomList[0].TenPhong
                     }}
                     onSubmit={async (values) => {
                         console.log(values);
@@ -26,16 +26,16 @@ export default function AddRoomModal({ handleClose }) {
                         <form noValidate onSubmit={handleSubmit}>
                             <FormControl fullWidth sx={{ mb: 3, mt: 1 }}>
                                 <Autocomplete
-                                    name="roomName"
+                                    name="TenPhong"
                                     options={roomList}
                                     defaultValue={roomList[0]}
                                     disableClearable
-                                    getOptionLabel={(option) => option.roomName}
+                                    getOptionLabel={(option) => option.TenPhong}
                                     isOptionEqualToValue={(option, value) => option === value}
                                     onChange={(event, value) => {
-                                        setFieldValue('roomName', value.roomName);
+                                        setFieldValue('TenPhong', value.TenPhong);
                                     }}
-                                    renderInput={(params) => <TextField {...params} label="Tên phòng" value={values.roomName} />}
+                                    renderInput={(params) => <TextField {...params} label="Tên phòng" value={values.TenPhong} />}
                                 />
                             </FormControl>
 

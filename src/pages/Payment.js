@@ -22,12 +22,12 @@ import numberWithCommas from "../utils/number-with-commas";
 function createData(
   id,
   number,
-  roomName,
+  TenPhong,
   numberOfRentalDays,
   price,
   totalPrice
 ) {
-  return { id, number, roomName, numberOfRentalDays, price, totalPrice };
+  return { id, number, TenPhong, numberOfRentalDays, price, totalPrice };
 }
 
 const customerList = [
@@ -50,7 +50,7 @@ export default function Payment() {
   };
 
   const handleDeleteRoom = (room) => {
-    toast.success(`Xóa phòng ${room.roomName} thành công!`);
+    toast.success(`Xóa phòng ${room.TenPhong} thành công!`);
   };
 
   return (
