@@ -5,6 +5,9 @@ import rootSaga from "./sagas/rootSaga";
 import { UserReducer } from "./reducer/UserReducer";
 import {RoomReducer} from "./reducer/RoomReducer";
 import { LoadingReducer } from "./reducer/LoadingReducer";
+import {TypeRoomReducer} from "./reducer/TypeRoomReducer";
+import {TypeCustomerReducer} from "./reducer/TypeCustomerReducer";
+
 const middlewareSaga = createMiddlewareSaga();
 
 const rootReducer = combineReducers({
@@ -12,6 +15,8 @@ const rootReducer = combineReducers({
     UserReducer,
     RoomReducer,
     LoadingReducer,
+    TypeRoomReducer,
+    TypeCustomerReducer
   });
 
 const store = createStore(rootReducer, applyMiddleware(middlewareSaga));

@@ -11,10 +11,10 @@ import applySortFilter from "../../utils/table-sort-filter";
 import MoreMenu from "../RoomSettings/MoreMenu";
 
 const columns = [
-  { id: "number", label: "STT", minWidth: 50, align: "center" },
-  { id: "roomType", label: "Loại phòng", minWidth: 150 },
+  { id: "MaLoaiPhong", label: "STT", minWidth: 50, align: "center" },
+  { id: "TenLoaiPhong", label: "Loại phòng", minWidth: 150 },
   {
-    id: "roomPrice",
+    id: "DonGia",
     label: "Đơn giá",
     minWidth: 120,
   },

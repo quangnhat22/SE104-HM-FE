@@ -11,9 +11,9 @@ import applySortFilter from "../../utils/table-sort-filter";
 import MoreMenu from "../CustomerSettings/MoreMenu";
 
 const columns = [
-  { id: "number", label: "STT", minWidth: 50, align: "center" },
-  { id: "customerType", label: "Loại khách hàng", minWidth: 180 },
-  { id: "surchargeFactor", label: "Hệ số phụ thu", minWidth: 150 },
+  { id: "MaLoaiKhach", label: "STT", minWidth: 50, align: "center" },
+  { id: "TenLoaiKhach", label: "Loại khách hàng", minWidth: 180 },
+  { id: "HeSoPhuThu", label: "Hệ số phụ thu", minWidth: 150 },
   {
     id: "more",
     label: "",

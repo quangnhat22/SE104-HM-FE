@@ -1,20 +1,19 @@
 import { Box, Button, Paper, Typography } from "@mui/material";
 import { IconPlus } from "@tabler/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import * as ActionTypes from "../redux/constants/constant";
+import * as ActionTypesSaga from "../redux/constants/constantSaga"
 import CustomerTypeModal from "../components/CustomerSettings/CustomerTypeModal";
 import TableCustomerType from "../components/Table/TableCustomerType";
 
-function createData(id, number, customerType, surchargeFactor) {
-  return { id, number, customerType, surchargeFactor };
-}
-
-const typeList = [
-  createData(1, 1, "Loại A", 1),
-  createData(2, 2, "Loại B", 1.5),
-];
-
 export default function CustomerSettings() {
+  const {typeCustomerList} = useSelector(state => state.TypeCustomerReducer);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({type: ActionTypesSaga.FETCH_LIST_TYPE_CUSTOMER})
+  },[])
   const [openNew, setOpenNew] = useState(false);
   const [openModify, setOpenModify] = useState(false);
   const [modifyingCustomerType, setModifyingCustomerType] = useState();
@@ -46,7 +45,7 @@ export default function CustomerSettings() {
       </Typography>
 
       <TableCustomerType
-        data={typeList}
+        data={typeCustomerList}
         handleModify={handleModify}
         handleDelete={handleDelete}
       />

@@ -1,7 +1,7 @@
 import {call, takeLatest, put} from 'redux-saga/effects';
 import { RoomService } from "../../services/RoomService";
 import { STATUS_SUCCESS } from "../../services/urlAPI";
-import { GET_ROOM_LIST } from "../constants/constant";
+import * as ActionTypes from "../constants/constant";
 import { ADD_NEW_ROOM_SAGA, FETCH_LIST_ROOM_SAGA } from "../constants/constantSaga";
 
 function * actFetchListRoom() {
@@ -9,7 +9,7 @@ function * actFetchListRoom() {
         let {data, status} = yield call(()=> RoomService.getListRoom());
         if(status === STATUS_SUCCESS) {
             yield put({
-                type: GET_ROOM_LIST,
+                type: ActionTypes.GET_ROOM_LIST,
                 roomList: data
             })
         }

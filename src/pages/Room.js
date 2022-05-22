@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import RoomModal from "../components/Room/RoomModal";
 import TableRoom from "../components/Table/TableRoom";
 import Search from "../ui-component/Search";
-import {FETCH_LIST_ROOM_SAGA} from "../redux/constants/constantSaga"
+import * as ActionSagaTypes from "../redux/constants/constantSaga"
 import { useDispatch } from "react-redux";
 
 export default function Room() {
@@ -12,7 +12,8 @@ export default function Room() {
   const {loading} = useSelector(state => state.LoadingReducer);
   const dispatch = useDispatch();
   useEffect(()=> {
-    dispatch({type: FETCH_LIST_ROOM_SAGA})
+    dispatch({type: ActionSagaTypes.FETCH_LIST_ROOM_SAGA})
+    
   }, [])
   console.log(roomList);
   const [filterName, setFilterName] = useState("");
