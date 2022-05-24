@@ -7,6 +7,7 @@ export default function* rootSaga() {
     yield all([
         RoomListSaga.followActFetchListRoom(),
         RoomListSaga.followActNewRoom(),
+        RoomListSaga.followActEditRoom(),
         RoomListSaga.followActDeleteRoom(),
         RoomStateListSaga.followFecthStateRoomList(),
         TypeRoomSaga.followActFetchListTypeRoom(),

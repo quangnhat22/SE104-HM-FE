@@ -35,6 +35,7 @@ export default function Room() {
   };
 
   const handleModify = (room) => {
+    console.log("modify: ", room);
     setModifyingRoom(room);
     setOpenModify(true);
   };
@@ -47,7 +48,7 @@ export default function Room() {
     <Paper sx={{ width: "100%", overflow: "hidden", p: 5 }}>    
       <Box sx={{ display: "flex" }}>
         <Search
-          placeholder="Tìm phòng"
+          placeholder="Tìm tên phòng"
           filterName={filterName}
           setFilterName={handleFilterByName}
         />
@@ -82,7 +83,7 @@ export default function Room() {
         </div> :
         <TableRoom
           data={roomList}
-          searchField="room"
+          searchField="TenPhong"
           filterName={filterName}
           handleModify={handleModify}
         />

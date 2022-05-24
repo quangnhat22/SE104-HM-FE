@@ -3,7 +3,7 @@ import {call, takeLatest, put} from 'redux-saga/effects';
 import { RoomService } from "../../services/RoomService";
 import { STATUS_CREATE_SUCCESS, STATUS_SUCCESS } from "../../services/urlAPI";
 import * as ActionTypes from "../constants/constant";
-import { ADD_NEW_ROOM_SAGA, DELETE_ROOM_SAGA, FETCH_LIST_ROOM_SAGA } from "../constants/constantSaga";
+import { ADD_NEW_ROOM_SAGA, DELETE_ROOM_SAGA, EDIT_ROOM_SAGA, FETCH_LIST_ROOM_SAGA } from "../constants/constantSaga";
 
 function * actFetchListRoom() {
     try {
@@ -48,6 +48,18 @@ function * actDeleteRoom(action) {
     }
 }
 
+function * actEditRoom(action) {
+    let {editRoom} = action; 
+    console.log("editRoom: ", editRoom);
+    try {
+        let {status} = yield call(()=> RoomService.editRoom(editRoom));
+        yield put ({type: FETCH_LIST_ROOM_SAGA});
+            toast.success("Sửa thông tin phòng thành công!");
+    } catch (err) {
+
+    }
+}
+
 export function * followActFetchListRoom() {
     yield takeLatest(FETCH_LIST_ROOM_SAGA, actFetchListRoom);
 }
@@ -58,4 +70,8 @@ export function * followActNewRoom() {
 
 export function * followActDeleteRoom() {
     yield takeLatest(DELETE_ROOM_SAGA, actDeleteRoom);
+}
+
+export function * followActEditRoom() {
+    yield takeLatest(EDIT_ROOM_SAGA, actEditRoom);
 }

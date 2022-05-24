@@ -9,7 +9,6 @@ import {
   TableRow,
 } from "@mui/material";
 import { useState } from "react";
-import { toast } from "react-toastify";
 import CustomTableHead from "../../ui-component/CustomTableHead";
 import SearchNotFound from "../../ui-component/SearchNotFound";
 import MoreMenu from "../Room/MoreMenu";
@@ -91,7 +90,6 @@ export default function TableRoom({
 
   return (
     <>
-
       <TableContainer sx={{ maxHeight: 460 }}>
         <Table stickyHeader aria-label="sticky table">
           <CustomTableHead
@@ -107,7 +105,6 @@ export default function TableRoom({
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                   {columns.map((column) => {
                     const value = row[column.id];
-
                     switch (column.id) {
                       case "more":
                         return (
@@ -122,7 +119,7 @@ export default function TableRoom({
                       case "TenTinhTrang":
                         return (
                           <TableCell align="left" key="more">
-                            {value ? (
+                            {value !== "Phòng trống" ? (
                               <Chip
                                 label="Đã đặt"
                                 color="warning"

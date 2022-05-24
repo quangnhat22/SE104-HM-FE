@@ -21,12 +21,13 @@ import { useEffect } from "react";
 
 
 export default function RoomModal({ handleClose, type, room, typeRooms, statesRoomList }) {
+
   const dispatch = useDispatch();
   const handleNewRoom = (values) => {
     let newRoom = {
       TenPhong: values.TenPhong,
       MaLoaiPhong: values.MaLoaiPhong,
-      MaTinhTrang: statesRoomList[0].MaTinhTrang,
+      MaTinhTrang: values.MaTinhTrang,
       GhiChu: values.GhiChu,
     };
     dispatch({
@@ -37,8 +38,17 @@ export default function RoomModal({ handleClose, type, room, typeRooms, statesRo
   };
 
   const handleModifyRoom = (values) => {
-    console.log(toast);
-    toast.success("Chỉnh sửa phòng thành công");
+    let editRoom = {
+      MaPhong : values.MaPhong,
+      TenPhong: values.TenPhong,
+      MaLoaiPhong: values.MaLoaiPhong,
+      MaTinhTrang: values.MaTinhTrang,
+      GhiChu: values.GhiChu
+    }
+    dispatch({
+      type: SagaActionTypes.EDIT_ROOM_SAGA,
+      editRoom: editRoom
+    })
     handleClose();
   };
 
@@ -50,11 +60,13 @@ export default function RoomModal({ handleClose, type, room, typeRooms, statesRo
       <DialogContent>
         <Formik
           initialValues={{
-            TenPhong: "",
-            MaLoaiPhong: typeRooms[0].MaLoaiPhong,
-            TenLoaiPhong: typeRooms[0].TenLoaiPhong,
-            DonGia: typeRooms[0].DonGia,
-            GhiChu: "",
+            MaPhong: room ? room.MaPhong : "",
+            TenPhong: room ? room.TenPhong : "",
+            MaLoaiPhong: room ? room.MaLoaiPhong : typeRooms[0].MaLoaiPhong,
+            TenLoaiPhong: room ? room.TenLoaiPhong : typeRooms[0].TenLoaiPhong,
+            DonGia: room ? room.DonGia: typeRooms[0].DonGia,
+            GhiChu: room ? room.GhiChu: "",
+            MaTinhTrang: room ? room.MaTinhTrang : statesRoomList[0].MaTinhTrang,
             // submit: null,
           }}
           validationSchema={Yup.object().shape({
@@ -101,9 +113,9 @@ export default function RoomModal({ handleClose, type, room, typeRooms, statesRo
                   getOptionLabel={(option) => option.TenLoaiPhong}
                   isOptionEqualToValue={(option, value) => option === value}
                   onChange={(event, value) => {
-                    console.log(value);
                     setFieldValue("DonGia", value.DonGia);
                     setFieldValue("TenLoaiPhong", value.TenLoaiPhong);
+                    setFieldValue("MaLoaiPhong", value.MaLoaiPhong);
                   }}
                   renderInput={(params) => (
                     <TextField
@@ -131,6 +143,7 @@ export default function RoomModal({ handleClose, type, room, typeRooms, statesRo
               <FormControl fullWidth sx={{ mb: 3 }}>
                 <TextField
                   label="Ghi chú"
+                  multiline
                   value={values.GhiChu}
                   name="GhiChu"
                   onBlur={handleBlur}

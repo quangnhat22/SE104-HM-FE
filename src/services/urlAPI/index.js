@@ -5,6 +5,7 @@ export const STATUS_CREATE_SUCCESS = 201;
 //ROOM
 export const URL_GET_LIST_ROOM = `${DOMAIN_NAME}/room`;
 export const URL_ADD_NEW_ROOM = `${DOMAIN_NAME}/room`;
+export const URL_EDIT_ROOM = (MaPhong) => `${DOMAIN_NAME}/room/${MaPhong}`;
 export const URL_DELETE_ROOM= (MaPhong) => `${DOMAIN_NAME}/room/${MaPhong}`;
 
 //TYPE ROOM
