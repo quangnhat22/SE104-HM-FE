@@ -14,6 +14,9 @@ export default function* rootSaga() {
         TypeRoomSaga.followActAddTypeRoom(),
         TypeRoomSaga.followActEditTypeRoom(),
         TypeRoomSaga.followActDeleteTypeRoom(),
-        TypeCustomerSaga.followActFetchListTypeCustomer()
+        TypeCustomerSaga.followActFetchListTypeCustomer(),
+        TypeCustomerSaga.followAddTypeCustomer(),
+        TypeCustomerSaga.followEditTypeCustomer(),
+        TypeCustomerSaga.followDeleteTypeCustomer(),
     ]);
 }

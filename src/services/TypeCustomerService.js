@@ -1,5 +1,5 @@
 import Axios from "axios";
-import { URL_GET_LIST_TYPE_CUSTOMER, URL_POST_TYPE_CUSTOMER } from "./urlAPI";
+import { URL_ADD_TYPE_CUSTOMER, URL_DELETE_TYPE_CUSTOMER, URL_EDIT_TYPE_CUSTOMER, URL_GET_LIST_TYPE_CUSTOMER } from "./urlAPI";
 
 export const TypeCustomerService = {
     getListTypeCustomer: () => {
@@ -7,13 +7,24 @@ export const TypeCustomerService = {
             URL_GET_LIST_TYPE_CUSTOMER
         )
     },
-    postRoomTypeCustomer: (typeCustomer) => {
+    addTypeCustomer: (typeCustomer) => {
         return Axios.post(
-            URL_POST_TYPE_CUSTOMER,
+            URL_ADD_TYPE_CUSTOMER,
             {
-                "TenLoaiKhach": typeCustomer["TenLoaiKhach"],
-                "HeSoPhuThu": typeCustomer["HeSoPhuThu"]
+                TenLoaiKhach: typeCustomer.TenLoaiKhach,
+                HeSoPhuThu: typeCustomer.HeSoPhuThu
             }
         )
+    },
+    editTypeCustomer: (typeCustomer) => {
+        return Axios.put(
+            URL_EDIT_TYPE_CUSTOMER(typeCustomer.MaLoaiKhach), {
+                TenLoaiKhach: typeCustomer.TenLoaiKhach,
+                HeSoPhuThu: typeCustomer.HeSoPhuThu
+            }
+        )
+    },
+    deleteTypeCustomer: (MaLoaiKhach) => {
+        return Axios.delete(URL_DELETE_TYPE_CUSTOMER(MaLoaiKhach))
     }
 }

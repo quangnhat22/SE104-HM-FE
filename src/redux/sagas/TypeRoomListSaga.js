@@ -24,7 +24,6 @@ function * actAddTypeRoom(action) {
     let {newTypeRoom} = action;
     try {
         let {status} = yield call (()=> TypeRoomService.addTypeRoom(newTypeRoom));
-        console.log("status: ", status);
         if(status === STATUS_CREATE_SUCCESS) {
             yield put({type: FECTH_LIST_TYPE_ROOM_SAGA});
             toast.success(`Thêm loại phòng ${newTypeRoom.TenLoaiPhong} thành công`);
@@ -39,10 +38,9 @@ function * actEditTypeRoom(action) {
     let {typeRoom} = action;
     try {
         let {status} = yield call (()=> TypeRoomService.editListTypeRoom(typeRoom));
-        console.log("status: ", status);
         if(status === STATUS_SUCCESS) {
             yield put({type: FECTH_LIST_TYPE_ROOM_SAGA});
-            toast.success(`Cập nhập loại phòng có mã ${typeRoom.MaLoaiPhong} thành công`);
+            toast.success(`Cập nhập loại phòng có mã ${typeRoom.TenLoaiPhong} thành công`);
         }
     }
     catch(err) {
@@ -51,13 +49,13 @@ function * actEditTypeRoom(action) {
 }
 
 function * actDeleteTypeRoom(action) {
-    let {maLoaiPhong} = action;
+    let {typeDelete} = action;
     try {
-        let {status} = yield call (()=> TypeRoomService.deleteTypeRoom(maLoaiPhong));
+        let {status} = yield call (()=> TypeRoomService.deleteTypeRoom(typeDelete.MaLoaiPhong));
         console.log("status: ", status);
         if(status === STATUS_SUCCESS) {
             yield put({type: FECTH_LIST_TYPE_ROOM_SAGA});
-            toast.success(`Xoá loại phòng có mã ${maLoaiPhong} thành công`);
+            toast.success(`Xoá loại phòng ${typeDelete.TenLoaiPhong} thành công`);
         }
     }
     catch(err) {
@@ -67,17 +65,17 @@ function * actDeleteTypeRoom(action) {
 
 
 export function * followActFetchListTypeRoom() {
-    yield takeLatest(FECTH_LIST_TYPE_ROOM_SAGA, actFetchListTypeRoom)
+    yield takeLatest(FECTH_LIST_TYPE_ROOM_SAGA, actFetchListTypeRoom);
 }
 
 export function * followActAddTypeRoom() {
-    yield takeLatest(ADD_TYPE_ROOM_SAGA, actAddTypeRoom)
+    yield takeLatest(ADD_TYPE_ROOM_SAGA, actAddTypeRoom);
 }
 
 export function * followActEditTypeRoom() {
-    yield takeLatest(EDIT_TYPE_ROOM_SAGA, actEditTypeRoom)
+    yield takeLatest(EDIT_TYPE_ROOM_SAGA, actEditTypeRoom);
 }
 
 export function * followActDeleteTypeRoom() {
-    yield takeLatest(DELETE_TYPE_ROOM_SAGA, actDeleteTypeRoom)
+    yield takeLatest(DELETE_TYPE_ROOM_SAGA, actDeleteTypeRoom);
 }

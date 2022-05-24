@@ -33,7 +33,7 @@ export default function RoomSettings() {
   };
 
   const handleDelete = (roomType) => {
-    dispatch({type: SagaActionTypes.DELETE_TYPE_ROOM_SAGA, maLoaiPhong : roomType.MaLoaiPhong});
+    dispatch({type: SagaActionTypes.DELETE_TYPE_ROOM_SAGA, typeDelete : roomType});
   };
 
   return (

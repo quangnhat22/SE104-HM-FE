@@ -38,13 +38,13 @@ export default function RoomTypeModal({ type, roomType, handleClose }) {
           initialValues={{
             MaLoaiPhong: roomType ? roomType.MaLoaiPhong : "",
             TenLoaiPhong: roomType ? roomType.TenLoaiPhong : "",
-            DonGia: roomType ? roomType.DonGia : "0",
+            DonGia: roomType ? roomType.DonGia : 1,
           }}
           validationSchema={Yup.object().shape({
             TenLoaiPhong: Yup.string().required("Vui lòng nhập tên loại phòng"),
             DonGia: Yup.number()
               .typeError("Số không hợp lệ")
-              .min(0, "Giá trị không thể nhỏ hơn 0")
+              .min(1, "Giá trị không thể nhỏ hơn 1")
               .required("Vui lòng nhập đơn giá"),
           })}
           onSubmit={async (values) => {

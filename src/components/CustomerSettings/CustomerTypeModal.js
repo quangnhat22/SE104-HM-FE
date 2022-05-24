@@ -9,19 +9,21 @@ import {
   TextField,
 } from "@mui/material";
 import { Formik } from "formik";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
+import * as SagaActionTypes from "../../redux/constants/constantSaga";
 
 export default function CustomerTypeModal({ type, customerType, handleClose }) {
+  console.log(customerType);
+  const dispatch = useDispatch();
   const handleNewCustomerType = (values) => {
-    toast.success(`Thêm loại khách hàng ${values.customerType} thành công`);
+    dispatch({ type: SagaActionTypes.ADD_TYPE_CUSTOMER_SAGA, typeCustomer: values });
     handleClose();
   };
 
   const handleModifyCustomerType = (values) => {
-    toast.success(
-      `Chỉnh sửa loại khách hàng ${values.customerType} thành công`
-    );
+    dispatch({ type: SagaActionTypes.EDIT_TYPE_CUSTOMER_SAGA, typeCustomer: values });
     handleClose();
   };
 
@@ -33,16 +35,16 @@ export default function CustomerTypeModal({ type, customerType, handleClose }) {
       <DialogContent>
         <Formik
           initialValues={{
-            customerType: customerType ? customerType.customerType : "",
-            surchargeFactor: customerType ? customerType.surchargeFactor : 1,
-            submit: null,
+            MaLoaiKhach: customerType ? customerType.MaLoaiKhach : "",
+            TenLoaiKhach: customerType ? customerType.TenLoaiKhach : "",
+            HeSoPhuThu: customerType ? customerType.HeSoPhuThu : 1,
           }}
           validationSchema={Yup.object().shape({
-            customerType: Yup.string().required(
+            TenLoaiKhach: Yup.string().required(
               "Vui lòng nhập tên loại khách hàng"
             ),
-            surchargeFactor: Yup.number()
-              .typeError("Số không hợp lệ")
+            HeSoPhuThu: Yup.number()
+              .typeError("Số không hợp lệ, nếu là số thập phân vui lòng dùng dấu \".\" thay cho dấu \",\"")
               .min(1, "Giá trị không thể nhỏ hơn 1")
               .required("Vui lòng nhập hệ số phụ thu"),
           })}
@@ -62,37 +64,37 @@ export default function CustomerTypeModal({ type, customerType, handleClose }) {
             <form noValidate onSubmit={handleSubmit}>
               <FormControl
                 fullWidth
-                error={Boolean(touched.customerType && errors.customerType)}
+                error={Boolean(touched.TenLoaiKhach && errors.TenLoaiKhach)}
                 sx={{ mb: 3, mt: 1 }}
               >
                 <TextField
                   label="Tên loại khách hàng"
-                  value={values.customerType}
-                  name="customerType"
+                  value={values.TenLoaiKhach}
+                  name="TenLoaiKhach"
                   onBlur={handleBlur}
                   onChange={handleChange}
                 />
-                {touched.customerType && errors.customerType && (
-                  <FormHelperText error>{errors.customerType}</FormHelperText>
+                {touched.TenLoaiKhach && errors.TenLoaiKhach && (
+                  <FormHelperText error>{errors.TenLoaiKhach}</FormHelperText>
                 )}
               </FormControl>
               <FormControl
                 fullWidth
                 sx={{ mb: 3 }}
                 error={Boolean(
-                  touched.surchargeFactor && errors.surchargeFactor
+                  touched.HeSoPhuThu && errors.HeSoPhuThu
                 )}
               >
                 <TextField
                   label="Hệ số phụ thu"
-                  value={values.surchargeFactor}
-                  name="surchargeFactor"
+                  value={values.HeSoPhuThu}
+                  name="HeSoPhuThu"
                   onBlur={handleBlur}
                   onChange={handleChange}
                 />
-                {touched.surchargeFactor && errors.surchargeFactor && (
+                {touched.HeSoPhuThu && errors.HeSoPhuThu && (
                   <FormHelperText error>
-                    {errors.surchargeFactor}
+                    {errors.HeSoPhuThu}
                   </FormHelperText>
                 )}
               </FormControl>

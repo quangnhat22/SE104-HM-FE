@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import * as ActionTypes from "../redux/constants/constant";
-import * as ActionTypesSaga from "../redux/constants/constantSaga"
+import * as SagaActionTypes from "../redux/constants/constantSaga"
 import CustomerTypeModal from "../components/CustomerSettings/CustomerTypeModal";
 import TableCustomerType from "../components/Table/TableCustomerType";
 
@@ -12,7 +12,7 @@ export default function CustomerSettings() {
   const {typeCustomerList} = useSelector(state => state.TypeCustomerReducer);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch({type: ActionTypesSaga.FETCH_LIST_TYPE_CUSTOMER_SAGA})
+    dispatch({type: SagaActionTypes.FETCH_LIST_TYPE_CUSTOMER_SAGA})
   },[])
   const [openNew, setOpenNew] = useState(false);
   const [openModify, setOpenModify] = useState(false);
@@ -33,9 +33,7 @@ export default function CustomerSettings() {
   };
 
   const handleDelete = (customerType) => {
-    toast.success(
-      `Xóa loại khách hàng ${customerType.customerType} thành công!`
-    );
+    dispatch({type: SagaActionTypes.DELETE_TYPE_CUSTOMER_SAGA, typeDelete: customerType})
   };
 
   return (
