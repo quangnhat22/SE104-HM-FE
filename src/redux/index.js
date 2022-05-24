@@ -7,16 +7,17 @@ import {RoomReducer} from "./reducer/RoomReducer";
 import { LoadingReducer } from "./reducer/LoadingReducer";
 import {TypeRoomReducer} from "./reducer/TypeRoomReducer";
 import {TypeCustomerReducer} from "./reducer/TypeCustomerReducer";
-
+import {RoomStateReducer} from "./reducer/RoomStateReducer";
 const middlewareSaga = createMiddlewareSaga();
 
 const rootReducer = combineReducers({
     customization: customizationReducer,
     UserReducer,
     RoomReducer,
+    RoomStateReducer,
     LoadingReducer,
     TypeRoomReducer,
-    TypeCustomerReducer
+    TypeCustomerReducer,
   });
 
 const store = createStore(rootReducer, applyMiddleware(middlewareSaga));

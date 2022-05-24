@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import {call, takeLatest, put} from 'redux-saga/effects';
 import { RoomService } from "../../services/RoomService";
-import { STATUS_SUCCESS } from "../../services/urlAPI";
+import { STATUS_CREATE_SUCCESS, STATUS_SUCCESS } from "../../services/urlAPI";
 import * as ActionTypes from "../constants/constant";
 import { ADD_NEW_ROOM_SAGA, DELETE_ROOM_SAGA, FETCH_LIST_ROOM_SAGA } from "../constants/constantSaga";
 
@@ -22,9 +22,12 @@ function * actFetchListRoom() {
 
 function * actNewRoom(action) {
     let {room} = action;
-    console.log(room);
     try {
         let {status} = yield call(()=> RoomService.addNewRoom(room));
+        if(status === STATUS_CREATE_SUCCESS) {
+            yield put ({type: FETCH_LIST_ROOM_SAGA});
+            toast.success("Xóa phòng thành công!");
+        }
     }
     catch (err) {
 

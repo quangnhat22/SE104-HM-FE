@@ -10,12 +10,14 @@ import { useDispatch } from "react-redux";
 export default function Room() {
   const {roomList} = useSelector(state => state.RoomReducer);
   const {typeList} = useSelector(state => state.TypeRoomReducer);
+  const {roomStateList} = useSelector(state => state.RoomStateReducer);
   const {loading} = useSelector(state => state.LoadingReducer);
   const dispatch = useDispatch();
 
   useEffect(()=> {
     dispatch({type: ActionSagaTypes.FETCH_LIST_ROOM_SAGA});
     dispatch({type: ActionSagaTypes.FECTH_LIST_TYPE_ROOM_SAGA});
+    dispatch({type: ActionSagaTypes.FETCH_LIST_STATE_ROOM_SAGA});
   }, []);
 
   const [filterName, setFilterName] = useState("");
@@ -62,7 +64,8 @@ export default function Room() {
         <RoomModal 
           handleClose={handleClose} 
           type="new" 
-          typeRooms = {typeList}/>
+          typeRooms = {typeList}
+          statesRoomList = {roomStateList}/>
       }
       {openModify && (
         <RoomModal

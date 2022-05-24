@@ -21,6 +21,9 @@ export const RoomService = {
             }
         )
     },
+    editRoom: () => {
+
+    },
     deleteRoom: (maPhong) => {
         return Axios.delete(URL_DELETE_ROOM(maPhong));
     }

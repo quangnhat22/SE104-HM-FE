@@ -19,28 +19,20 @@ import * as ActionTypes from "../../redux/constants/constant";
 import * as SagaActionTypes from "../../redux/constants/constantSaga";
 import { useEffect } from "react";
 
-// const roomTypes = [
-//   { id: 1, type: "A", price: 150000 },
-//   { id: 2, type: "B", price: 170000 },
-//   { id: 3, type: "C", price: 200000 },
-// ];
 
-export default function RoomModal({ handleClose, type, room, typeRooms }) {
+export default function RoomModal({ handleClose, type, room, typeRooms, statesRoomList }) {
   const dispatch = useDispatch();
-  console.log(room);
-
   const handleNewRoom = (values) => {
     let newRoom = {
       TenPhong: values.TenPhong,
       MaLoaiPhong: values.MaLoaiPhong,
-      MaTinhTrang: "",
+      MaTinhTrang: statesRoomList[0].MaTinhTrang,
       GhiChu: values.GhiChu,
     };
     dispatch({
       type: SagaActionTypes.ADD_NEW_ROOM_SAGA,
-      room: values,
+      room: newRoom,
     });
-    toast.success("Thêm phòng thành công");
     handleClose();
   };
 

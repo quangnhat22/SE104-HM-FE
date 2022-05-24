@@ -5,6 +5,9 @@ export const appDrawerWidth = 320;
 //ROOM
 export const GET_ROOM_LIST = "GET_ROOM_LIST";
 
+//STATE ROOM
+export const GET_ROOM_STATE_LIST = "GET_ROOM_STATE_LIST";
+
 //TYPE ROOM
 export const GET_TYPE_ROOM = "GET_TYPE_ROOM";
 
