@@ -10,6 +10,9 @@ export const URL_DELETE_ROOM= (MaPhong) => `${DOMAIN_NAME}/room/${MaPhong}`;
 
 //TYPE ROOM
 export const URL_GET_LIST_TYPE_ROOM = `${DOMAIN_NAME}/room-type`;
+export const URL_ADD_TYPE_ROOM = `${DOMAIN_NAME}/room-type`;
+export const URL_EDIT_TYPE_ROOM = (MaLoaiPhong) => `${DOMAIN_NAME}/room-type/${MaLoaiPhong}`;
+export const URL_DELETE_TYPE_ROOM = (MaLoaiPhong) => `${DOMAIN_NAME}/room-type/${MaLoaiPhong}`;
 
 //STATE ROOM
 export const URL_GET_LIST_STATE_ROOM = `${DOMAIN_NAME}/room-state`;

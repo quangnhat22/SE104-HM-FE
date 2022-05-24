@@ -50,7 +50,6 @@ function * actDeleteRoom(action) {
 
 function * actEditRoom(action) {
     let {editRoom} = action; 
-    console.log("editRoom: ", editRoom);
     try {
         let {status} = yield call(()=> RoomService.editRoom(editRoom));
         yield put ({type: FETCH_LIST_ROOM_SAGA});

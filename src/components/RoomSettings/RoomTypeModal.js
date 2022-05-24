@@ -11,18 +11,23 @@ import {
 } from "@mui/material";
 import { Formik } from "formik";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
+import * as SagaActionTypes from "../../redux/constants/constantSaga";
 
 export default function RoomTypeModal({ type, roomType, handleClose }) {
+  const dispatch = useDispatch();
   const handleNewRoom = (values) => {
-    toast.success(`Thêm loại phòng ${values.roomType} thành công`);
+    dispatch({ type: SagaActionTypes.ADD_TYPE_ROOM_SAGA, newTypeRoom: values });
     handleClose();
   };
 
   const handleModifyRoom = (values) => {
-    toast.success(`Chỉnh sửa loại phòng ${values.roomType} thành công`);
+    dispatch({ type: SagaActionTypes.EDIT_TYPE_ROOM_SAGA, typeRoom: values });
+    // toast.success(`Chỉnh sửa loại phòng ${values.roomType} thành công`);
     handleClose();
   };
+
   return (
     <Dialog open="true" sx={{ p: 4 }}>
       <DialogTitle sx={{ fontSize: 20 }}>
@@ -31,15 +36,15 @@ export default function RoomTypeModal({ type, roomType, handleClose }) {
       <DialogContent>
         <Formik
           initialValues={{
-            roomType: roomType ? roomType.roomType : "",
-            roomPrice: roomType ? roomType.roomPrice : "1",
-            submit: null,
+            MaLoaiPhong: roomType ? roomType.MaLoaiPhong : "",
+            TenLoaiPhong: roomType ? roomType.TenLoaiPhong : "",
+            DonGia: roomType ? roomType.DonGia : "0",
           }}
           validationSchema={Yup.object().shape({
-            roomType: Yup.string().required("Vui lòng nhập tên loại phòng"),
-            roomPrice: Yup.number()
+            TenLoaiPhong: Yup.string().required("Vui lòng nhập tên loại phòng"),
+            DonGia: Yup.number()
               .typeError("Số không hợp lệ")
-              .min(1, "Giá trị không thể nhỏ hơn 1")
+              .min(0, "Giá trị không thể nhỏ hơn 0")
               .required("Vui lòng nhập đơn giá"),
           })}
           onSubmit={async (values) => {
@@ -58,30 +63,30 @@ export default function RoomTypeModal({ type, roomType, handleClose }) {
             <form noValidate onSubmit={handleSubmit}>
               <FormControl
                 fullWidth
-                error={Boolean(touched.roomType && errors.roomType)}
+                error={Boolean(touched.TenLoaiPhong && errors.TenLoaiPhong)}
                 sx={{ mb: 3, mt: 1 }}
               >
                 <TextField
                   label="Tên loại phòng"
-                  value={values.roomType}
-                  name="roomType"
+                  value={values.TenLoaiPhong}
+                  name="TenLoaiPhong"
                   onBlur={handleBlur}
                   onChange={handleChange}
                 />
-                {touched.roomType && errors.roomType && (
-                  <FormHelperText error>{errors.roomType}</FormHelperText>
+                {touched.TenLoaiPhong && errors.TenLoaiPhong && (
+                  <FormHelperText error>{errors.TenLoaiPhong}</FormHelperText>
                 )}
               </FormControl>
 
               <FormControl
                 fullWidth
                 sx={{ mb: 3 }}
-                error={Boolean(touched.roomPrice && errors.roomPrice)}
+                error={Boolean(touched.DonGia && errors.DonGia)}
               >
                 <TextField
                   label="Đơn giá"
-                  value={values.roomPrice}
-                  name="roomPrice"
+                  value={values.DonGia}
+                  name="DonGia"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   InputProps={{
@@ -90,8 +95,8 @@ export default function RoomTypeModal({ type, roomType, handleClose }) {
                     ),
                   }}
                 />
-                {touched.roomPrice && errors.roomPrice && (
-                  <FormHelperText error>{errors.roomPrice}</FormHelperText>
+                {touched.DonGia && errors.DonGia && (
+                  <FormHelperText error>{errors.DonGia}</FormHelperText>
                 )}
               </FormControl>
 

@@ -6,13 +6,13 @@ import { toast } from "react-toastify";
 import TableRoomType from "../components/Table/TableRoomType";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import * as ActionSagaTypes from "../redux/constants/constantSaga";
+import * as SagaActionTypes from "../redux/constants/constantSaga";
 
 export default function RoomSettings() {
   const dispatch = useDispatch();
   const {typeList} = useSelector(state => state.TypeRoomReducer);
   useEffect(()=> {
-    dispatch({type: ActionSagaTypes.FECTH_LIST_TYPE_ROOM_SAGA});
+    dispatch({type: SagaActionTypes.FECTH_LIST_TYPE_ROOM_SAGA});
   },[])
   const [openNew, setOpenNew] = useState(false);
   const [openModify, setOpenModify] = useState(false);
@@ -33,7 +33,7 @@ export default function RoomSettings() {
   };
 
   const handleDelete = (roomType) => {
-    toast.success(`Xóa loại phòng ${roomType.roomType} thành công!`);
+    dispatch({type: SagaActionTypes.DELETE_TYPE_ROOM_SAGA, maLoaiPhong : roomType.MaLoaiPhong});
   };
 
   return (
