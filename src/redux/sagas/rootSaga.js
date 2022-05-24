@@ -5,6 +5,8 @@ import * as TypeCustomerSaga from "./TypeCustomerListSaga";
 export default function* rootSaga() {
     yield all([
         RoomListSaga.followActFetchListRoom(),
+        RoomListSaga.followActNewRoom(),
+        RoomListSaga.followActDeleteRoom(),
         TypeRoomSaga.followActFetchListTypeRoom(),
         TypeCustomerSaga.followActFetchListTypeCustomer()
     ]);

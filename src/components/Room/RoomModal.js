@@ -14,22 +14,32 @@ import { Formik } from "formik";
 import { toast } from "react-toastify";
 import numberWithCommas from "../../utils/number-with-commas";
 import * as Yup from "yup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as ActionTypes from "../../redux/constants/constant";
-import * as SagaActionTypes from "../../redux/constants/constantSaga"
+import * as SagaActionTypes from "../../redux/constants/constantSaga";
+import { useEffect } from "react";
 
-const roomTypes = [
-  { id: 1, type: "A", price: 150000 },
-  { id: 2, type: "B", price: 170000 },
-  { id: 3, type: "C", price: 200000 },
-];
+// const roomTypes = [
+//   { id: 1, type: "A", price: 150000 },
+//   { id: 2, type: "B", price: 170000 },
+//   { id: 3, type: "C", price: 200000 },
+// ];
 
-export default function RoomModal({ handleClose, type, room }) {
+export default function RoomModal({ handleClose, type, room, typeRooms }) {
   const dispatch = useDispatch();
+  console.log(room);
 
   const handleNewRoom = (values) => {
-    console.log(values);
-    //dispatch({type: SagaActionTypes.ADD_NEW_ROOM_SAGA})
+    let newRoom = {
+      TenPhong: values.TenPhong,
+      MaLoaiPhong: values.MaLoaiPhong,
+      MaTinhTrang: "",
+      GhiChu: values.GhiChu,
+    };
+    dispatch({
+      type: SagaActionTypes.ADD_NEW_ROOM_SAGA,
+      room: values,
+    });
     toast.success("Thêm phòng thành công");
     handleClose();
   };
@@ -48,11 +58,12 @@ export default function RoomModal({ handleClose, type, room }) {
       <DialogContent>
         <Formik
           initialValues={{
-            TenPhong: room ? room.room : "",
-            roomType: room ? room.type : roomTypes[0].type,
-            roomPrice: room ? room.price : roomTypes[0].price,
-            note: room ? room.note : "",
-            submit: null,
+            TenPhong: "",
+            MaLoaiPhong: typeRooms[0].MaLoaiPhong,
+            TenLoaiPhong: typeRooms[0].TenLoaiPhong,
+            DonGia: typeRooms[0].DonGia,
+            GhiChu: "",
+            // submit: null,
           }}
           validationSchema={Yup.object().shape({
             TenPhong: Yup.string().required("Vui lòng nhập tên phòng"),
@@ -91,21 +102,22 @@ export default function RoomModal({ handleClose, type, room }) {
 
               <FormControl fullWidth sx={{ mb: 3 }}>
                 <Autocomplete
-                  name="roomType"
-                  options={roomTypes}
-                  defaultValue={roomTypes[0]}
+                  name="TenLoaiPhong"
+                  options={typeRooms}
+                  defaultValue={typeRooms[0]}
                   disableClearable
-                  getOptionLabel={(option) => option.type}
+                  getOptionLabel={(option) => option.TenLoaiPhong}
                   isOptionEqualToValue={(option, value) => option === value}
                   onChange={(event, value) => {
-                    setFieldValue("roomPrice", value.price);
-                    setFieldValue("roomType", value.type);
+                    console.log(value);
+                    setFieldValue("DonGia", value.DonGia);
+                    setFieldValue("TenLoaiPhong", value.TenLoaiPhong);
                   }}
                   renderInput={(params) => (
                     <TextField
                       {...params}
                       label="Loại phòng"
-                      value={values.roomType}
+                      value={values.TenLoaiPhong}
                     />
                   )}
                 />
@@ -114,7 +126,7 @@ export default function RoomModal({ handleClose, type, room }) {
               <FormControl fullWidth sx={{ mb: 3 }}>
                 <TextField
                   label="Giá"
-                  value={numberWithCommas(values.roomPrice)}
+                  value={numberWithCommas(values.DonGia)}
                   name="roomPrice"
                   InputProps={{
                     endAdornment: (
@@ -127,8 +139,8 @@ export default function RoomModal({ handleClose, type, room }) {
               <FormControl fullWidth sx={{ mb: 3 }}>
                 <TextField
                   label="Ghi chú"
-                  value={values.note}
-                  name="note"
+                  value={values.GhiChu}
+                  name="GhiChu"
                   onBlur={handleBlur}
                   onChange={handleChange}
                 />

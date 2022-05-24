@@ -12,7 +12,7 @@ export default function CustomerSettings() {
   const {typeCustomerList} = useSelector(state => state.TypeCustomerReducer);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch({type: ActionTypesSaga.FETCH_LIST_TYPE_CUSTOMER})
+    dispatch({type: ActionTypesSaga.FETCH_LIST_TYPE_CUSTOMER_SAGA})
   },[])
   const [openNew, setOpenNew] = useState(false);
   const [openModify, setOpenModify] = useState(false);

@@ -14,6 +14,8 @@ import CustomTableHead from "../../ui-component/CustomTableHead";
 import SearchNotFound from "../../ui-component/SearchNotFound";
 import MoreMenu from "../Room/MoreMenu";
 import applySortFilter from "../../utils/table-sort-filter";
+import { useDispatch } from "react-redux";
+import * as SagaActionTypes from "../../redux/constants/constantSaga";
 
 const columns = [
   { id: "MaPhong", label: "Mã Phòng", minWidth: 50, align: "center" },
@@ -24,7 +26,7 @@ const columns = [
     minWidth: 120,
   },
   {
-    id: "price",
+    id: "DonGia",
     label: "Đơn giá",
     minWidth: 100,
   },
@@ -55,9 +57,11 @@ export default function TableRoom({
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [order, setOrder] = useState("");
   const [orderBy, setOrderBy] = useState("number");
+  const dispatch = useDispatch();
 
   const handleDelete = (room) => {
-    toast.success("Xóa phòng thành công!");
+    dispatch({type: SagaActionTypes.DELETE_ROOM_SAGA, maPhong: room.MaPhong});
+    
   };
 
   const handleRequestSort = (event, property) => {
@@ -147,7 +151,9 @@ export default function TableRoom({
                         );
                       default:
                         return (
-                          <TableCell key={column.id} align={column.align}>
+                          <TableCell 
+                            key={column.id} 
+                            align={column.align}>
                             {column.format && typeof value === "number"
                               ? column.format(value)
                               : value}

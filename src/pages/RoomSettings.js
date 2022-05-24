@@ -12,7 +12,7 @@ export default function RoomSettings() {
   const dispatch = useDispatch();
   const {typeList} = useSelector(state => state.TypeRoomReducer);
   useEffect(()=> {
-    dispatch({type: ActionSagaTypes.FECTH_LIST_TYPE_ROOM_SAGA})
+    dispatch({type: ActionSagaTypes.FECTH_LIST_TYPE_ROOM_SAGA});
   },[])
   const [openNew, setOpenNew] = useState(false);
   const [openModify, setOpenModify] = useState(false);

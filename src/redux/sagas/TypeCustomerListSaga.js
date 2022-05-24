@@ -1,8 +1,9 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import { STATUS_SUCCESS } from "../../services/urlAPI";
-import { FETCH_LIST_TYPE_CUSTOMER } from "../constants/constantSaga";
-import * as ActionTypes from "../constants/constant";
-import {TypeCustomerService} from "../../services/TypeCustomerService"
+import * as ActionTypesSaga from "../constants/constantSaga";
+import * as ActionTypes from "../constants/constant"
+import {TypeCustomerService} from "../../services/TypeCustomerService";
+
 function * actFetchListTypeCustomer() {
     try {
         let {data, status} = yield call (()=> TypeCustomerService.getListTypeCustomer());
@@ -13,10 +14,22 @@ function * actFetchListTypeCustomer() {
             })
         }
     } catch (err) {
-        
+        console.log(err.message)
+    }
+}
+
+function * actPostTypeCustomer(typeCustomer) {
+    try {
+        let {status} = yield call(()=> TypeCustomerService.postRoomTypeCustomer(typeCustomer));
+    } catch (err) {
+
     }
 }
 
 export function * followActFetchListTypeCustomer() {
-    yield takeLatest(FETCH_LIST_TYPE_CUSTOMER, actFetchListTypeCustomer);
+    yield takeLatest(ActionTypesSaga.FETCH_LIST_TYPE_CUSTOMER_SAGA, actFetchListTypeCustomer);
+}
+
+export function * followPostTypeCustomer() {
+    yield takeLatest(ActionTypesSaga.POST_TYPE_CUSTOMER_SAGA, actPostTypeCustomer)
 }
