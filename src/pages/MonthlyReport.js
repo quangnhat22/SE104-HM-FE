@@ -9,25 +9,19 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { Formik } from "formik";
-import TableRoomRevenue from "../components/Table/TableRoomRevenue";
-
-function createData(id, number, roomType, revenue, turnoverRate) {
-  return { id, number, roomType, revenue, turnoverRate };
-}
+import TotalRevenueOfMonthChart from "../components/MonthLyReport/TotalRevenueOfMonthChart";
+import { useParams } from "react-router-dom";
 
 const monthList = [
   { id: 1, month: "1/2022" },
   { id: 2, month: "2/2022" },
 ];
 
-const roomTypeList = [
-  createData(1, 1, "Loại A", 1000000, 50),
-  createData(2, 2, "Loại B", 1000000, 50),
-];
-
 export default function MonthlyReport() {
+  const { month, year } = useParams();
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", p: 5 }}>
       <Typography variant="h3" gutterBottom sx={{ mb: 4 }}>
@@ -72,7 +66,7 @@ export default function MonthlyReport() {
           </form>
         )}
       </Formik>
-      <TableRoomRevenue data={roomTypeList} />
+      <TotalRevenueOfMonthChart/>
     </Paper>
   );
 }
