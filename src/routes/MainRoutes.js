@@ -3,11 +3,13 @@ import MonthlyReport from '../pages/MonthlyReport';
 import { lazy } from "react";
 import Loadable from "../ui-component/Loadable";
 
-const TestPage = Loadable(lazy(() => import("../pages/TestPage")));
+const Dashboard = Loadable(lazy(() => import("../pages/Dashboard")));
 const Room = Loadable(lazy(() => import("../pages/Room")));
 const CustomerSettings = Loadable(lazy(() => import('../pages/CustomerSettings')));
 const Booking = Loadable(lazy(() => import('../pages/Booking')));
 const Payment = Loadable(lazy(() => import('../pages/Payment')));
+const Receipt = Loadable(lazy(() => import('../pages/Receipt')));
+const ReceiptDetail = Loadable(lazy(() => import('../pages/ReceiptDetail')));
 const RoomSettings = Loadable(lazy(() => import('../pages/RoomSettings')));
 const SurchargeRateSetting = Loadable(lazy(() => import('../pages/SurchargeRateSetting')));
 
@@ -18,7 +20,7 @@ const MainRoutes = {
   children: [
     {
       path: "/",
-      element: <TestPage />,
+      element: <Dashboard />,
     },
     {
       path: "/room",
@@ -29,12 +31,24 @@ const MainRoutes = {
       element: <MonthlyReport />
     },
     {
+      path: '/monthly-report/:year/:month',
+      element: <MonthlyReport />
+    },
+    {
       path: '/booking/:id',
       element: <Booking />
     },
     {
       path: '/payment',
       element: <Payment />
+    },
+    {
+      path: '/receipt',
+      element: <Receipt />
+    },
+    {
+      path: '/receipt/:id',
+      element: <ReceiptDetail />
     },
     {
       path: '/customer-settings',
