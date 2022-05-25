@@ -3,7 +3,6 @@ import {
   Button,
   Grid,
   Paper,
-  TextField,
   Typography,
   useMediaQuery,
 } from "@mui/material";
@@ -35,38 +34,51 @@ export default function Payment() {
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", p: 5 }}>
-      <Typography variant="h3" gutterBottom sx={{ mb: 4 }}>
-        {`Hóa đơn: ${id} - 1/1/2022`}
-      </Typography>
-      <Grid container spacing={matchDownSM ? 0 : 2}>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            label="Khách hàng / Cơ quan"
-            value="abc"
-            name="customerName"
-            disabled
-            fullWidth
-            sx={{ mb: 3 }}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            label="Địa chỉ"
-            value="abf"
-            name="address"
-            disabled
-            fullWidth
-            sx={{ mb: 3 }}
-          />
-        </Grid>
-      </Grid>
-
-      <TableReceiptDetail data={customerList} />
-
-      <Box sx={{ display: "flex", justifyContent: "right" }}>
-        <Typography variant="h3" gutterBottom sx={{ mt: 4 }} color="secondary">
-          {`${numberWithCommas(500000)} VNĐ`}
+      <Box>
+        <Typography variant="h3" gutterBottom sx={{ mb: 4 }}>
+          {`Hóa đơn: ${id} - 1/1/2022`}
         </Typography>
+        <Grid container spacing={matchDownSM ? 0 : 2}>
+          <Grid item xs={12} sx={{ mt: 2 }}>
+            <Typography variant="h4" display="inline">
+              Khách hàng / Cơ quan:
+            </Typography>
+            <Typography
+              variant="h4"
+              display="inline"
+              sx={{ ml: 1 }}
+              color="primary"
+            >
+              Đỗ Phú Quang
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sx={{ mb: 2 }}>
+            <Typography variant="h4" display="inline">
+              Địa chỉ:
+            </Typography>
+            <Typography
+              variant="h4"
+              display="inline"
+              sx={{ ml: 1 }}
+              color="primary"
+            >
+              KTX Khu A
+            </Typography>
+          </Grid>
+        </Grid>
+
+        <TableReceiptDetail data={customerList} />
+
+        <Box sx={{ display: "flex", justifyContent: "right" }}>
+          <Typography
+            variant="h3"
+            gutterBottom
+            sx={{ mt: 4 }}
+            color="secondary"
+          >
+            {`${numberWithCommas(500000)} VNĐ`}
+          </Typography>
+        </Box>
       </Box>
       <Box sx={{ display: "flex", justifyContent: "end" }}>
         <Button variant="outlined" sx={{ mt: 4 }}>
