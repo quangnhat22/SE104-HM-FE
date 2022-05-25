@@ -1,17 +1,16 @@
 import { Card, CardContent, Grid } from "@mui/material";
 import Skeleton from "@mui/material/Skeleton";
-import { gridSpacing } from "store/constant";
 
 const PopularCard = () => (
   <Card>
     <CardContent>
-      <Grid container spacing={gridSpacing}>
+      <Grid container spacing={3}>
         <Grid item xs={12}>
           <Grid
             container
             alignItems="center"
             justifyContent="space-between"
-            spacing={gridSpacing}
+            spacing={3}
           >
             <Grid item xs zeroMinWidth>
               <Skeleton variant="rectangular" height={20} />
@@ -30,7 +29,7 @@ const PopularCard = () => (
               <Grid
                 container
                 alignItems="center"
-                spacing={gridSpacing}
+                spacing={3}
                 justifyContent="space-between"
               >
                 <Grid item xs={6}>
@@ -40,7 +39,7 @@ const PopularCard = () => (
                   <Grid
                     container
                     alignItems="center"
-                    spacing={gridSpacing}
+                    spacing={3}
                     justifyContent="space-between"
                   >
                     <Grid item xs zeroMinWidth>
@@ -64,7 +63,7 @@ const PopularCard = () => (
               <Grid
                 container
                 alignItems="center"
-                spacing={gridSpacing}
+                spacing={3}
                 justifyContent="space-between"
               >
                 <Grid item xs={6}>
@@ -74,7 +73,7 @@ const PopularCard = () => (
                   <Grid
                     container
                     alignItems="center"
-                    spacing={gridSpacing}
+                    spacing={3}
                     justifyContent="space-between"
                   >
                     <Grid item xs zeroMinWidth>
@@ -98,7 +97,7 @@ const PopularCard = () => (
               <Grid
                 container
                 alignItems="center"
-                spacing={gridSpacing}
+                spacing={3}
                 justifyContent="space-between"
               >
                 <Grid item xs={6}>
@@ -108,7 +107,7 @@ const PopularCard = () => (
                   <Grid
                     container
                     alignItems="center"
-                    spacing={gridSpacing}
+                    spacing={3}
                     justifyContent="space-between"
                   >
                     <Grid item xs zeroMinWidth>
@@ -132,7 +131,7 @@ const PopularCard = () => (
               <Grid
                 container
                 alignItems="center"
-                spacing={gridSpacing}
+                spacing={3}
                 justifyContent="space-between"
               >
                 <Grid item xs={6}>
@@ -142,7 +141,7 @@ const PopularCard = () => (
                   <Grid
                     container
                     alignItems="center"
-                    spacing={gridSpacing}
+                    spacing={3}
                     justifyContent="space-between"
                   >
                     <Grid item xs zeroMinWidth>
@@ -166,7 +165,7 @@ const PopularCard = () => (
               <Grid
                 container
                 alignItems="center"
-                spacing={gridSpacing}
+                spacing={3}
                 justifyContent="space-between"
               >
                 <Grid item xs={6}>
@@ -176,7 +175,7 @@ const PopularCard = () => (
                   <Grid
                     container
                     alignItems="center"
-                    spacing={gridSpacing}
+                    spacing={3}
                     justifyContent="space-between"
                   >
                     <Grid item xs zeroMinWidth>
