@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import RoomModal from "../components/Room/RoomModal";
 import TableRoom from "../components/Table/TableRoom";
 import Search from "../ui-component/Search";
-import * as ActionSagaTypes from "../redux/constants/constantSaga"
+import * as ActionSagaTypes from "../redux/constants/constantSaga";
 import { useDispatch } from "react-redux";
 
 export default function Room() {
@@ -35,7 +35,6 @@ export default function Room() {
   };
 
   const handleModify = (room) => {
-    console.log("modify: ", room);
     setModifyingRoom(room);
     setOpenModify(true);
   };
@@ -88,8 +87,6 @@ export default function Room() {
           handleModify={handleModify}
         />
       }
-      
-      
     </Paper>
   );
 }

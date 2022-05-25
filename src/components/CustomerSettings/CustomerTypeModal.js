@@ -10,12 +10,10 @@ import {
 } from "@mui/material";
 import { Formik } from "formik";
 import { useDispatch } from "react-redux";
-import { toast } from "react-toastify";
 import * as Yup from "yup";
 import * as SagaActionTypes from "../../redux/constants/constantSaga";
 
 export default function CustomerTypeModal({ type, customerType, handleClose }) {
-  console.log(customerType);
   const dispatch = useDispatch();
   const handleNewCustomerType = (values) => {
     dispatch({ type: SagaActionTypes.ADD_TYPE_CUSTOMER_SAGA, typeCustomer: values });

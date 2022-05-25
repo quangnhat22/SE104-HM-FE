@@ -11,14 +11,14 @@ import applySortFilter from "../../utils/table-sort-filter";
 
 const columns = [
   { id: "number", label: "STT", minWidth: 50, align: "center" },
-  { id: "roomType", label: "Loại phòng", minWidth: 150 },
+  { id: "MaLoaiPhong", label: "Loại phòng", minWidth: 150 },
   {
-    id: "revenue",
+    id: "DoanhThuTheoThang",
     label: "Doanh thu",
     minWidth: 170,
   },
   {
-    id: "turnoverRate",
+    id: "TiLe",
     label: "Tỷ lệ",
     minWidth: 170,
   },

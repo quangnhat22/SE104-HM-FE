@@ -13,3 +13,6 @@ export const GET_TYPE_ROOM = "GET_TYPE_ROOM";
 
 //TYPE CUSTOMER
 export const GET_TYPE_CUSTOMER = "GET_TYPE_CUSTOMER";
+
+//REPORT
+export const GET_REPORT = "GET_REPORT";

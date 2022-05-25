@@ -1,3 +1,4 @@
+import * as React from "react";
 import {
   Autocomplete,
   FormControl,
@@ -10,69 +11,55 @@ import {
 import { useTheme } from "@mui/material/styles";
 import { Formik } from "formik";
 import TableRoomRevenue from "../components/Table/TableRoomRevenue";
-
-function createData(id, number, roomType, revenue, turnoverRate) {
-  return { id, number, roomType, revenue, turnoverRate };
-}
-
-const monthList = [
-  { id: 1, month: "1/2022" },
-  { id: 2, month: "2/2022" },
-];
-
-const roomTypeList = [
-  createData(1, 1, "Loại A", 1000000, 50),
-  createData(2, 2, "Loại B", 1000000, 50),
-];
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import * as SagaActionTypes from "../redux/constants/constantSaga";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 
 export default function MonthlyReport() {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down("sm"));
+  const [value, setValue] = useState(new Date());
+  const {report} = useSelector(state => state.ReportReducer);
+  const dispatch = useDispatch();
+  // useEffect(()=> {
+  //   dispatch({
+  //     type: SagaActionTypes.FETCH_REPORT_SAGA,
+  //     thang: 2,
+  //     nam: 2022
+  //   });
+  // }, [])
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", p: 5 }}>
       <Typography variant="h3" gutterBottom sx={{ mb: 4 }}>
         Báo cáo tháng
       </Typography>
-
-      <Formik
-        initialValues={{
-          month: monthList[0].month,
-          submit: null,
-        }}
-        onSubmit={async (values) => {
-          console.log(values);
-        }}
-      >
-        {({ setFieldValue, handleSubmit, values }) => (
-          <form noValidate onSubmit={handleSubmit}>
-            <Grid container spacing={matchDownSM ? 0 : 2}>
-              <Grid item xs={12} sm={6}>
-                <FormControl fullWidth sx={{ mb: 3 }}>
-                  <Autocomplete
-                    name="month"
-                    options={monthList}
-                    defaultValue={monthList[0]}
-                    disableClearable
-                    getOptionLabel={(option) => option.month}
-                    isOptionEqualToValue={(option, value) => option === value}
-                    onChange={(event, value) => {
-                      setFieldValue("month", value.month);
-                    }}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Chọn tháng"
-                        value={values.month}
-                      />
-                    )}
-                  />
-                </FormControl>
-              </Grid>
-            </Grid>
-          </form>
-        )}
-      </Formik>
-      <TableRoomRevenue data={roomTypeList} />
+      {/* date picker with month and year */}
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <DatePicker
+          views={["year", "month"]}
+          label="Year and Month"
+          minDate={new Date("2000-01-01")}
+          maxDate={new Date("2100-12-01")}
+          value={value}
+          onChange={(newValue) => {
+            let month = newValue.getUTCMonth() + 1;
+            let year = newValue.getUTCFullYear();
+            setValue(newValue);
+            dispatch({
+              type: SagaActionTypes.FETCH_REPORT_SAGA,
+              thang: month,
+              nam: year,
+            });
+          }}
+          renderInput={(params) => <TextField {...params} helperText={null} />}
+        />
+      </LocalizationProvider>
+      {/* table report */}
+      {report ? <TableRoomRevenue data={report.ReportDetails} /> : ""}
     </Paper>
   );
 }
