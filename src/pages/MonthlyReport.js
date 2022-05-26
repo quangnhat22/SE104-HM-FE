@@ -8,7 +8,6 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import TotalRevenueOfMonthChart from "../components/MonthLyReport/TotalRevenueOfMonthChart";
-import TableRoomRevenue from "../components/Table/TableRoomRevenue";
 import * as SagaActionTypes from "../redux/constants/constantSaga";
 
 export default function MonthlyReport() {
@@ -25,13 +24,14 @@ export default function MonthlyReport() {
   //     nam: 2022
   //   });
   // }, [])
+  console.log(report);
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", p: 5 }}>
       <Typography variant="h3" gutterBottom sx={{ mb: 4 }}>
         Báo cáo tháng
       </Typography>
       {/* date picker with month and year */}
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <LocalizationProvider dateAdapter={AdapterDateFns} >
         <DatePicker
           views={["year", "month"]}
           label="Year and Month"
@@ -51,9 +51,7 @@ export default function MonthlyReport() {
           renderInput={(params) => <TextField {...params} helperText={null} />}
         />
       </LocalizationProvider>
-      {/* table report */}
-      <TotalRevenueOfMonthChart />
-      {report ? <TableRoomRevenue data={report.ReportDetails} /> : ""}
+      {report ? <TotalRevenueOfMonthChart /> : ""}
     </Paper>
   );
 }

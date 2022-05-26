@@ -60,7 +60,7 @@ const TotalRevenueOfMonthChart = ({ isLoading }) => {
       {isLoading ? (
         <SkeletonTotalGrowthBarChart />
       ) : (
-        <MainCard>
+        <MainCard sx={{mt: 3}}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <Grid
