@@ -24,7 +24,7 @@ const columns = [
   },
 ];
 
-export default function TableRoomRevenue({ data }) {
+export default function TableReceiptDetail({ data }) {
   const [order, setOrder] = useState("");
   const [orderBy, setOrderBy] = useState("number");
 

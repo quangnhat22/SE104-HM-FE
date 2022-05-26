@@ -28,7 +28,7 @@ export default function MoreMenu({ room, handleModify, handleDelete }) {
   return (
     <>
       <Box sx={{ display: "flex", justifyContent: "right" }}>
-        {room.status ? (
+        {room.TenTinhTrang === "Phòng đang sử dụng" ? (
           <Link to="/payment">
             <Tooltip title="Thanh toán" size="large">
               <IconButton variant="text" color="success">
