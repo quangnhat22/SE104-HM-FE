@@ -20,8 +20,6 @@ export default function Payment() {
   const matchDownSM = useMediaQuery(theme.breakpoints.down("sm"));
   const location = useLocation();
   const { receipt } = location.state;
-  console.log("receipt detail: ", receipt);
-
   return (
     <>
       <Paper sx={{ width: "100%", overflow: "hidden", p: 5 }}>

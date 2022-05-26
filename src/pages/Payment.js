@@ -1,9 +1,11 @@
 import {
   Box,
   Button,
+  CircularProgress,
   FormControl,
   FormHelperText,
   Grid,
+  IconButton,
   Paper,
   TextField,
   Typography,
@@ -19,6 +21,11 @@ import * as Yup from "yup";
 import AddRoomModal from "../components/Payment/AddRoomModal";
 import TableRoomPayment from "../components/Table/TableRoomPayment";
 import numberWithCommas from "../utils/number-with-commas";
+import PrintIcon from "@mui/icons-material/Print";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import * as SagaActionTypes from "../redux/constants/constantSaga";
+const _ = require("lodash");
 
 function createData(
   id,
@@ -37,10 +44,17 @@ const customerList = [
 ];
 
 export default function Payment() {
+  const { loading } = useSelector((state) => state.LoadingReducer);
+  const {rentList} = useSelector((state) => state.RentVoucherReducer);
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down("sm"));
   const componentRef = useRef(null);
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    dispatch({ type: SagaActionTypes.FETCH_LIST_RENT_VOUCHER_SAGA });
+  }, []);
 
   const handleClose = () => {
     setOpen(false);
@@ -54,6 +68,7 @@ export default function Payment() {
     toast.success(`Xóa phòng ${room.TenPhong} thành công!`);
   };
 
+
   return (
     <>
       <Paper sx={{ width: "100%", overflow: "hidden", p: 5 }}>
@@ -62,10 +77,7 @@ export default function Payment() {
         </Typography>
 
         {/* button the print */}
-        <ReactToPrint
-          trigger={() => <button>Print this out!</button>}
-          content={() => componentRef.current}
-        />
+
         <Formik
           initialValues={{
             customerName: "",
@@ -133,42 +145,83 @@ export default function Payment() {
           )}
         </Formik>
 
-        <TableRoomPayment data={customerList} handleDelete={handleDeleteRoom} />
-
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <Button sx={{ mt: 4 }} startIcon={<IconPlus />} onClick={handleOpen}>
-            Thêm phòng
-          </Button>
-        </Box>
-
-        <Box sx={{ display: "flex", justifyContent: "right" }}>
-          <Typography
-            variant="h3"
-            gutterBottom
-            sx={{ mt: 2 }}
-            color="secondary"
+        {/* table with circle loading */}
+        {loading ? (
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              paddingTop: "4rem",
+            }}
           >
-            {`${numberWithCommas(500000)} VNĐ`}
-          </Typography>
-        </Box>
+            <CircularProgress />
+          </div>
+        ) : (
+          <>
+            <TableRoomPayment
+              data={customerList}
+              handleDelete={handleDeleteRoom}
+            />
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
+              <Button
+                sx={{ mt: 4 }}
+                startIcon={<IconPlus />}
+                onClick={handleOpen}
+              >
+                Thêm phòng
+              </Button>
+            </Box>
+            <Box sx={{ display: "flex", justifyContent: "right" }}>
+              <Typography
+                variant="h3"
+                gutterBottom
+                sx={{ mt: 2 }}
+                color="secondary"
+              >
+                {`${numberWithCommas(500000)} VNĐ`}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                mt: 2,
+                justifyContent: "end",
+                alignContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Box sx={{ display: "flex", justifyContent: "center" }}>
+                <ReactToPrint
+                  trigger={() => (
+                    <IconButton variant="text" size="large" color="info">
+                      <PrintIcon />
+                    </IconButton>
+                  )}
+                  content={() => componentRef.current}
+                />
+              </Box>
 
-        <Box sx={{ display: "flex", justifyContent: "end" }}>
-          <Button
-            variant="outlined"
-            form="booking-form"
-            type="submit"
-            sx={{ mt: 4 }}
-          >
-            Xác nhận
-          </Button>
-        </Box>
-
-        {open && <AddRoomModal handleClose={handleClose} />}
+              <Box sx={{ display: "flex", justifyContent: "center" }}>
+                <Button
+                  variant="outlined"
+                  form="booking-form"
+                  type="submit"
+                  sx={{ ml: 4 }}
+                >
+                  Xác nhận
+                </Button>
+              </Box>
+            </Box>
+            {open && <AddRoomModal handleClose={handleClose} rentList = {rentList} />}
+          </>
+        )}
       </Paper>
       <div style={{ display: "none" }}>
         <Paper
-          ref={componentRef} 
-          sx={{ width: "100%", overflow: "hidden", p: 5 }}      
+          ref={componentRef}
+          sx={{ width: "100%", overflow: "hidden", p: 5 }}
         >
           <Typography variant="h3" gutterBottom sx={{ mb: 4 }}>
             Thanh toán
@@ -180,7 +233,9 @@ export default function Payment() {
               submit: null,
             }}
             validationSchema={Yup.object().shape({
-              customerName: Yup.string().required("Vui lòng nhập tên khách hàng"),
+              customerName: Yup.string().required(
+                "Vui lòng nhập tên khách hàng"
+              ),
               address: Yup.string().required("Vui lòng nhập địa chỉ"),
             })}
             onSubmit={async (values) => {
@@ -200,7 +255,9 @@ export default function Payment() {
                   <Grid item xs={12} sm={6}>
                     <FormControl
                       fullWidth
-                      error={Boolean(touched.customerName && errors.customerName)}
+                      error={Boolean(
+                        touched.customerName && errors.customerName
+                      )}
                       sx={{ mb: 3 }}
                     >
                       <TextField
@@ -240,13 +297,10 @@ export default function Payment() {
             )}
           </Formik>
 
-          <TableRoomPayment data={customerList} handleDelete={handleDeleteRoom} />
-
-          {/* <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <Button sx={{ mt: 4 }} startIcon={<IconPlus />} onClick={handleOpen}>
-              Thêm phòng
-            </Button>
-          </Box> */}
+          <TableRoomPayment
+            data={customerList}
+            handleDelete={handleDeleteRoom}
+          />
 
           <Box sx={{ display: "flex", justifyContent: "right" }}>
             <Typography
@@ -258,22 +312,8 @@ export default function Payment() {
               {`${numberWithCommas(500000)} VNĐ`}
             </Typography>
           </Box>
-
-          {/* <Box sx={{ display: "flex", justifyContent: "end" }}>
-            <Button
-              variant="outlined"
-              form="booking-form"
-              type="submit"
-              sx={{ mt: 4 }}
-            >
-              Xác nhận
-            </Button>
-          </Box> */}
-
-          {/* {open && <AddRoomModal handleClose={handleClose} />} */}
         </Paper>
       </div>
-      
     </>
   );
 }

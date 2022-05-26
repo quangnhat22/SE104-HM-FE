@@ -5,6 +5,8 @@ import * as TypeCustomerSaga from "./TypeCustomerListSaga";
 import * as RoomStateListSaga from "./RoomStateListSaga";
 import * as ReportSaga from "./ReportSaga";
 import * as InvoiceSaga from "./InvoiceSaga";
+import * as RentVoucherSaga from "./RentVoucherSaga";
+
 export default function* rootSaga() {
     yield all([
         RoomListSaga.followActFetchListRoom(),
@@ -21,6 +23,7 @@ export default function* rootSaga() {
         TypeCustomerSaga.followEditTypeCustomer(),
         TypeCustomerSaga.followDeleteTypeCustomer(),
         ReportSaga.followActFetchReport(),
-        InvoiceSaga.followActFetchInvoiceList()    
+        InvoiceSaga.followActFetchInvoiceList(),
+        RentVoucherSaga.followActFetchListRentVoucher(),
     ]);
 }

@@ -9,14 +9,14 @@ const roomList = [
     { id: 5, TenPhong: 'A014' }
 ];
 
-export default function AddRoomModal({ handleClose }) {
+export default function AddRoomModal({ handleClose, rentList }) {
     return (
         <Dialog open="true" sx={{ p: 4 }}>
             <DialogTitle sx={{ fontSize: 20 }}>Thêm phòng</DialogTitle>
             <DialogContent>
                 <Formik
                     initialValues={{
-                        TenPhong: roomList[0].TenPhong
+                        TenPhong: rentList[0].TenPhong
                     }}
                     onSubmit={async (values) => {
                         console.log(values);
@@ -27,8 +27,8 @@ export default function AddRoomModal({ handleClose }) {
                             <FormControl fullWidth sx={{ mb: 3, mt: 1 }}>
                                 <Autocomplete
                                     name="TenPhong"
-                                    options={roomList}
-                                    defaultValue={roomList[0]}
+                                    options={rentList}
+                                    defaultValue={rentList[0]}
                                     disableClearable
                                     getOptionLabel={(option) => option.TenPhong}
                                     isOptionEqualToValue={(option, value) => option === value}

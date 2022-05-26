@@ -7,7 +7,6 @@ import TableReceipt from "../components/Table/TableReceipt";
 
 export default function Receipt() {
   const { invoiceList } = useSelector(state => state.InvoiceReducer);
-  console.log(invoiceList);
   const dispatch = useDispatch();
   useEffect(()=> {
     dispatch({type: SagaActionTypes.FETCH_LIST_INVOICE_SAGA});

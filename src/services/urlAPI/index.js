@@ -28,3 +28,7 @@ export const URL_GET_REPORT = (thang, nam) => `${DOMAIN_NAME}/report/${thang}/${
 
 //INVOICE
 export const URL_GET_LIST_INVOICES = `${DOMAIN_NAME}/invoice`;
+export const URL_ADD_NEW_INVOICES = `${DOMAIN_NAME}/invoice`;
+
+//RENT VOUCHER
+export const URL_GET_RENT_VOUCHER = `${DOMAIN_NAME}/rent`;
