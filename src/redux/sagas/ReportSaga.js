@@ -11,6 +11,10 @@ function* actFetchReport(action) {
     let { data, status } = yield call(() =>
       ReportService.getReport(thang, nam)
     );
+
+    data.ReportDetails.forEach(reportDetail => reportDetail.index = data.ReportDetails.indexOf(reportDetail) + 1);
+    console.log(data)
+    
     if (status === STATUS_SUCCESS) {
       yield put({
         type: ActionTypes.GET_REPORT,
