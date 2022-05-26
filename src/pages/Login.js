@@ -1,66 +1,99 @@
-import { Grid, Stack, Typography, useMediaQuery } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
-import { Link } from 'react-router-dom';
-import Logo from '../ui-component/Logo';
-import AuthLogin from '../components/Login/AuthLogin';
-import AuthCardWrapper from '../ui-component/AuthCardWrapper';
-import AuthWrapper from '../ui-component/AuthWrapper';
+import { Grid, Stack, Typography, useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import { Link } from "react-router-dom";
+import Logo from "../ui-component/Logo";
+import AuthLogin from "../components/Login/AuthLogin";
+import AuthCardWrapper from "../ui-component/AuthCardWrapper";
+import AuthWrapper from "../ui-component/AuthWrapper";
+import { useState } from "react";
+import ResetPasswordModal from "../components/Login/ResetPasswordModal";
 
 const Login = () => {
-    const theme = useTheme();
-    const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
+  const theme = useTheme();
+  const matchDownSM = useMediaQuery(theme.breakpoints.down("md"));
+  const [openResetPassword, setOpenResetPassword] = useState(false);
 
-    return (
-        <AuthWrapper>
-            <Grid container direction="column" justifyContent="flex-end" sx={{ minHeight: '100vh' }}>
-                <Grid item xs={12}>
-                    <Grid container justifyContent="center" alignItems="center" sx={{ minHeight: 'calc(100vh - 68px)' }}>
-                        <Grid item sx={{ m: { xs: 1, sm: 3 }, mb: 0 }}>
-                            <AuthCardWrapper>
-                                <Grid container spacing={2} alignItems="center" justifyContent="center">
-                                    <Grid item sx={{ mb: 3 }}>
-                                        <Link to="#">
-                                            <Logo />
-                                        </Link>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <Grid
-                                            container
-                                            direction={matchDownSM ? 'column-reverse' : 'row'}
-                                            alignItems="center"
-                                            justifyContent="center"
-                                        >
-                                            <Grid item>
-                                                <Stack alignItems="center" justifyContent="center" spacing={1}>
-                                                    <Typography
-                                                        color={theme.palette.secondary.main}
-                                                        gutterBottom
-                                                        variant={matchDownSM ? 'h3' : 'h2'}
-                                                    >
-                                                        Chào mừng bạn đã quay trở lại
-                                                    </Typography>
-                                                    <Typography
-                                                        variant="caption"
-                                                        fontSize="16px"
-                                                        textAlign={matchDownSM ? 'center' : 'inherit'}
-                                                    >
-                                                        Nhập thông tin đăng nhập của bạn để tiếp tục
-                                                    </Typography>
-                                                </Stack>
-                                            </Grid>
-                                        </Grid>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <AuthLogin />
-                                    </Grid>
-                                </Grid>
-                            </AuthCardWrapper>
-                        </Grid>
+  const handleCloseReset = () => {
+    setOpenResetPassword(false);
+  };
+
+  const handleOpenReset = () => {
+    setOpenResetPassword(true);
+  };
+
+  return (
+    <>
+      <AuthWrapper>
+        <Grid
+          container
+          direction="column"
+          justifyContent="flex-end"
+          sx={{ minHeight: "100vh" }}
+        >
+          <Grid item xs={12}>
+            <Grid
+              container
+              justifyContent="center"
+              alignItems="center"
+              sx={{ minHeight: "calc(100vh - 68px)" }}
+            >
+              <Grid item sx={{ m: { xs: 1, sm: 3 }, mb: 0 }}>
+                <AuthCardWrapper>
+                  <Grid
+                    container
+                    spacing={2}
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <Grid item sx={{ mb: 3 }}>
+                      <Link to="#">
+                        <Logo />
+                      </Link>
                     </Grid>
-                </Grid>
+                    <Grid item xs={12}>
+                      <Grid
+                        container
+                        direction={matchDownSM ? "column-reverse" : "row"}
+                        alignItems="center"
+                        justifyContent="center"
+                      >
+                        <Grid item>
+                          <Stack
+                            alignItems="center"
+                            justifyContent="center"
+                            spacing={1}
+                          >
+                            <Typography
+                              color={theme.palette.secondary.main}
+                              gutterBottom
+                              variant={matchDownSM ? "h3" : "h2"}
+                            >
+                              Chào mừng bạn đã quay trở lại
+                            </Typography>
+                            <Typography
+                              variant="caption"
+                              fontSize="16px"
+                              textAlign={matchDownSM ? "center" : "inherit"}
+                            >
+                              Nhập thông tin đăng nhập của bạn để tiếp tục
+                            </Typography>
+                          </Stack>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <AuthLogin handleOpenReset={handleOpenReset}/>
+                    </Grid>
+                  </Grid>
+                </AuthCardWrapper>
+              </Grid>
             </Grid>
-        </AuthWrapper>
-    );
+          </Grid>
+        </Grid>
+      </AuthWrapper>
+      {openResetPassword && <ResetPasswordModal handleClose={handleCloseReset} />}
+    </>
+  );
 };
 
 export default Login;
