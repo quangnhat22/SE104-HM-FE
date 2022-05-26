@@ -1,4 +1,10 @@
-import { Box, Button, CircularProgress, Paper } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Paper,
+  Typography,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import RoomModal from "../components/Room/RoomModal";
@@ -8,16 +14,16 @@ import * as ActionSagaTypes from "../redux/constants/constantSaga";
 import { useDispatch } from "react-redux";
 
 export default function Room() {
-  const {roomList} = useSelector(state => state.RoomReducer);
-  const {typeList} = useSelector(state => state.TypeRoomReducer);
-  const {roomStateList} = useSelector(state => state.RoomStateReducer);
-  const {loading} = useSelector(state => state.LoadingReducer);
+  const { roomList } = useSelector((state) => state.RoomReducer);
+  const { typeList } = useSelector((state) => state.TypeRoomReducer);
+  const { roomStateList } = useSelector((state) => state.RoomStateReducer);
+  const { loading } = useSelector((state) => state.LoadingReducer);
   const dispatch = useDispatch();
 
-  useEffect(()=> {
-    dispatch({type: ActionSagaTypes.FETCH_LIST_ROOM_SAGA});
-    dispatch({type: ActionSagaTypes.FECTH_LIST_TYPE_ROOM_SAGA});
-    dispatch({type: ActionSagaTypes.FETCH_LIST_STATE_ROOM_SAGA});
+  useEffect(() => {
+    dispatch({ type: ActionSagaTypes.FETCH_LIST_ROOM_SAGA });
+    dispatch({ type: ActionSagaTypes.FECTH_LIST_TYPE_ROOM_SAGA });
+    dispatch({ type: ActionSagaTypes.FETCH_LIST_STATE_ROOM_SAGA });
   }, []);
 
   const [filterName, setFilterName] = useState("");
@@ -35,7 +41,9 @@ export default function Room() {
   };
 
   const handleModify = (room) => {
-    let index = typeList.findIndex(type => type.MaLoaiPhong == room.MaLoaiPhong);
+    let index = typeList.findIndex(
+      (type) => type.MaLoaiPhong == room.MaLoaiPhong
+    );
     setModifyingRoomType(index);
     setModifyingRoom(room);
     setOpenModify(true);
@@ -46,10 +54,13 @@ export default function Room() {
   };
 
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden", p: 5 }}>    
+    <Paper sx={{ width: "100%", overflow: "hidden", p: 5 }}>
+      <Typography variant="h3" gutterBottom sx={{ mb: 4 }}>
+        Danh mục phòng
+      </Typography>
       <Box sx={{ display: "flex" }}>
         <Search
-          placeholder="Tìm tên phòng"
+          placeholder="Tìm mã phòng, tên phòng, loại phòng ..."
           filterName={filterName}
           setFilterName={handleFilterByName}
         />
@@ -62,34 +73,42 @@ export default function Room() {
         </Button>
       </Box>
 
-      {openNew && 
-        <RoomModal 
-          handleClose={handleClose} 
-          type="new" 
-          typeRooms = {typeList}
-          statesRoomList = {roomStateList}/>
-      }
+      {openNew && (
+        <RoomModal
+          handleClose={handleClose}
+          type="new"
+          typeRooms={typeList}
+          statesRoomList={roomStateList}
+        />
+      )}
       {openModify && (
         <RoomModal
           handleClose={handleClose}
           type="modify"
           room={modifyingRoom}
-          typeRooms = {typeList}
-          typeIndex = {modifyingRoomType}/>
-        )
-      }
-      {
-        loading ?
-        <div style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", paddingTop:"4rem"}}>
+          typeRooms={typeList}
+          typeIndex={modifyingRoomType}
+        />
+      )}
+      {loading ? (
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingTop: "4rem",
+          }}
+        >
           <CircularProgress />
-        </div> :
+        </div>
+      ) : (
         <TableRoom
           data={roomList}
-          searchField="TenPhong"
           filterName={filterName}
           handleModify={handleModify}
         />
-      }
+      )}
     </Paper>
   );
 }

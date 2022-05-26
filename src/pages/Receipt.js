@@ -1,5 +1,7 @@
-import { Paper, Typography } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
+import { useState } from "react";
 import TableReceipt from "../components/Table/TableReceipt";
+import Search from "../ui-component/Search";
 
 function createData(MaHoaDon, KhachHang_CoQuan, DiaChi, NgayLap, TongTien) {
   return { MaHoaDon, KhachHang_CoQuan, DiaChi, NgayLap, TongTien };
@@ -11,12 +13,25 @@ const receiptList = [
 ];
 
 export default function Receipt() {
+  const [filterName, setFilterName] = useState("");
+
+  const handleChangeFilterByName = (event) => {
+    setFilterName(event.target.value);
+  };
+
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", p: 5 }}>
       <Typography variant="h3" gutterBottom sx={{ mb: 4 }}>
         Hóa đơn
       </Typography>
-      <TableReceipt data={receiptList} />
+      <Box sx={{ display: "flex" }}>
+        <Search
+          placeholder="Tìm mã hóa đơn, tên khách hàng, địa chỉ ..."
+          filterName={filterName}
+          setFilterName={handleChangeFilterByName}
+        />
+      </Box>
+      <TableReceipt data={receiptList} filterName={filterName} />
     </Paper>
   );
 }
