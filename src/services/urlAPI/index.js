@@ -25,3 +25,6 @@ export const URL_DELETE_TYPE_CUSTOMER = (MaLoaiKhach) => `${DOMAIN_NAME}/custome
 
 //REPORT
 export const URL_GET_REPORT = (thang, nam) => `${DOMAIN_NAME}/report/${thang}/${nam}`;
+
+//INVOICE
+export const URL_GET_LIST_INVOICES = `${DOMAIN_NAME}/invoice`;

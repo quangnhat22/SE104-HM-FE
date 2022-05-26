@@ -26,7 +26,6 @@ import {
   ];
   
   export default function TableRoomRevenue({ data }) {
-    console.log("data: ", data);
     const [order, setOrder] = useState("");
     const [orderBy, setOrderBy] = useState("number");
   

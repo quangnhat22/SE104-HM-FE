@@ -29,9 +29,10 @@ const columns = [
   },
 ];
 
-export default function TableReceiptDetail({ data }) {
+export default function TableReceiptDetailPrint({ data }) {
   const [order, setOrder] = useState("");
   const [orderBy, setOrderBy] = useState("number");
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -45,7 +46,6 @@ export default function TableReceiptDetail({ data }) {
       <Table stickyHeader aria-label="sticky table">
         <CustomTableHead
           order={order}
-          orderBy={orderBy}
           columns={columns}
           onRequestSort={handleRequestSort}
         />

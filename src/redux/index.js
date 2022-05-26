@@ -9,8 +9,9 @@ import {TypeRoomReducer} from "./reducer/TypeRoomReducer";
 import {TypeCustomerReducer} from "./reducer/TypeCustomerReducer";
 import {RoomStateReducer} from "./reducer/RoomStateReducer";
 import { ReportReducer } from "./reducer/ReportReducer";
-const middlewareSaga = createMiddlewareSaga();
+import {InvoiceReducer} from "./reducer/InvoiceReducer";
 
+const middlewareSaga = createMiddlewareSaga();
 const rootReducer = combineReducers({
     customization: customizationReducer,
     UserReducer,
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
     LoadingReducer,
     TypeRoomReducer,
     TypeCustomerReducer,
-    ReportReducer
+    ReportReducer,
+    InvoiceReducer,
   });
 
 const store = createStore(rootReducer, applyMiddleware(middlewareSaga));

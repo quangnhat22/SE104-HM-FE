@@ -14,7 +14,7 @@ function* actFetchReport(action) {
     //add new property
     data.ReportDetails.forEach(reportDetail => reportDetail.index = data.ReportDetails.indexOf(reportDetail) + 1);
     data.ReportDetails.forEach(reportDetail => reportDetail.TenLoaiPhong = reportDetail.RoomType.TenLoaiPhong);
-    console.log(data)
+    
     
     if (status === STATUS_SUCCESS) {
       yield put({
