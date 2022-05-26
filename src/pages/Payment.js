@@ -62,7 +62,7 @@ export default function Payment() {
         initialValues={{
           customerName: "",
           address: "",
-          submit: null,
+          createDate: new Date().toLocaleDateString(),
         }}
         validationSchema={Yup.object().shape({
           customerName: Yup.string().required("Vui lòng nhập tên khách hàng"),
@@ -116,6 +116,18 @@ export default function Payment() {
                   {touched.address && errors.address && (
                     <FormHelperText error>{errors.address}</FormHelperText>
                   )}
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <FormControl
+                  fullWidth
+                  sx={{ mb: 3 }}>
+                  <TextField
+                    label="Ngày lập"
+                    value={values.createDate}
+                    name="createDate"
+                    disabled
+                  />
                 </FormControl>
               </Grid>
             </Grid>
