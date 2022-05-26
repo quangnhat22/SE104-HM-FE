@@ -3,6 +3,7 @@ import MonthlyReport from '../pages/MonthlyReport';
 import { lazy } from "react";
 import Loadable from "../ui-component/Loadable";
 
+const AuthGuard = Loadable(lazy(() => import("./AuthGuard")));
 const Dashboard = Loadable(lazy(() => import("../pages/Dashboard")));
 const Room = Loadable(lazy(() => import("../pages/Room")));
 const CustomerSettings = Loadable(lazy(() => import('../pages/CustomerSettings')));
@@ -16,7 +17,11 @@ const SurchargeRateSetting = Loadable(lazy(() => import('../pages/SurchargeRateS
 
 const MainRoutes = {
   path: "/",
-  element: <MainLayout />,
+  element: (
+    // <AuthGuard>
+        <MainLayout />
+    // </AuthGuard>
+),
   children: [
     {
       path: "/",
