@@ -20,8 +20,7 @@ import * as SagaActionTypes from "../../redux/constants/constantSaga";
 import { useEffect } from "react";
 
 
-export default function RoomModal({ handleClose, type, room, typeRooms, statesRoomList }) {
-
+export default function RoomModal({ handleClose, type, typeIndex, room,  typeRooms, statesRoomList }) {
   const dispatch = useDispatch();
   const handleNewRoom = (values) => {
     let newRoom = {
@@ -108,7 +107,7 @@ export default function RoomModal({ handleClose, type, room, typeRooms, statesRo
                 <Autocomplete
                   name="TenLoaiPhong"
                   options={typeRooms}
-                  defaultValue={typeRooms[0]}
+                  defaultValue={room ? typeRooms[typeIndex] : typeRooms[0]}
                   disableClearable
                   getOptionLabel={(option) => option.TenLoaiPhong}
                   isOptionEqualToValue={(option, value) => option === value}
