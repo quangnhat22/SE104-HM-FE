@@ -10,8 +10,9 @@ import {
   import applySortFilter from "../../utils/table-sort-filter";
   
   const columns = [
-    { id: "number", label: "STT", minWidth: 50, align: "center" },
-    { id: "MaLoaiPhong", label: "Loại phòng", minWidth: 150 },
+    { id: "index", label: "STT", minWidth: 50, align: "center" },
+    { id: "MaLoaiPhong", label: "Mã loại phòng", minWidth: 150 },
+    { id: "TenLoaiPhong", label: "Tên loại phòng", minWidth: 150 },
     {
       id: "DoanhThuTheoThang",
       label: "Doanh thu",
@@ -25,6 +26,7 @@ import {
   ];
   
   export default function TableRoomRevenue({ data }) {
+    console.log("data: ", data);
     const [order, setOrder] = useState("");
     const [orderBy, setOrderBy] = useState("number");
   
@@ -37,7 +39,7 @@ import {
     const sortedData = applySortFilter(data, order, orderBy);
   
     return (
-      <TableContainer sx={{ maxHeight: 450 }}>
+      <TableContainer sx={{ maxHeight: 450 }} >
         <Table stickyHeader aria-label="sticky table">
           <CustomTableHead
             order={order}

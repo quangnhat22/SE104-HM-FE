@@ -11,8 +11,9 @@ function* actFetchReport(action) {
     let { data, status } = yield call(() =>
       ReportService.getReport(thang, nam)
     );
-
+    //add new property
     data.ReportDetails.forEach(reportDetail => reportDetail.index = data.ReportDetails.indexOf(reportDetail) + 1);
+    data.ReportDetails.forEach(reportDetail => reportDetail.TenLoaiPhong = reportDetail.RoomType.TenLoaiPhong);
     console.log(data)
     
     if (status === STATUS_SUCCESS) {
