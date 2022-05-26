@@ -24,7 +24,7 @@ export default function Room() {
   const [openNew, setOpenNew] = useState(false);
   const [openModify, setOpenModify] = useState(false);
   const [modifyingRoom, setModifyingRoom] = useState();
-
+  const [modifyingRoomType, setModifyingRoomType] = useState(0);
   const handleClose = () => {
     setOpenNew(false);
     setOpenModify(false);
@@ -35,6 +35,8 @@ export default function Room() {
   };
 
   const handleModify = (room) => {
+    let index = typeList.findIndex(type => type.MaLoaiPhong == room.MaLoaiPhong);
+    setModifyingRoomType(index);
     setModifyingRoom(room);
     setOpenModify(true);
   };
@@ -72,7 +74,8 @@ export default function Room() {
           handleClose={handleClose}
           type="modify"
           room={modifyingRoom}
-          typeRooms = {typeList}/>
+          typeRooms = {typeList}
+          typeIndex = {modifyingRoomType}/>
         )
       }
       {

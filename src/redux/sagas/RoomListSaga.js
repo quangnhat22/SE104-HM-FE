@@ -26,7 +26,7 @@ function * actNewRoom(action) {
         let {status} = yield call(()=> RoomService.addNewRoom(room));
         if(status === STATUS_CREATE_SUCCESS) {
             yield put ({type: FETCH_LIST_ROOM_SAGA});
-            toast.success("Xóa phòng thành công!");
+            toast.success("Thêm phòng thành công!");
         }
     }
     catch (err) {

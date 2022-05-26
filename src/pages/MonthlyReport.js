@@ -1,29 +1,21 @@
-import * as React from "react";
-import {
-  Autocomplete,
-  FormControl,
-  Grid,
-  Paper,
-  TextField,
-  Typography,
-  useMediaQuery,
-} from "@mui/material";
+import { Paper, TextField, Typography, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { Formik } from "formik";
-import TableRoomRevenue from "../components/Table/TableRoomRevenue";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import * as SagaActionTypes from "../redux/constants/constantSaga";
+import * as React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import * as SagaActionTypes from "../redux/constants/constantSaga";
+import TableRoomRevenue from "../components/Table/TableRoomRevenue";
 
 export default function MonthlyReport() {
+  const { month, year } = useParams();
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down("sm"));
   const [value, setValue] = useState(new Date());
-  const {report} = useSelector(state => state.ReportReducer);
+  const { report } = useSelector((state) => state.ReportReducer);
   const dispatch = useDispatch();
   // useEffect(()=> {
   //   dispatch({
@@ -32,6 +24,7 @@ export default function MonthlyReport() {
   //     nam: 2022
   //   });
   // }, [])
+  console.log(report);
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", p: 5 }}>
       <Typography variant="h3" gutterBottom sx={{ mb: 4 }}>
@@ -58,7 +51,6 @@ export default function MonthlyReport() {
           renderInput={(params) => <TextField {...params} helperText={null} />}
         />
       </LocalizationProvider>
-      {/* table report */}
       {report ? <TableRoomRevenue data={report.ReportDetails} /> : ""}
     </Paper>
   );

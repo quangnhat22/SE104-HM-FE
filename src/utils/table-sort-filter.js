@@ -28,8 +28,7 @@ export default function applySortFilter(array, order, orderBy, field, query) {
   if (field && query) {
     return filter(
       result,
-      (_element) =>
-        _element[field].toLowerCase().indexOf(query.toLowerCase()) !== -1
+      (_element) => JSON.stringify(_element).toLowerCase().indexOf(query.toLowerCase()) !== -1
     );
   }
   return result;
