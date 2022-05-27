@@ -11,6 +11,8 @@ import {RoomStateReducer} from "./reducer/RoomStateReducer";
 import { ReportReducer } from "./reducer/ReportReducer";
 import {InvoiceReducer} from "./reducer/InvoiceReducer";
 import { RentVoucherReducer } from "./reducer/RentVoucherReducer";
+import {InvoiceReducerLocal} from "./reducer/InvoiceReducerLocal";
+
 const middlewareSaga = createMiddlewareSaga();
 const rootReducer = combineReducers({
     customization: customizationReducer,
@@ -22,7 +24,8 @@ const rootReducer = combineReducers({
     TypeCustomerReducer,
     ReportReducer,
     InvoiceReducer,
-    RentVoucherReducer
+    RentVoucherReducer,
+    InvoiceReducerLocal,
   });
 
 const store = createStore(rootReducer, applyMiddleware(middlewareSaga));

@@ -46,6 +46,8 @@ const customerList = [
 export default function Payment() {
   const { loading } = useSelector((state) => state.LoadingReducer);
   const {rentList} = useSelector((state) => state.RentVoucherReducer);
+  const {CacPhieuThuePhong, TotalPrice} = useSelector((state) => state.InvoiceReducerLocal);
+  const [totalPrice, setTotalPrice] = useState(0);
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down("sm"));
   const componentRef = useRef(null);
@@ -55,6 +57,10 @@ export default function Payment() {
   useEffect(() => {
     dispatch({ type: SagaActionTypes.FETCH_LIST_RENT_VOUCHER_SAGA });
   }, []);
+
+  useEffect(() => {
+    setTotalPrice(TotalPrice);
+  }, [TotalPrice]);
 
   const handleClose = () => {
     setOpen(false);
@@ -161,7 +167,7 @@ export default function Payment() {
         ) : (
           <>
             <TableRoomPayment
-              data={customerList}
+              data={CacPhieuThuePhong}
               handleDelete={handleDeleteRoom}
             />
             <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -180,7 +186,7 @@ export default function Payment() {
                 sx={{ mt: 2 }}
                 color="secondary"
               >
-                {`${numberWithCommas(500000)} VNĐ`}
+                {`${numberWithCommas(totalPrice)} VNĐ`}
               </Typography>
             </Box>
             <Box
@@ -309,7 +315,7 @@ export default function Payment() {
               sx={{ mt: 2 }}
               color="secondary"
             >
-              {`${numberWithCommas(500000)} VNĐ`}
+              {`${numberWithCommas(totalPrice)} VNĐ`}
             </Typography>
           </Box>
         </Paper>

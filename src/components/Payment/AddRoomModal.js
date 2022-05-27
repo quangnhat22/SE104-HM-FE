@@ -1,5 +1,8 @@
 import { Autocomplete, Box, Button, Dialog, DialogContent, DialogTitle, FormControl, TextField } from '@mui/material';
 import { Formik } from 'formik';
+import * as ActionTypes from "../../redux/constants/constant";
+import { useDispatch } from "react-redux";
+import { differenceInDays } from 'date-fns';
 
 const roomList = [
     { id: 1, TenPhong: 'A010' },
@@ -10,16 +13,31 @@ const roomList = [
 ];
 
 export default function AddRoomModal({ handleClose, rentList }) {
+    const dispatch = useDispatch();
+    console.log(rentList);
     return (
-        <Dialog open="true" sx={{ p: 4 }}>
+        <Dialog open="true" sx={{ p: 4 }} fullWidth>
             <DialogTitle sx={{ fontSize: 20 }}>Thêm phòng</DialogTitle>
             <DialogContent>
                 <Formik
                     initialValues={{
-                        TenPhong: rentList[0].TenPhong
+                        PhieuThuePhong: rentList[0]
                     }}
                     onSubmit={async (values) => {
-                        console.log(values);
+                        //handle distance date
+                        let date = new Date(values.PhieuThuePhong.NgayBatDauThue);
+                        let currentDate = Date.now();
+                        const distanceDate = differenceInDays(currentDate, date);
+
+                        let submitValue = {
+                            MaPhong: values.PhieuThuePhong.MaPhong,
+                            TenPhong: values.PhieuThuePhong.TenPhong,
+                            MaPhieuThuePhong: values.PhieuThuePhong.MaPhieuThuePhong,
+                            SoNgayThue: distanceDate,
+                            DonGia: values.PhieuThuePhong.DonGiaThueTrenNgay,
+                            ThanhTien: Math.round(distanceDate * values.PhieuThuePhong.DonGiaThueTrenNgay * 100)/100
+                        }
+                        dispatch({type: ActionTypes.ADD_ROOM_INVOICE_LOCAL, PhieuThuePhong: submitValue});
                     }}
                 >
                     {({ handleSubmit, setFieldValue, values }) => (
@@ -30,10 +48,10 @@ export default function AddRoomModal({ handleClose, rentList }) {
                                     options={rentList}
                                     defaultValue={rentList[0]}
                                     disableClearable
-                                    getOptionLabel={(option) => option.TenPhong}
+                                    getOptionLabel={(option) => `Mã phiếu: ${option.MaPhieuThuePhong} - ${option.TenPhong} - Ngày bắt đầu thuê: ${option.NgayBatDauThue}`}
                                     isOptionEqualToValue={(option, value) => option === value}
                                     onChange={(event, value) => {
-                                        setFieldValue('TenPhong', value.TenPhong);
+                                        setFieldValue('PhieuThuePhong', value);
                                     }}
                                     renderInput={(params) => <TextField {...params} label="Tên phòng" value={values.TenPhong} />}
                                 />

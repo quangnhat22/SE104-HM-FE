@@ -14,17 +14,17 @@ const columns = [
   { id: "number", label: "STT", minWidth: 50, align: "center" },
   { id: "TenPhong", label: "Phòng", minWidth: 150 },
   {
-    id: "numberOfRentalDays",
+    id: "SoNgayThue",
     label: "Số ngày thuê",
     minWidth: 120,
   },
   {
-    id: "price",
+    id: "DonGia",
     label: "Đơn giá",
     minWidth: 100,
   },
   {
-    id: "totalPrice",
+    id: "ThanhTien",
     label: "Thành tiền",
     minWidth: 170,
   },
