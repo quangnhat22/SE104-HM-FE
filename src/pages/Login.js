@@ -1,12 +1,12 @@
 import { Grid, Stack, Typography, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import Logo from "../ui-component/Logo";
+import logo from "../assets/images/logo.png";
 import AuthLogin from "../components/Login/AuthLogin";
+import ResetPasswordModal from "../components/Login/ResetPasswordModal";
 import AuthCardWrapper from "../ui-component/AuthCardWrapper";
 import AuthWrapper from "../ui-component/AuthWrapper";
-import { useState } from "react";
-import ResetPasswordModal from "../components/Login/ResetPasswordModal";
 
 const Login = () => {
   const theme = useTheme();
@@ -47,7 +47,12 @@ const Login = () => {
                   >
                     <Grid item sx={{ mb: 3 }}>
                       <Link to="#">
-                        <Logo />
+                        <img
+                          src={logo}
+                          alt="Berry"
+                          width="100%"
+                          height="60px"
+                        />
                       </Link>
                     </Grid>
                     <Grid item xs={12}>
@@ -82,7 +87,7 @@ const Login = () => {
                       </Grid>
                     </Grid>
                     <Grid item xs={12}>
-                      <AuthLogin handleOpenReset={handleOpenReset}/>
+                      <AuthLogin handleOpenReset={handleOpenReset} />
                     </Grid>
                   </Grid>
                 </AuthCardWrapper>
@@ -91,7 +96,9 @@ const Login = () => {
           </Grid>
         </Grid>
       </AuthWrapper>
-      {openResetPassword && <ResetPasswordModal handleClose={handleCloseReset} />}
+      {openResetPassword && (
+        <ResetPasswordModal handleClose={handleCloseReset} />
+      )}
     </>
   );
 };
