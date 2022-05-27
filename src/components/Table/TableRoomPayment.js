@@ -5,13 +5,13 @@ import {
   TableContainer,
   TableRow,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomTableHead from "../../ui-component/CustomTableHead";
 import applySortFilter from "../../utils/table-sort-filter";
 import MoreMenu from "../Payment/MoreMenu";
 
 const columns = [
-  { id: "number", label: "STT", minWidth: 50, align: "center" },
+  { id: "STT", label: "STT", minWidth: 50, align: "center" },
   { id: "TenPhong", label: "Phòng", minWidth: 150 },
   {
     id: "SoNgayThue",

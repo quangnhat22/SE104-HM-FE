@@ -45,15 +45,20 @@ const customerList = [
 
 export default function Payment() {
   const { loading } = useSelector((state) => state.LoadingReducer);
-  const {rentList} = useSelector((state) => state.RentVoucherReducer);
-  const {CacPhieuThuePhong, TotalPrice} = useSelector((state) => state.InvoiceReducerLocal);
-  const [totalPrice, setTotalPrice] = useState(0);
+  const { rentList } = useSelector((state) => state.RentVoucherReducer);
+  const { CacPhieuThuePhong, TotalPrice } = useSelector(
+    (state) => state.InvoiceReducerLocal
+  );
+
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down("sm"));
   const componentRef = useRef(null);
   const [open, setOpen] = useState(false);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [CoQuan, setCoQuan] = useState("TBA");
+  const [DiaChi, setDiaChi] = useState("TBA");
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     dispatch({ type: SagaActionTypes.FETCH_LIST_RENT_VOUCHER_SAGA });
   }, []);
@@ -73,7 +78,6 @@ export default function Payment() {
   const handleDeleteRoom = (room) => {
     toast.success(`Xóa phòng ${room.TenPhong} thành công!`);
   };
-
 
   return (
     <>
@@ -95,7 +99,33 @@ export default function Payment() {
             address: Yup.string().required("Vui lòng nhập địa chỉ"),
           })}
           onSubmit={async (values) => {
-            console.log(values);
+            if (CacPhieuThuePhong.length > 0) {
+              const currentDate = new Date();
+              const currentDateString = `${currentDate.getFullYear()}-${currentDate.getMonth()}-${currentDate.getDate()}`;
+              let listInvoice = _.map(CacPhieuThuePhong, (element) => {
+                return {
+                  MaPhieuThuePhong: element.MaPhieuThuePhong,
+                  SoNgayThue: element.SoNgayThue,
+                  DonGia: element.DonGia,
+                };
+              });
+              let invoiceSubmit = {
+                KhachHang_CoQuan: values.customerName,
+                DiaChi: values.address,
+                NgayLap: currentDateString,
+                TongTien: TotalPrice,
+                CacPhieuThuePhong: listInvoice,
+              };
+
+              //set value state for print template
+              setCoQuan(invoiceSubmit.KhachHang_CoQuan);
+              setDiaChi(invoiceSubmit.DiaChi);
+
+              dispatch({
+                type: SagaActionTypes.ADD_NEW_INVOICE_SAGA,
+                invoiceSubmit: invoiceSubmit,
+              });
+            }
           }}
         >
           {({
@@ -186,7 +216,7 @@ export default function Payment() {
                 sx={{ mt: 2 }}
                 color="secondary"
               >
-                {`${numberWithCommas(totalPrice)} VNĐ`}
+                {`${numberWithCommas(Math.round(totalPrice * 100) / 100)} VNĐ`}
               </Typography>
             </Box>
             <Box
@@ -220,94 +250,33 @@ export default function Payment() {
                 </Button>
               </Box>
             </Box>
-            {open && <AddRoomModal handleClose={handleClose} rentList = {rentList} />}
+            {open && (
+              <AddRoomModal handleClose={handleClose} rentList={rentList} />
+            )}
           </>
         )}
       </Paper>
+      {/* printer template */}
       <div style={{ display: "none" }}>
         <Paper
           ref={componentRef}
           sx={{ width: "100%", overflow: "hidden", p: 5 }}
         >
           <Typography variant="h3" gutterBottom sx={{ mb: 4 }}>
-            Thanh toán
+            Hoá đơn
           </Typography>
-          <Formik
-            initialValues={{
-              customerName: "",
-              address: "",
-              submit: null,
-            }}
-            validationSchema={Yup.object().shape({
-              customerName: Yup.string().required(
-                "Vui lòng nhập tên khách hàng"
-              ),
-              address: Yup.string().required("Vui lòng nhập địa chỉ"),
-            })}
-            onSubmit={async (values) => {
-              console.log(values);
-            }}
-          >
-            {({
-              errors,
-              handleBlur,
-              handleChange,
-              handleSubmit,
-              touched,
-              values,
-            }) => (
-              <form noValidate onSubmit={handleSubmit} id="booking-form">
-                <Grid container spacing={matchDownSM ? 0 : 2}>
-                  <Grid item xs={12} sm={6}>
-                    <FormControl
-                      fullWidth
-                      error={Boolean(
-                        touched.customerName && errors.customerName
-                      )}
-                      sx={{ mb: 3 }}
-                    >
-                      <TextField
-                        label="Khách hàng / Cơ quan"
-                        value={values.customerName}
-                        name="customerName"
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                      />
-                      {touched.customerName && errors.customerName && (
-                        <FormHelperText error>
-                          {errors.customerName}
-                        </FormHelperText>
-                      )}
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <FormControl
-                      fullWidth
-                      error={Boolean(touched.address && errors.address)}
-                      sx={{ mb: 3 }}
-                    >
-                      <TextField
-                        label="Địa chỉ"
-                        value={values.address}
-                        name="address"
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                      />
-                      {touched.address && errors.address && (
-                        <FormHelperText error>{errors.address}</FormHelperText>
-                      )}
-                    </FormControl>
-                  </Grid>
-                </Grid>
-              </form>
-            )}
-          </Formik>
-
+          <Typography variant="h3" gutterBottom sx={{ mb: 4 }}>
+            {`Khách hàng / Cơ quan: ${CoQuan} - Địa chỉ: ${DiaChi}`}
+          </Typography>
+          <Typography variant="h4" gutterBottom sx={{ mb: 4 }}>
+            {
+              `Ngày lập: ${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`
+            }
+          </Typography>
           <TableRoomPayment
-            data={customerList}
+            data={CacPhieuThuePhong}
             handleDelete={handleDeleteRoom}
           />
-
           <Box sx={{ display: "flex", justifyContent: "right" }}>
             <Typography
               variant="h3"
@@ -315,7 +284,7 @@ export default function Payment() {
               sx={{ mt: 2 }}
               color="secondary"
             >
-              {`${numberWithCommas(totalPrice)} VNĐ`}
+              {`${numberWithCommas(Math.round(totalPrice * 100) / 100)} VNĐ`}
             </Typography>
           </Box>
         </Paper>

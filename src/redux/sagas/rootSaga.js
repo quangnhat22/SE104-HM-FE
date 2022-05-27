@@ -24,6 +24,7 @@ export default function* rootSaga() {
         TypeCustomerSaga.followDeleteTypeCustomer(),
         ReportSaga.followActFetchReport(),
         InvoiceSaga.followActFetchInvoiceList(),
+        InvoiceSaga.followActAddNewInvoice(),
         RentVoucherSaga.followActFetchListRentVoucher(),
     ]);
 }

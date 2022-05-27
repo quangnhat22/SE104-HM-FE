@@ -3,14 +3,23 @@ import {
   IconCirclePlus,
   IconCreditCard,
   IconPencil,
-  IconTrash
+  IconTrash,
 } from "@tabler/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AlertModal from "../../ui-component/AlertModal";
+import * as ActionTypes from "../../redux/constants/constant";
 
 export default function MoreMenu({ room, handleModify, handleDelete }) {
   const [openDelete, setOpenDelete] = useState(false);
+  const [enableNewVoucher, setEnableNewVoucher] = useState(false);
+
+  useEffect(() => {
+    const currentDate = new Date();
+    if (currentDate.getHours() > ActionTypes.CHECK_IN_TIME) {
+      setEnableNewVoucher(true);
+    }
+  }, []);
 
   const handleClose = () => {
     setOpenDelete(false);
@@ -38,13 +47,26 @@ export default function MoreMenu({ room, handleModify, handleDelete }) {
           </Link>
         ) : (
           <>
-            <Link to="/booking/anv">
+            {enableNewVoucher ? (
+              <Link to="/booking/anv">
+                <Tooltip title="Thuê phòng">
+                  <IconButton variant="text" size="large" color="success">
+                    <IconCirclePlus />
+                  </IconButton>
+                </Tooltip>
+              </Link>
+            ) : (
               <Tooltip title="Thuê phòng">
-                <IconButton variant="text" size="large" color="success">
+                <IconButton
+                  variant="text"
+                  size="large"
+                  color="success"
+                  disabled={true}
+                >
                   <IconCirclePlus />
                 </IconButton>
               </Tooltip>
-            </Link>
+            )}
             <Tooltip title="Chỉnh sửa">
               <IconButton
                 variant="text"
