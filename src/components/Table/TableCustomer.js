@@ -6,25 +6,26 @@ import {
   TableRow,
 } from "@mui/material";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import CustomTableHead from "../../ui-component/CustomTableHead";
 import applySortFilter from "../../utils/table-sort-filter";
 import MoreMenu from "../Booking/MoreMenu";
 
 const columns = [
-  { id: "number", label: "STT", minWidth: 50, align: "center" },
-  { id: "name", label: "Khách hàng", minWidth: 150 },
+  { id: "STT", label: "STT", minWidth: 50, align: "center" },
+  { id: "TenKhachHang", label: "Khách hàng", minWidth: 150 },
   {
-    id: "type",
+    id: "TenLoaiKhach",
     label: "Loại khách",
     minWidth: 120,
   },
   {
-    id: "idNumber",
+    id: "CMND",
     label: "CMND/CCCD",
     minWidth: 100,
   },
   {
-    id: "address",
+    id: "DiaChi",
     label: "Địa chỉ",
     minWidth: 170,
   },
@@ -35,9 +36,10 @@ const columns = [
   },
 ];
 
-export default function TableCustomer({ data, handleModify, handleDelete }) {
+export default function TableCustomer({ data , handleModify, handleDelete }) {
   const [order, setOrder] = useState("");
   const [orderBy, setOrderBy] = useState("number");
+  
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";

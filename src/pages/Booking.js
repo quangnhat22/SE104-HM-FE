@@ -15,20 +15,13 @@ import {
 import { useTheme } from "@mui/material/styles";
 import { IconPlus } from "@tabler/icons";
 import { Formik } from "formik";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import TableCustomer from "../components/Table/TableCustomer";
 import CustomerModal from "../components/Booking/CustomerModal";
-
-function createData(id, number, name, type, idNumber, address) {
-  return { id, number, name, type, idNumber, address };
-}
-
-const customerList = [
-  createData(1, 1, "India", "Nội địa", 1324171354, 3287263),
-  createData(2, 2, "China", "Nước ngoài", 1403500365, 9596961),
-];
+import { useDispatch, useSelector } from "react-redux";
+import * as SagaActionTypes from "../redux/constants/constantSaga";
 
 export default function Booking() {
   const { id } = useParams();
@@ -39,6 +32,15 @@ export default function Booking() {
   const [openNew, setOpenNew] = useState(false);
   const [openModify, setOpenModify] = useState(false);
   const [modifyingCustomer, setModifyingCustomer] = useState();
+  const { customerList } = useSelector((state) => state.CustomerReducerLocal);
+  const { typeCustomerList } = useSelector(
+    (state) => state.TypeCustomerReducer
+  );
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({ type: SagaActionTypes.FETCH_LIST_TYPE_CUSTOMER_SAGA });
+  }, []);
 
   const handleClose = () => {
     setOpenNew(false);
@@ -152,9 +154,16 @@ export default function Booking() {
         </Button>
       </Box>
 
-      {openNew && <CustomerModal handleClose={handleClose} type="new" />}
+      {openNew && (
+        <CustomerModal
+          typeCustomer={typeCustomerList}
+          handleClose={handleClose}
+          type="new"
+        />
+      )}
       {openModify && (
         <CustomerModal
+          typeCustomer={typeCustomerList}
           handleClose={handleClose}
           type="modify"
           customer={modifyingCustomer}

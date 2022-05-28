@@ -60,7 +60,6 @@ export default function TableRoom({
 
   const handleDelete = (room) => {
     dispatch({type: SagaActionTypes.DELETE_ROOM_SAGA, maPhong: room.MaPhong});
-    
   };
 
   const handleRequestSort = (event, property) => {

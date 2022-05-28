@@ -11,6 +11,7 @@ import AlertModal from "../../ui-component/AlertModal";
 import * as ActionTypes from "../../redux/constants/constant";
 
 export default function MoreMenu({ room, handleModify, handleDelete }) {
+  console.log(room);
   const [openDelete, setOpenDelete] = useState(false);
   const [enableNewVoucher, setEnableNewVoucher] = useState(false);
 
@@ -48,7 +49,7 @@ export default function MoreMenu({ room, handleModify, handleDelete }) {
         ) : (
           <>
             {enableNewVoucher ? (
-              <Link to="/booking/anv">
+              <Link to={`/booking/${room.MaPhong}`}>
                 <Tooltip title="Thuê phòng">
                   <IconButton variant="text" size="large" color="success">
                     <IconCirclePlus />
@@ -56,16 +57,13 @@ export default function MoreMenu({ room, handleModify, handleDelete }) {
                 </Tooltip>
               </Link>
             ) : (
-              <Tooltip title="Thuê phòng">
-                <IconButton
-                  variant="text"
-                  size="large"
-                  color="success"
-                  disabled={true}
-                >
-                  <IconCirclePlus />
-                </IconButton>
-              </Tooltip>
+              <Link to={`/booking/${room.MaPhong}`}>
+                <Tooltip title="Thuê phòng (Lưu ý: Thời gian đặt phòng sẽ bắt đầu tính sau 14:00)">
+                  <IconButton variant="text" size="large" color="success">
+                    <IconCirclePlus />
+                  </IconButton>
+                </Tooltip>
+              </Link>
             )}
             <Tooltip title="Chỉnh sửa">
               <IconButton

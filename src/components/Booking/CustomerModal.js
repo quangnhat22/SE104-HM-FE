@@ -12,11 +12,13 @@ import {
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
+import * as ActionTypes from "../../redux/constants/constant";
+import { useDispatch } from "react-redux";
 
-const customerTypes = ["Nội địa", "Nước ngoài"];
-
-export default function CustomerModal({ handleClose, type, customer }) {
+export default function CustomerModal({ handleClose, type, customer, typeCustomer }) {
+  const dispatch = useDispatch();
   const handleNewCustomer = (values) => {
+    dispatch({ type: ActionTypes.GET_CLIENT_RENT_VOUCHER_LIST, customer: values});
     toast.success("Thêm khách hàng thành công");
     handleClose();
   };
@@ -34,15 +36,15 @@ export default function CustomerModal({ handleClose, type, customer }) {
       <DialogContent>
         <Formik
           initialValues={{
-            name: customer ? customer.name : "",
-            type: customer ? customer.type : customerTypes[0],
-            idNumber: customer ? customer.idNumber : "",
-            address: customer ? customer.address : "",
+            TenKhachHang: customer ? customer.TenKhachHang : "",
+            TenLoaiKhach: customer ? customer.TenLoaiKhach : typeCustomer[0].TenLoaiKhach,
+            MaLoaiKhach: customer ? customer.MaLoaiKhach : typeCustomer[0].MaLoaiKhach,
+            CMND: customer ? customer.CMND : "",
+            DiaChi: customer ? customer.DiaChi : "",
           }}
           validationSchema={Yup.object().shape({
-            name: Yup.string().required("Vui lòng nhập tên khách hàng"),
-            idNumber: Yup.string().required("Vui lòng nhập CMND/CCCD"),
-            address: Yup.string().required("Vui lòng nhập địa chỉ"),
+            TenKhachHang: Yup.string().required("Vui lòng nhập tên khách hàng"),
+            DiaChi: Yup.string().required("Vui lòng nhập địa chỉ"),
           })}
           onSubmit={async (values) => {
             if (type === "new") handleNewCustomer(values);
@@ -61,71 +63,71 @@ export default function CustomerModal({ handleClose, type, customer }) {
             <form noValidate onSubmit={handleSubmit}>
               <FormControl
                 fullWidth
-                error={Boolean(touched.name && errors.name)}
+                error={Boolean(touched.TenKhachHang && errors.TenKhachHang)}
                 sx={{ mb: 3, mt: 1 }}
               >
                 <TextField
                   label="Tên khách hàng"
-                  value={values.name}
-                  name="name"
+                  value={values.TenKhachHang}
+                  name="TenKhachHang"
                   onBlur={handleBlur}
                   onChange={handleChange}
                 />
-                {touched.name && errors.name && (
-                  <FormHelperText error>{errors.name}</FormHelperText>
+                {touched.TenKhachHang && errors.TenKhachHang && (
+                  <FormHelperText error>{errors.TenKhachHang}</FormHelperText>
                 )}
               </FormControl>
 
               <FormControl fullWidth sx={{ mb: 3 }}>
                 <Autocomplete
-                  name="type"
-                  options={customerTypes}
-                  defaultValue={customer ? customer.type : customerTypes[0]}
+                  name="TenLoaiKhach"
+                  options={typeCustomer}
+                  defaultValue={typeCustomer[0]}
                   disableClearable
+                  getOptionLabel={(option) => option.TenLoaiKhach}
                   isOptionEqualToValue={(option, value) => option === value}
                   onChange={(event, value) => {
-                    setFieldValue("type", value);
+                    console.log(value);
+                    setFieldValue("MaLoaiKhach", value.MaLoaiKhach);
+                    setFieldValue("TenLoaiKhach", value.TenLoaiKhach);
                   }}
                   renderInput={(params) => (
                     <TextField
                       {...params}
                       label="Loại khách"
-                      value={values.type}
+                      value={values.TenLoaiKhach}
                     />
-                  )}
+                  )
+                }
                 />
               </FormControl>
 
               <FormControl
                 fullWidth
                 sx={{ mb: 3 }}
-                error={Boolean(touched.idNumber && errors.idNumber)}
               >
                 <TextField
                   label="CMND/CCCD"
-                  value={values.idNumber}
-                  name="idNumber"
+                  value={values.CMND}
+                  name="CMND"
                   onBlur={handleBlur}
                   onChange={handleChange}
                 />
-                {touched.idNumber && errors.idNumber && (
-                  <FormHelperText error>{errors.idNumber}</FormHelperText>
-                )}
               </FormControl>
               <FormControl
                 fullWidth
                 sx={{ mb: 3 }}
-                error={Boolean(touched.address && errors.address)}
+                error={Boolean(touched.DiaChi && errors.DiaChi)}
               >
                 <TextField
                   label="Địa chỉ"
-                  value={values.address}
-                  name="address"
+                  value={values.DiaChi}
+                  name="DiaChi"
                   onBlur={handleBlur}
                   onChange={handleChange}
                 />
-                {touched.address && errors.address && (
-                  <FormHelperText error>{errors.address}</FormHelperText>
+                {touched.DiaChi && errors.DiaChi && (
+                  <FormHelperText error>{errors.DiaChi}</FormHelperText>
                 )}
               </FormControl>
 

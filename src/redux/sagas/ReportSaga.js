@@ -14,7 +14,6 @@ function* actFetchReport(action) {
     data.ReportDetails.forEach(reportDetail => reportDetail.index = data.ReportDetails.indexOf(reportDetail) + 1);
     data.ReportDetails.forEach(reportDetail => reportDetail.TenLoaiPhong = reportDetail.RoomType.TenLoaiPhong);
     
-    
     if (status === STATUS_SUCCESS) {
       yield put({
         type: ActionTypes.GET_REPORT,
