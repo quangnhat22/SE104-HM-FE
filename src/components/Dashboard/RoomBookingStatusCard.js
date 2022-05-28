@@ -34,7 +34,7 @@ const RoomBookingStatusCard = ({ isLoading }) => {
                   <Typography variant="h4" sx={{mt: 3, ml: 3}}>Tình trạng đặt phòng</Typography>
                 </Grid>
               </Grid>
-              <Grid item xs={12} sx={{ pt: "16px !important" }}>
+              <Grid item xs={12} sx={{ pt: "28px !important", pb: "16px" }}>
                 <Chart
                   series={[
                     roomList.length - bookedRoomList.length,

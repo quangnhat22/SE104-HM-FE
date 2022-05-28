@@ -51,7 +51,7 @@ const TotalRevenueCard = ({ isLoading }) => {
         <SkeletonEarningCard />
       ) : (
         <CardWrapper border={false} content={false}>
-          <Box sx={{ p: 2 }}>
+          <Box sx={{ p: 3 }}>
             <Grid container direction="column">
               <Grid item>
                 <Grid container justifyContent="space-between">

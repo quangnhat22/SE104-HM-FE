@@ -11,7 +11,7 @@ const chartConfig = {
       zoom: {
         enabled: true,
       },
-      height: "548px"
+      height: "400px"
     },
     responsive: [
       {
