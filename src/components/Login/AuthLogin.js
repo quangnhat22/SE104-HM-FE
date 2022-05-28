@@ -17,7 +17,7 @@ import { useState } from "react";
 import * as Yup from "yup";
 import AnimateButton from "../../ui-component/extended/AnimateButton";
 
-const Login = ({ ...others }) => {
+const Login = ({ handleOpenReset }) => {
   const theme = useTheme();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -33,7 +33,7 @@ const Login = ({ ...others }) => {
     <>
       <Formik
         initialValues={{
-          email: "info@codedthemes.com",
+          email: "daijoubuteam@gmail.com",
           password: "123456",
         }}
         validationSchema={Yup.object().shape({
@@ -53,7 +53,7 @@ const Login = ({ ...others }) => {
           touched,
           values,
         }) => (
-          <form noValidate onSubmit={handleSubmit} {...others}>
+          <form noValidate onSubmit={handleSubmit}>
             <FormControl
               fullWidth
               error={Boolean(touched.email && errors.email)}
@@ -125,6 +125,7 @@ const Login = ({ ...others }) => {
                 variant="subtitle1"
                 color="secondary"
                 sx={{ textDecoration: "none", cursor: "pointer" }}
+                onClick={handleOpenReset}
               >
                 Quên mật khẩu?
               </Typography>

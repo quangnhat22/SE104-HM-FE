@@ -55,9 +55,12 @@ export default function Room() {
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", p: 5 }}>
+      <Typography variant="h3" gutterBottom sx={{ mb: 4 }}>
+        Danh mục phòng
+      </Typography>
       <Box sx={{ display: "flex" }}>
         <Search
-          placeholder="Tìm tên phòng"
+          placeholder="Tìm mã phòng, tên phòng, loại phòng ..."
           filterName={filterName}
           setFilterName={handleFilterByName}
         />
@@ -102,7 +105,6 @@ export default function Room() {
       ) : (
         <TableRoom
           data={roomList}
-          searchField="TenPhong"
           filterName={filterName}
           handleModify={handleModify}
         />

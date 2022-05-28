@@ -1,6 +1,5 @@
 import {
   Chip,
-  CircularProgress,
   Table,
   TableBody,
   TableCell,
@@ -9,12 +8,12 @@ import {
   TableRow,
 } from "@mui/material";
 import { useState } from "react";
-import CustomTableHead from "../../ui-component/CustomTableHead";
-import SearchNotFound from "../../ui-component/SearchNotFound";
-import MoreMenu from "../Room/MoreMenu";
-import applySortFilter from "../../utils/table-sort-filter";
 import { useDispatch } from "react-redux";
 import * as SagaActionTypes from "../../redux/constants/constantSaga";
+import CustomTableHead from "../../ui-component/CustomTableHead";
+import SearchNotFound from "../../ui-component/SearchNotFound";
+import applySortFilter from "../../utils/table-sort-filter";
+import MoreMenu from "../Room/MoreMenu";
 
 const columns = [
   { id: "MaPhong", label: "Mã Phòng", minWidth: 50, align: "center" },
@@ -46,12 +45,7 @@ const columns = [
   },
 ];
 
-export default function TableRoom({
-  data,
-  searchField,
-  filterName,
-  handleModify,
-}) {
+export default function TableRoom({ data, filterName, handleModify }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [order, setOrder] = useState("");
@@ -59,7 +53,7 @@ export default function TableRoom({
   const dispatch = useDispatch();
 
   const handleDelete = (room) => {
-    dispatch({type: SagaActionTypes.DELETE_ROOM_SAGA, maPhong: room.MaPhong});
+    dispatch({ type: SagaActionTypes.DELETE_ROOM_SAGA, maPhong: room.MaPhong });
   };
 
   const handleRequestSort = (event, property) => {
@@ -77,13 +71,7 @@ export default function TableRoom({
     setPage(0);
   };
 
-  const filteredData = applySortFilter(
-    data,
-    order,
-    orderBy,
-    searchField,
-    filterName
-  );
+  const filteredData = applySortFilter(data, order, orderBy, filterName);
 
   const isUserNotFound = filteredData.length === 0;
 
@@ -147,9 +135,7 @@ export default function TableRoom({
                         );
                       default:
                         return (
-                          <TableCell 
-                            key={column.id} 
-                            align={column.align}>
+                          <TableCell key={column.id} align={column.align}>
                             {column.format && typeof value === "number"
                               ? column.format(value)
                               : value}

@@ -22,19 +22,19 @@ const RoomBookingStatusCard = ({ isLoading }) => {
       {isLoading ? (
         <SkeletonPopularCard />
       ) : (
-        <MainCard content={false}>
-          <CardContent>
-            <Grid container spacing={3}>
+        <MainCard content={false} sx={{p: 0}}>
+          <CardContent sx={{p: 0}}>
+            <Grid container>
               <Grid item xs={12}>
                 <Grid
                   container
                   alignContent="center"
                   justifyContent="space-between"
                 >
-                  <Typography variant="h4">Tình trạng đặt phòng</Typography>
+                  <Typography variant="h4" sx={{mt: 3, ml: 3}}>Tình trạng đặt phòng</Typography>
                 </Grid>
               </Grid>
-              <Grid item xs={12} sx={{ pt: "16px !important" }}>
+              <Grid item xs={12} sx={{ pt: "28px !important", pb: "16px" }}>
                 <Chart
                   series={[
                     roomList.length - bookedRoomList.length,

@@ -17,25 +17,21 @@ import { IconLogout, IconSettings } from "@tabler/icons";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import User1 from "../../../assets/images/users/user-round.svg";
 import MainCard from "../../../ui-component/cards/MainCard";
 import Transitions from "../../../ui-component/extended/Transitions";
 import showTextBasedOnTime from "../../../utils/showTextBasedOnTime";
 
 const ProfileSection = () => {
   const theme = useTheme();
-  // get infor from reducer
   const customization = useSelector((state) => state.customization);
-  const {userLogin} = useSelector(state => state.UserReducer);
+  const { userLogin } = useSelector((state) => state.UserReducer);
 
   const navigate = useNavigate();
-  
-  const [selectedIndex, setSelectedIndex] = useState(-1);
+
   const [open, setOpen] = useState(false);
 
   const anchorRef = useRef(null);
 
-  // show text based on real time
   const textHelloFromRealtime = showTextBasedOnTime();
 
   const handleLogout = async () => {
@@ -49,14 +45,6 @@ const ProfileSection = () => {
     setOpen(false);
   };
 
-  const handleListItemClick = (event, index, route = "") => {
-    setSelectedIndex(index);
-    handleClose(event);
-
-    if (route && route !== "") {
-      navigate(route);
-    }
-  };
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
@@ -152,16 +140,20 @@ const ProfileSection = () => {
                   <Box sx={{ px: 2, pt: 2 }}>
                     <Stack>
                       <Stack direction="row" spacing={0.5} alignItems="center">
-                        <Typography variant="h4">{textHelloFromRealtime},</Typography>
+                        <Typography variant="h4">
+                          {textHelloFromRealtime},
+                        </Typography>
                         <Typography
-                          component="span"
+                          component="span" 
                           variant="h4"
                           sx={{ fontWeight: 400 }}
                         >
                           {userLogin?.fullName}
                         </Typography>
                       </Stack>
-                      <Typography variant="subtitle2">{userLogin?.role}</Typography>
+                      <Typography variant="subtitle2">
+                        {userLogin?.role}
+                      </Typography>
                     </Stack>
                   </Box>
                   <Box sx={{ px: 2, pb: 1 }}>
@@ -183,29 +175,6 @@ const ProfileSection = () => {
                     >
                       <ListItemButton
                         sx={{ borderRadius: `${customization.borderRadius}px` }}
-                        selected={selectedIndex === 0}
-                        onClick={(event) =>
-                          handleListItemClick(
-                            event,
-                            0,
-                            "/user/account-profile/profile1"
-                          )
-                        }
-                      >
-                        <ListItemIcon>
-                          <IconSettings stroke={1.5} size="1.3rem" />
-                        </ListItemIcon>
-                        <ListItemText
-                          primary={
-                            <Typography variant="body2">
-                              Account Settings
-                            </Typography>
-                          }
-                        />
-                      </ListItemButton>
-                      <ListItemButton
-                        sx={{ borderRadius: `${customization.borderRadius}px` }}
-                        selected={selectedIndex === 4}
                         onClick={handleLogout}
                       >
                         <ListItemIcon>

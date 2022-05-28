@@ -51,7 +51,7 @@ const TotalRevenueCard = ({ isLoading }) => {
         <SkeletonEarningCard />
       ) : (
         <CardWrapper border={false} content={false}>
-          <Box sx={{ p: 2.25 }}>
+          <Box sx={{ p: 3 }}>
             <Grid container direction="column">
               <Grid item>
                 <Grid container justifyContent="space-between">
@@ -62,7 +62,6 @@ const TotalRevenueCard = ({ isLoading }) => {
                         ...theme.typography.commonAvatar,
                         ...theme.typography.largeAvatar,
                         backgroundColor: theme.palette.secondary[800],
-                        mt: 1,
                       }}
                     >
                       <img src={EarningIcon} alt="Notification" />
@@ -102,7 +101,7 @@ const TotalRevenueCard = ({ isLoading }) => {
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item sx={{ mb: 1.25 }}>
+              <Grid item>
                 <Typography
                   sx={{
                     fontSize: "1rem",
