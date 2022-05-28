@@ -68,7 +68,6 @@ const TotalBookingCard = ({ isLoading }) => {
                         ...theme.typography.commonAvatar,
                         ...theme.typography.largeAvatar,
                         backgroundColor: theme.palette.primary[800],
-                        mt: 1,
                       }}
                     >
                       <img src={EarningIcon} alt="Notification" />
@@ -108,7 +107,7 @@ const TotalBookingCard = ({ isLoading }) => {
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item sx={{ mb: 1.25 }}>
+              <Grid item>
                 <Typography
                   sx={{
                     fontSize: "1rem",
