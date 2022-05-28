@@ -23,7 +23,7 @@ export default function Receipt() {
       <Typography variant="h3" gutterBottom sx={{ mb: 4 }}>
         Hóa đơn
       </Typography>
-      <TableReceipt data={invoiceList} />
+      {/* <TableReceipt data={invoiceList} /> */}
       <Box sx={{ display: "flex" }}>
         <Search
           placeholder="Tìm mã hóa đơn, tên khách hàng, địa chỉ ..."
@@ -31,7 +31,7 @@ export default function Receipt() {
           setFilterName={handleChangeFilterByName}
         />
       </Box>
-      <TableReceipt data={receiptList} filterName={filterName} />
+      <TableReceipt data={invoiceList} filterName={filterName} />
     </Paper>
   );
 }
