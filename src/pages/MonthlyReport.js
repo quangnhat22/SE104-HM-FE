@@ -1,14 +1,21 @@
-import { Paper, TextField, Typography, useMediaQuery } from "@mui/material";
+import {
+  Box,
+  Button, Paper,
+  TextField,
+  Typography,
+  useMediaQuery
+} from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { IconTable } from "@tabler/icons";
 import * as React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import * as SagaActionTypes from "../redux/constants/constantSaga";
 import TableRoomRevenue from "../components/Table/TableRoomRevenue";
+import * as SagaActionTypes from "../redux/constants/constantSaga";
 
 export default function MonthlyReport() {
   const { month, year } = useParams();
@@ -52,6 +59,23 @@ export default function MonthlyReport() {
         />
       </LocalizationProvider>
       {report ? <TableRoomRevenue data={report.ReportDetails} /> : ""}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "right",
+          alignItems: "right",
+        }}
+      >
+        <Button
+          type="submit"
+          form="surchargeRateForm"
+          variant="outlined"
+          sx={{ pt: "12px", pb: "12px", mt: "24px" }}
+          startIcon={<IconTable />}
+        >
+          Xuất Excel
+        </Button>
+      </Box>
     </Paper>
   );
 }

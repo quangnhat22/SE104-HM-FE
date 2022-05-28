@@ -1,7 +1,9 @@
+import accounts from "./accounts";
 import dashboard from "./dashboard";
-import settings from './settings';
+import settings from "./settings";
+
 const menuItems = {
-  items: [dashboard,settings]
+  items: [dashboard, accounts, settings],
 };
 
 export default menuItems;
