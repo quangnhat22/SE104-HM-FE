@@ -3,6 +3,7 @@ const _ = require("lodash");
 
 const initialState = {
   customerList: [],
+  TongTienPhieuThuePhong: 0,
 };
 
 export const CustomerReducerLocal = (state = initialState, action) => {
@@ -10,6 +11,8 @@ export const CustomerReducerLocal = (state = initialState, action) => {
     case ActionTypes.GET_CLIENT_RENT_VOUCHER_LIST:
       // add new elements
       state.customerList = [...state.customerList, action.customer];
+      // hanlde total price per day
+
       //add index for elements in array
       state.customerList = _.map(state.customerList, (element) => {
         return _.extend({}, element, {

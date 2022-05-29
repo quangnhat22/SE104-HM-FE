@@ -11,6 +11,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { IconTable } from "@tabler/icons";
 import * as React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -27,9 +28,10 @@ export default function MonthlyReport() {
   // useEffect(()=> {
   //   dispatch({
   //     type: SagaActionTypes.FETCH_REPORT_SAGA,
-  //     thang: 2,
-  //     nam: 2022
-  //   });
+  //     thang: (new Date()).getMonth(),
+  //     nam: (new Date()).getFullYear()
+  //   })
+  //   setValue(new Date())
   // }, [])
   console.log(report);
   return (

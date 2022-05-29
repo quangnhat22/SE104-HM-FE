@@ -48,23 +48,22 @@ export default function MoreMenu({ room, handleModify, handleDelete }) {
           </Link>
         ) : (
           <>
-            {enableNewVoucher ? (
-              <Link to={`/booking/${room.MaPhong}`}>
-                <Tooltip title="Thuê phòng">
-                  <IconButton variant="text" size="large" color="success">
-                    <IconCirclePlus />
-                  </IconButton>
-                </Tooltip>
-              </Link>
-            ) : (
-              <Link to={`/booking/${room.MaPhong}`}>
-                <Tooltip title="Thuê phòng (Lưu ý: Thời gian đặt phòng sẽ bắt đầu tính sau 14:00)">
-                  <IconButton variant="text" size="large" color="success">
-                    <IconCirclePlus />
-                  </IconButton>
-                </Tooltip>
-              </Link>
-            )}
+            <Link
+              to={`/booking/${room.MaPhong}`}
+              state={{ DonGia: room.DonGia, MaPhong: room.MaPhong }}
+            >
+              <Tooltip
+                title={
+                  enableNewVoucher
+                    ? "Thuê phòng"
+                    : "Thuê phòng (Lưu ý: Thời gian đặt phòng sẽ bắt đầu tính sau 14:00)"
+                }
+              >
+                <IconButton variant="text" size="large" color="success">
+                  <IconCirclePlus />
+                </IconButton>
+              </Tooltip>
+            </Link>
             <Tooltip title="Chỉnh sửa">
               <IconButton
                 variant="text"

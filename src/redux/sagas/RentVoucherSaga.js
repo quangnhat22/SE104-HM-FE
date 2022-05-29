@@ -3,7 +3,7 @@ import { call, takeLatest, put } from "redux-saga/effects";
 import * as ActionTypes from "../constants/constant";
 import * as SagaActionTypes from "../constants/constantSaga";
 import { RentVoucherService } from "../../services/RentVoucherService";
-import { STATUS_SUCCESS } from "../../services/urlAPI";
+import { STATUS_CREATE_SUCCESS, STATUS_SUCCESS } from "../../services/urlAPI";
 const _ = require("lodash");
 
 function* actFetchListRentVoucher() {
@@ -30,9 +30,29 @@ function* actFetchListRentVoucher() {
   }
 }
 
+function * actNewRentVoucher(action) {
+  let {rentVoucher} = action;
+  try {
+      let {status} = yield call(()=> RentVoucherService.addNewRentVoucher(rentVoucher));
+      if(status === STATUS_CREATE_SUCCESS) {
+        yield put ({type: SagaActionTypes.FETCH_LIST_ROOM_SAGA});
+        toast.success("Tạo phiếu thuê phòng thành công!");
+      } else {
+        toast.error("Đã có lỗi xảy ra vui lòng thử lại!");
+      }
+  }
+  catch (err) {
+    toast.error("Đã có lỗi xảy ra vui lòng thử lại!");
+  }
+}
+
 export function* followActFetchListRentVoucher() {
   yield takeLatest(
     SagaActionTypes.FETCH_LIST_RENT_VOUCHER_SAGA,
     actFetchListRentVoucher
   );
+}
+
+export function * followActNewRentVoucher() {
+  yield takeLatest(SagaActionTypes.ADD_RENT_VOUCHER_SAGA, actNewRentVoucher);
 }

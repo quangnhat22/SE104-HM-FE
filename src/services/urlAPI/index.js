@@ -32,6 +32,7 @@ export const URL_ADD_NEW_INVOICES = `${DOMAIN_NAME}/invoice`;
 
 //RENT VOUCHER
 export const URL_GET_RENT_VOUCHER = `${DOMAIN_NAME}/rent`;
+export const URL_ADD_NEW_RENT_VOUCHER = `${DOMAIN_NAME}/rent`;
 
 //CONFIG
 export const URL_GET_CONFIG = `${DOMAIN_NAME}/setting/config`;

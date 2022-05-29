@@ -101,7 +101,7 @@ export default function Payment() {
           onSubmit={async (values) => {
             if (CacPhieuThuePhong.length > 0) {
               const currentDate = new Date();
-              const currentDateString = `${currentDate.getFullYear()}-${currentDate.getMonth()}-${currentDate.getDate()}`;
+              const currentDateString = `${currentDate.getFullYear()}-${currentDate.getMonth()+1}-${currentDate.getDate()}`;
               let listInvoice = _.map(CacPhieuThuePhong, (element) => {
                 return {
                   MaPhieuThuePhong: element.MaPhieuThuePhong,

@@ -26,5 +26,6 @@ export default function* rootSaga() {
         InvoiceSaga.followActFetchInvoiceList(),
         InvoiceSaga.followActAddNewInvoice(),
         RentVoucherSaga.followActFetchListRentVoucher(),
+        RentVoucherSaga.followActNewRentVoucher()
     ]);
 }

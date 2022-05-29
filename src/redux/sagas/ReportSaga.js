@@ -19,9 +19,11 @@ function* actFetchReport(action) {
         type: ActionTypes.GET_REPORT,
         report: data,
       });
+    } else {
+      toast.error("Vui lòng kiểm tra các giá trị nhập vào.")
     }
   } catch (err) {
-    console.log(err);
+    toast.error("Vui lòng kiểm tra các giá trị nhập vào.")
   }
 }
 
