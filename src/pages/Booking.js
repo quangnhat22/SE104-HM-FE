@@ -31,7 +31,7 @@ export default function Booking() {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down("sm"));
   const location = useLocation();
-  const { DonGia, MaPhong } = location.state;
+  const { DonGia, MaPhong, SoKhachToiDa, SoKhachKhongPhuThu, surchargeList } = location.state;
   const [openNew, setOpenNew] = useState(false);
   const [openModify, setOpenModify] = useState(false);
   const [modifyingCustomer, setModifyingCustomer] = useState();
@@ -42,18 +42,32 @@ export default function Booking() {
   );
   const [totalPricePerDay, setTotalPricePerDay] = useState(0);
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch({ type: SagaActionTypes.FETCH_LIST_TYPE_CUSTOMER_SAGA });
     setTotalPricePerDay(0);
   }, []);
-
+  
+  console.log(typeCustomerList)
   useEffect(() => {
-    if(customerList.length > 0) {
-      setTotalPricePerDay(DonGia)
+    console.log("length:",customerList.length)
+    console.log("ko phu thu: ", SoKhachKhongPhuThu)
+    if(customerList.length === 0) {
+      setTotalPricePerDay(0)
     }
-    if(customerList.length > 3) {
-      setTotalPricePerDay(DonGia*1.5)
+    else if(customerList.length <= SoKhachKhongPhuThu) {
+      setTotalPricePerDay(DonGia)   
+    } 
+    else {
+      let heSoPhuThu = _.find(surchargeList, (element) => {
+        return element.SoKhach === customerList.length
+      })?.TiLePhuThu
+      if(heSoPhuThu === undefined) {
+        heSoPhuThu = 1
+      } 
+      //let checkTypeCustomer = _.findIndex(customerList, (element) => element.MaLoaiKhach)
+      console.log(heSoPhuThu)
+      
+      setTotalPricePerDay(DonGia);
     }
   }, [customerList])
 
@@ -63,7 +77,11 @@ export default function Booking() {
   };
 
   const handleNewCustomer = () => {
-    setOpenNew(true);
+    if(customerList.length >= SoKhachToiDa) {
+      toast.warning("Không thể thêm khách mới vì phòng đã đầy!")
+    } else {
+      setOpenNew(true);
+    }
   };
 
   const handleModifyCustomer = (customer) => {

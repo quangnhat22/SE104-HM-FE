@@ -7,8 +7,8 @@ import {
   TablePagination,
   TableRow,
 } from "@mui/material";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import * as SagaActionTypes from "../../redux/constants/constantSaga";
 import CustomTableHead from "../../ui-component/CustomTableHead";
 import SearchNotFound from "../../ui-component/SearchNotFound";
@@ -45,13 +45,19 @@ const columns = [
   },
 ];
 
-export default function TableRoom({ data, filterName, handleModify }) {
+export default function TableRoom({
+  data,
+  filterName,
+  handleModify,
+  SoKhachToiDa,
+  SoKhachKhongPhuThu,
+  surchargeList,
+}) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [order, setOrder] = useState("");
   const [orderBy, setOrderBy] = useState("number");
   const dispatch = useDispatch();
-
   const handleDelete = (room) => {
     dispatch({ type: SagaActionTypes.DELETE_ROOM_SAGA, maPhong: room.MaPhong });
   };
@@ -100,6 +106,9 @@ export default function TableRoom({ data, filterName, handleModify }) {
                               room={row}
                               handleModify={handleModify}
                               handleDelete={handleDelete}
+                              SoKhachToiDa={SoKhachToiDa}
+                              SoKhachKhongPhuThu={SoKhachKhongPhuThu}
+                              surchargeList = {surchargeList}
                             />
                           </TableCell>
                         );

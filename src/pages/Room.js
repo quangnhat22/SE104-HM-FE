@@ -18,12 +18,15 @@ export default function Room() {
   const { typeList } = useSelector((state) => state.TypeRoomReducer);
   const { roomStateList } = useSelector((state) => state.RoomStateReducer);
   const { loading } = useSelector((state) => state.LoadingReducer);
+  const {SoKhachToiDa, SoKhachKhongPhuThu} = useSelector((state) => state.ConfigReducer);
+  const {surchargeList} = useSelector(state => state.SurchargeReducer);
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch({ type: ActionSagaTypes.FETCH_LIST_ROOM_SAGA });
     dispatch({ type: ActionSagaTypes.FECTH_LIST_TYPE_ROOM_SAGA });
     dispatch({ type: ActionSagaTypes.FETCH_LIST_STATE_ROOM_SAGA });
+    dispatch({ type: ActionSagaTypes.GET_CONFIG_SAGA });
+    dispatch({type: ActionSagaTypes.FETCH_LIST_SURCHARGE_SAGA});
   }, []);
 
   const [filterName, setFilterName] = useState("");
@@ -107,6 +110,9 @@ export default function Room() {
           data={roomList}
           filterName={filterName}
           handleModify={handleModify}
+          SoKhachToiDa = {SoKhachToiDa.GiaTri}
+          SoKhachKhongPhuThu = {SoKhachKhongPhuThu.GiaTri}
+          surchargeList = {surchargeList}
         />
       )}
     </Paper>

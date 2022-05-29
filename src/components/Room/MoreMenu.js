@@ -10,8 +10,14 @@ import { Link } from "react-router-dom";
 import AlertModal from "../../ui-component/AlertModal";
 import * as ActionTypes from "../../redux/constants/constant";
 
-export default function MoreMenu({ room, handleModify, handleDelete }) {
-  console.log(room);
+export default function MoreMenu({
+  room,
+  handleModify,
+  handleDelete,
+  SoKhachToiDa,
+  SoKhachKhongPhuThu,
+  surchargeList,
+}) {
   const [openDelete, setOpenDelete] = useState(false);
   const [enableNewVoucher, setEnableNewVoucher] = useState(false);
 
@@ -50,7 +56,13 @@ export default function MoreMenu({ room, handleModify, handleDelete }) {
           <>
             <Link
               to={`/booking/${room.MaPhong}`}
-              state={{ DonGia: room.DonGia, MaPhong: room.MaPhong }}
+              state={{
+                DonGia: room.DonGia,
+                MaPhong: room.MaPhong,
+                SoKhachToiDa,
+                SoKhachKhongPhuThu,
+                surchargeList,
+              }}
             >
               <Tooltip
                 title={

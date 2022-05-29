@@ -21,11 +21,6 @@ import * as SagaActionTypes from "../redux/constants/constantSaga";
 import SurchargeRateModal from "../components/SurchargeRate/SurchargeRateModal";
 import TableSurchargeRate from "../components/Table/TableSurchargeRate";
 
-function createData(SoKhach, TiLePhuThu) {
-  return { SoKhach, TiLePhuThu };
-}
-
-const typeList = [createData(3, 25), createData(4, 15)];
 
 export default function SurchargeRateSetting() {
   const theme = useTheme();

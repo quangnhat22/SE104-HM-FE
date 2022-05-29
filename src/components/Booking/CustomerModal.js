@@ -16,7 +16,6 @@ import * as ActionTypes from "../../redux/constants/constant";
 import { useDispatch } from "react-redux";
 
 export default function CustomerModal({ handleClose, type, customer, typeCustomer, indexType }) {
-  console.log(customer)
   const dispatch = useDispatch();
   const handleNewCustomer = (values) => {
     dispatch({ type: ActionTypes.GET_CLIENT_RENT_VOUCHER_LIST, customer: values});
