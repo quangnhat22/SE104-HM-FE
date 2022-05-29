@@ -23,10 +23,11 @@ export const CustomerReducerLocal = (state = initialState, action) => {
     case ActionTypes.REMOVE_CLIENT_RENT_VOUCER:
       //remove element
       _.remove(state.customerList, (element) => {
-        if (element.CMND !== null) {
-          return element.CMND === action.customer.CMND;
-        }
-        return element.TenKhachHang === action.customer.TenKhachHang;
+        // if (element.CMND !== '') {
+        //   return element.CMND === action.customer.CMND;
+        // }
+        // return element.TenKhachHang === action.customer.TenKhachHang;
+        return element.STT === action.customer.STT;
       });
       //add index for elements in new array
       state.customerList = _.map(state.customerList, (element) => {
@@ -34,6 +35,22 @@ export const CustomerReducerLocal = (state = initialState, action) => {
           STT: _.indexOf(state.customerList, element) + 1,
         });
       });
+      return { ...state };
+    case ActionTypes.UPDATE_CLIENT_RENT_VOUCHER:
+      console.log(action.newCustomer);
+      state.customerList = _.map(state.customerList, (element) => {
+          return element.STT === action.STT
+            ? {
+                STT: action.STT,
+                CMND: action.newCustomer.CMND,
+                DiaChi: action.newCustomer.DiaChi,
+                MaLoaiKhach: action.newCustomer.MaLoaiKhach,
+                TenLoaiKhach: action.newCustomer.TenLoaiKhach,
+                TenKhachHang: action.newCustomer.TenKhachHang,
+              }
+            : element;
+      });
+      console.log(state);
       return { ...state };
     default:
       return state;

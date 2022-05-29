@@ -15,7 +15,8 @@ import { toast } from "react-toastify";
 import * as ActionTypes from "../../redux/constants/constant";
 import { useDispatch } from "react-redux";
 
-export default function CustomerModal({ handleClose, type, customer, typeCustomer }) {
+export default function CustomerModal({ handleClose, type, customer, typeCustomer, indexType }) {
+  console.log(customer)
   const dispatch = useDispatch();
   const handleNewCustomer = (values) => {
     dispatch({ type: ActionTypes.GET_CLIENT_RENT_VOUCHER_LIST, customer: values});
@@ -24,6 +25,7 @@ export default function CustomerModal({ handleClose, type, customer, typeCustome
   };
 
   const handleModifyCustomer = (values) => {
+    dispatch({type: ActionTypes.UPDATE_CLIENT_RENT_VOUCHER, newCustomer: values, STT: customer.STT});
     toast.success("Chỉnh sửa khách hàng thành công");
     handleClose();
   };
@@ -82,7 +84,7 @@ export default function CustomerModal({ handleClose, type, customer, typeCustome
                 <Autocomplete
                   name="TenLoaiKhach"
                   options={typeCustomer}
-                  defaultValue={typeCustomer[0]}
+                  defaultValue={customer ? typeCustomer[indexType]: typeCustomer[0]}
                   disableClearable
                   getOptionLabel={(option) => option.TenLoaiKhach}
                   isOptionEqualToValue={(option, value) => option === value}

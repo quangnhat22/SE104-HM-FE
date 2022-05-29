@@ -22,6 +22,7 @@ import TableCustomer from "../components/Table/TableCustomer";
 import CustomerModal from "../components/Booking/CustomerModal";
 import { useDispatch, useSelector } from "react-redux";
 import * as SagaActionTypes from "../redux/constants/constantSaga";
+import * as ActionTypes from "../redux/constants/constant";
 import numberWithCommas from "../utils/number-with-commas";
 const _ = require("lodash");
 
@@ -34,6 +35,7 @@ export default function Booking() {
   const [openNew, setOpenNew] = useState(false);
   const [openModify, setOpenModify] = useState(false);
   const [modifyingCustomer, setModifyingCustomer] = useState();
+  const [modifyingCustomerType, setModifyingCustomerType] = useState(0);
   const { customerList } = useSelector((state) => state.CustomerReducerLocal);
   const { typeCustomerList } = useSelector(
     (state) => state.TypeCustomerReducer
@@ -65,11 +67,18 @@ export default function Booking() {
   };
 
   const handleModifyCustomer = (customer) => {
+    let index = typeCustomerList.findIndex(
+      (type) => type.MaLoaiKhach == customer.MaLoaiKhach
+    );
+    setModifyingCustomerType(index);
     setModifyingCustomer(customer);
     setOpenModify(true);
+   
   };
 
   const handleDeleteCustomer = (customer) => {
+    console.log(customer)
+    dispatch({type: ActionTypes.REMOVE_CLIENT_RENT_VOUCER, customer: customer});
     toast.success("Xóa khách hàng thành công!");
   };
 
@@ -211,6 +220,7 @@ export default function Booking() {
           handleClose={handleClose}
           type="modify"
           customer={modifyingCustomer}
+          indexType = {modifyingCustomerType}
         />
       )}
     </Paper>
