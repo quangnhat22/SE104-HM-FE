@@ -36,6 +36,7 @@ export const URL_ADD_NEW_RENT_VOUCHER = `${DOMAIN_NAME}/rent`;
 
 //CONFIG
 export const URL_GET_CONFIG = `${DOMAIN_NAME}/setting/config`;
+export const URL_UPDATE_CONFIG= (MaThamSo) => `${DOMAIN_NAME}/setting/config/${MaThamSo}`;
 
 //SURCHARGE
 export const URL_GET_LIST_SURCHARGE = `${DOMAIN_NAME}/setting/surcharge`;

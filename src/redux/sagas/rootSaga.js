@@ -6,6 +6,7 @@ import * as RoomStateListSaga from "./RoomStateListSaga";
 import * as ReportSaga from "./ReportSaga";
 import * as InvoiceSaga from "./InvoiceSaga";
 import * as RentVoucherSaga from "./RentVoucherSaga";
+import * as ConfigSaga from "./ConfigSaga"
 
 export default function* rootSaga() {
     yield all([
@@ -26,6 +27,8 @@ export default function* rootSaga() {
         InvoiceSaga.followActFetchInvoiceList(),
         InvoiceSaga.followActAddNewInvoice(),
         RentVoucherSaga.followActFetchListRentVoucher(),
-        RentVoucherSaga.followActNewRentVoucher()
+        RentVoucherSaga.followActNewRentVoucher(),
+        ConfigSaga.followActFetchConfig(),
+        ConfigSaga.followActUpdateNewConfig()
     ]);
 }

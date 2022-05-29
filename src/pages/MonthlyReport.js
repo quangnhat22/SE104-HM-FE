@@ -33,7 +33,6 @@ export default function MonthlyReport() {
   //   })
   //   setValue(new Date())
   // }, [])
-  console.log(report);
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", p: 5 }}>
       <Typography variant="h3" gutterBottom sx={{ mb: 4 }}>
