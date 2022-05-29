@@ -7,6 +7,7 @@ import * as ReportSaga from "./ReportSaga";
 import * as InvoiceSaga from "./InvoiceSaga";
 import * as RentVoucherSaga from "./RentVoucherSaga";
 import * as ConfigSaga from "./ConfigSaga"
+import * as SurchargeSaga from "./SurchareSaga";
 
 export default function* rootSaga() {
     yield all([
@@ -29,6 +30,9 @@ export default function* rootSaga() {
         RentVoucherSaga.followActFetchListRentVoucher(),
         RentVoucherSaga.followActNewRentVoucher(),
         ConfigSaga.followActFetchConfig(),
-        ConfigSaga.followActUpdateNewConfig()
+        ConfigSaga.followActUpdateNewConfig(),
+        SurchargeSaga.followActFetchListSurcharge(),
+        SurchargeSaga.followActAddNewSurcharge(),
+        SurchargeSaga.followActDeleteSurcharge()
     ]);
 }

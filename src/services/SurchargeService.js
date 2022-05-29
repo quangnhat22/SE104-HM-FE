@@ -1,9 +1,21 @@
 import Axios from "axios";
-import { URL_GET_LIST_SURCHARGE } from "./urlAPI";
-
+import { URL_ADD_SURCHARGE, URL_DELETE_SURCHARGE, URL_GET_LIST_SURCHARGE, URL_UPDATE_SURCHARGE } from "./urlAPI";
 
 export const SurchargeService = {
-    getListSurcharge: () => {
-        return Axios.get(URL_GET_LIST_SURCHARGE);
-    }
-}
+  getListSurcharge: () => {
+    return Axios.get(URL_GET_LIST_SURCHARGE);
+  },
+  addSurcharge: (SoKhach, TyLePhuThu) => {
+    return Axios.post(URL_ADD_SURCHARGE(SoKhach), {
+      TiLePhuThu: TyLePhuThu,
+    });
+  },
+  updateSurcharge: (surcharge) => {
+    return Axios.put(URL_UPDATE_SURCHARGE(surcharge.SoKhach), {
+      TiLePhuThu: surcharge.TiLePhuThu,
+    });
+  },
+  deleteSurcharge: (SoKhach) => {
+      return Axios.delete(URL_DELETE_SURCHARGE(SoKhach));
+  }
+};

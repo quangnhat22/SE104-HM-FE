@@ -34,9 +34,10 @@ export default function SurchargeRateSetting() {
   const { loading } = useSelector((state) => state.LoadingReducer);
   const {SoKhachToiDa, SoKhachKhongPhuThu} = useSelector((state) => state.ConfigReducer);
   const [openNew, setOpenNew] = useState(false);
-
+  const {surchargeList} = useSelector(state => state.SurchargeReducer);
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_CONFIG_SAGA });
+    dispatch({type: SagaActionTypes.FETCH_LIST_SURCHARGE_SAGA});
   }, []);
 
   const handleClose = () => {
@@ -48,7 +49,7 @@ export default function SurchargeRateSetting() {
   };
 
   const handleDelete = (surchargeRate) => {
-    toast.success(`Xóa tỉ lệ ${surchargeRate} thành công!`);
+    dispatch({type: SagaActionTypes.DELETE_SURCHARGE_SAGA, SoKhach: surchargeRate.SoKhach});
   };
 
   return (
@@ -188,7 +189,7 @@ export default function SurchargeRateSetting() {
             </Typography>
 
             <>
-              <TableSurchargeRate data={typeList} handleDelete={handleDelete} />
+              <TableSurchargeRate data={surchargeList} handleDelete={handleDelete} />
               <Box sx={{ display: "flex", justifyContent: "center" }}>
                 <Button
                   sx={{ mt: 4 }}
@@ -198,7 +199,7 @@ export default function SurchargeRateSetting() {
                   Thêm tỉ lệ phụ thu
                 </Button>
               </Box>
-              {openNew && <SurchargeRateModal handleClose={handleClose} />}
+              {openNew && <SurchargeRateModal handleClose={handleClose} soKhachToiDa={SoKhachToiDa.GiaTri} soKhachKhongPhuThu={SoKhachKhongPhuThu.GiaTri} />}
             </>
           </Paper>
         </>

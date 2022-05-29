@@ -40,3 +40,6 @@ export const URL_UPDATE_CONFIG= (MaThamSo) => `${DOMAIN_NAME}/setting/config/${M
 
 //SURCHARGE
 export const URL_GET_LIST_SURCHARGE = `${DOMAIN_NAME}/setting/surcharge`;
+export const URL_ADD_SURCHARGE = (SoKhach) => `${DOMAIN_NAME}/setting/surcharge/${SoKhach}`;
+export const URL_UPDATE_SURCHARGE = (SoKhach) => `${DOMAIN_NAME}/setting/surcharge/${SoKhach}`;
+export const URL_DELETE_SURCHARGE = (SoKhach) => `${DOMAIN_NAME}/setting/surcharge/${SoKhach}`;
