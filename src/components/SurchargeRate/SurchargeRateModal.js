@@ -15,34 +15,47 @@ import { toast } from "react-toastify";
 import * as Yup from "yup";
 import * as SagaActionTypes from "../../redux/constants/constantSaga";
 
-export default function SurchargeRateModal({ handleClose, soKhachToiDa, soKhachKhongPhuThu }) {
+export default function SurchargeRateModal({
+  type,
+  handleClose,
+  soKhachToiDa,
+  soKhachKhongPhuThu,
+  surchargeRate,
+}) {
   const dispatch = useDispatch();
   const handleNewTiLePhuThu = (values) => {
-    console.log(values.SoKhach, "-", soKhachToiDa)
-    if(values.SoKhach > soKhachToiDa || values.SoKhach <= soKhachKhongPhuThu) {
-      toast.error("Số khách không được vượt quá số khách tối đa trong phòng, hoặc nhỏ hơn hoặc bằng số khách không phụ thu");
+    console.log(values.SoKhach, "-", soKhachToiDa);
+    if (values.SoKhach > soKhachToiDa || values.SoKhach <= soKhachKhongPhuThu) {
+      toast.error(
+        "Số khách không được vượt quá số khách tối đa trong phòng, hoặc nhỏ hơn hoặc bằng số khách không phụ thu"
+      );
     } else {
       dispatch({
         type: SagaActionTypes.ADD_NEW_SURCHARGE_SAGA,
         SoKhach: values.SoKhach,
-        TyLePhuThu: values.TiLePhuThu
-      })
+        TyLePhuThu: values.TiLePhuThu,
+      });
       toast.success(
         `Thêm tỉ lệ phụ thu thành công với số khách ${values.SoKhach}`
       );
       handleClose();
     }
-   
+  };
+
+  const handleEditTiLePhuThu = (values) => {
+    toast.success("Chỉnh sửa tỉ lệ phụ thu");
   };
 
   return (
     <Dialog open="true" sx={{ p: 4 }}>
-      <DialogTitle sx={{ fontSize: 20 }}>Thêm tỉ lệ phụ thu</DialogTitle>
+      <DialogTitle sx={{ fontSize: 20 }}>
+        {type === "new" ? "Thêm tỉ lệ phụ thu" : "Chỉnh sửa tỉ lệ phụ thu"}
+      </DialogTitle>
       <DialogContent>
         <Formik
           initialValues={{
-            SoKhach: "",
-            TiLePhuThu: "",
+            SoKhach: surchargeRate ? surchargeRate.SoKhach : "",
+            TiLePhuThu: surchargeRate ? surchargeRate.TiLePhuThu : "",
           }}
           validationSchema={Yup.object().shape({
             SoKhach: Yup.number()
@@ -56,7 +69,8 @@ export default function SurchargeRateModal({ handleClose, soKhachToiDa, soKhachK
               .required("Vui lòng nhập tỷ lệ phụ thu"),
           })}
           onSubmit={async (values) => {
-            handleNewTiLePhuThu(values);
+            if (type === "new") handleNewTiLePhuThu(values);
+            else handleEditTiLePhuThu(values);
           }}
         >
           {({
@@ -112,7 +126,7 @@ export default function SurchargeRateModal({ handleClose, soKhachToiDa, soKhachK
                   Huỷ
                 </Button>
                 <Button type="submit" variant="outlined">
-                  Thêm
+                  {type === "new" ? "Thêm" : "Chỉnh sửa"}
                 </Button>
               </Box>
             </form>
