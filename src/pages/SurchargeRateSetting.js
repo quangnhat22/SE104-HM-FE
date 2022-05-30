@@ -17,26 +17,31 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
-import * as SagaActionTypes from "../redux/constants/constantSaga";
 import SurchargeRateModal from "../components/SurchargeRate/SurchargeRateModal";
 import TableSurchargeRate from "../components/Table/TableSurchargeRate";
-
+import * as SagaActionTypes from "../redux/constants/constantSaga";
 
 export default function SurchargeRateSetting() {
   const theme = useTheme();
   const dispatch = useDispatch();
   const matchDownSM = useMediaQuery(theme.breakpoints.down("sm"));
   const { loading } = useSelector((state) => state.LoadingReducer);
-  const {SoKhachToiDa, SoKhachKhongPhuThu} = useSelector((state) => state.ConfigReducer);
+  const { SoKhachToiDa, SoKhachKhongPhuThu } = useSelector(
+    (state) => state.ConfigReducer
+  );
   const [openNew, setOpenNew] = useState(false);
-  const {surchargeList} = useSelector(state => state.SurchargeReducer);
+  const [openModify, setOpenModify] = useState(false);
+  const [modifyingSurchargeRate, setModifyingSurchargeRate] = useState();
+  const { surchargeList } = useSelector((state) => state.SurchargeReducer);
+
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_CONFIG_SAGA });
-    dispatch({type: SagaActionTypes.FETCH_LIST_SURCHARGE_SAGA});
+    dispatch({ type: SagaActionTypes.FETCH_LIST_SURCHARGE_SAGA });
   }, []);
 
   const handleClose = () => {
     setOpenNew(false);
+    setOpenModify(false);
   };
 
   const handleNewRoomType = () => {
@@ -44,7 +49,15 @@ export default function SurchargeRateSetting() {
   };
 
   const handleDelete = (surchargeRate) => {
-    dispatch({type: SagaActionTypes.DELETE_SURCHARGE_SAGA, SoKhach: surchargeRate.SoKhach});
+    dispatch({
+      type: SagaActionTypes.DELETE_SURCHARGE_SAGA,
+      SoKhach: surchargeRate.SoKhach,
+    });
+  };
+
+  const handleModify = (surchargeRate) => {
+    setModifyingSurchargeRate(surchargeRate);
+    setOpenModify(true);
   };
 
   return (
@@ -86,19 +99,19 @@ export default function SurchargeRateSetting() {
                     .required("Vui lòng nhập số lượng khách không phụ thu"),
                 })}
                 onSubmit={async (values) => {
-                  if(values.SoKhachToiDa >= values.SoKhachKhongPhuThu) {
+                  if (values.SoKhachToiDa >= values.SoKhachKhongPhuThu) {
                     dispatch({
-                      type:SagaActionTypes.UPDATE_CONFIG_SAGA,
-                      mtsSoKhachToiDa:values.MaSoKhachToiDa,
+                      type: SagaActionTypes.UPDATE_CONFIG_SAGA,
+                      mtsSoKhachToiDa: values.MaSoKhachToiDa,
                       mtsSoKhachKhongPhuThu: values.MaSoKhachKhongPhuThu,
                       soKhachToiDa: values.SoKhachToiDa,
                       soKhachKhongPhuThu: values.SoKhachKhongPhuThu,
-                    })
+                    });
+                  } else {
+                    toast.error(
+                      "Số khách tối đa phải lớn hơn hoặc bằng số khác không phụ thu"
+                    );
                   }
-                  else {
-                    toast.error("Số khách tối đa phải lớn hơn hoặc bằng số khác không phụ thu");
-                  }
-                  
                 }}
               >
                 {({
@@ -184,7 +197,11 @@ export default function SurchargeRateSetting() {
             </Typography>
 
             <>
-              <TableSurchargeRate data={surchargeList} handleDelete={handleDelete} />
+              <TableSurchargeRate
+                data={surchargeList}
+                handleModify={handleModify}
+                handleDelete={handleDelete}
+              />
               <Box sx={{ display: "flex", justifyContent: "center" }}>
                 <Button
                   sx={{ mt: 4 }}
@@ -194,7 +211,23 @@ export default function SurchargeRateSetting() {
                   Thêm tỉ lệ phụ thu
                 </Button>
               </Box>
-              {openNew && <SurchargeRateModal handleClose={handleClose} soKhachToiDa={SoKhachToiDa.GiaTri} soKhachKhongPhuThu={SoKhachKhongPhuThu.GiaTri} />}
+              {openNew && (
+                <SurchargeRateModal
+                  type="new"
+                  handleClose={handleClose}
+                  soKhachToiDa={SoKhachToiDa.GiaTri}
+                  soKhachKhongPhuThu={SoKhachKhongPhuThu.GiaTri}
+                />
+              )}
+              {openModify && (
+                <SurchargeRateModal
+                  type="modify"
+                  handleClose={handleClose}
+                  soKhachToiDa={SoKhachToiDa.GiaTri}
+                  soKhachKhongPhuThu={SoKhachKhongPhuThu.GiaTri}
+                  surchargeRate={modifyingSurchargeRate}
+                />
+              )}
             </>
           </Paper>
         </>

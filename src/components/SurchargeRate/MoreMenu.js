@@ -1,11 +1,13 @@
 import { Box, IconButton, Tooltip } from "@mui/material";
-import { IconTrash } from "@tabler/icons";
+import { IconPencil, IconTrash } from "@tabler/icons";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import AlertModal from "../../ui-component/AlertModal";
-import * as SagaActionTypes from "../../redux/constants/constantSaga";
 
-export default function MoreMenu({ surchargeRate, handleDelete }) {
+export default function MoreMenu({
+  surchargeRate,
+  handleModify,
+  handleDelete,
+}) {
   const [openDelete, setOpenDelete] = useState(false);
 
   const handleClose = () => {
@@ -23,6 +25,16 @@ export default function MoreMenu({ surchargeRate, handleDelete }) {
   return (
     <>
       <Box sx={{ display: "flex", justifyContent: "right" }}>
+        <Tooltip title="Chỉnh sửa">
+          <IconButton
+            variant="text"
+            color="primary"
+            size="large"
+            onClick={() => handleModify(surchargeRate)}
+          >
+            <IconPencil />
+          </IconButton>
+        </Tooltip>
         <Tooltip title="Xoá">
           <IconButton
             variant="text"
