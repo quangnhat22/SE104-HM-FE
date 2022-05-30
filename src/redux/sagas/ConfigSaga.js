@@ -23,10 +23,12 @@ function* actFetchConfig() {
         type: ActionTypes.GET_CONFIG,
         SoKhachToiDa: soKhachToiDa,
         SoKhachKhongPhuThu: soKhachKhongPhuThu,
-      });
-      yield put({ type: ActionTypes.HIDE_LOADING });
+      });   
     }
-  } catch (err) {}
+    yield put({ type: ActionTypes.HIDE_LOADING });
+  } catch (err) {
+    yield put({ type: ActionTypes.HIDE_LOADING });
+  }
 }
 
 function* actUpdateNewConfig(action) {

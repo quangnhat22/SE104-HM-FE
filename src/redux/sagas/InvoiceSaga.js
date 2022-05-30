@@ -8,6 +8,7 @@ const _ = require("lodash");
 
 function* actFetchInvoiceList() {
   try {
+    yield put({ type: ActionTypes.SHOW_LOADING });
     let { data, status } = yield call(() => InvoiceService.getListInvoice());
     if (status === STATUS_SUCCESS) {
       let newInvoiceList = _.forEach(data, (element) => {
@@ -18,13 +19,15 @@ function* actFetchInvoiceList() {
           });
         });
       });
-      console.log("invoice: ", newInvoiceList);
       yield put({
         type: ActionTypes.GET_INVOICE_LIST,
         invoiceList: newInvoiceList,
-      });
+      });     
     }
-  } catch (err) {}
+    yield put({ type: ActionTypes.HIDE_LOADING });
+  } catch (err) {
+    yield put({ type: ActionTypes.HIDE_LOADING });
+  }
 }
 
 function* actAddNewInvoice(action) {

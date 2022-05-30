@@ -47,10 +47,11 @@ export default function Booking() {
     setTotalPricePerDay(0);
   }, []);
   
-  console.log(typeCustomerList)
+
   useEffect(() => {
-    console.log("length:",customerList.length)
-    console.log("ko phu thu: ", SoKhachKhongPhuThu)
+      console.log(typeCustomerList)
+    // console.log("length:",customerList.length)
+    // console.log("ko phu thu: ", SoKhachKhongPhuThu)
     if(customerList.length === 0) {
       setTotalPricePerDay(0)
     }
@@ -64,7 +65,16 @@ export default function Booking() {
       if(heSoPhuThu === undefined) {
         heSoPhuThu = 1
       } 
+      // let newArray1 = _.map(customerList, (element) => {
+      //   return {
+      //     MaLoaiKhach:
+      //   }
+      // })
+      let newArray2 = _.uniqBy(customerList, "MaLoaiKhach")
       //let checkTypeCustomer = _.findIndex(customerList, (element) => element.MaLoaiKhach)
+      let heSoPhuThuNuocNgoai = 1;
+      
+      console.log("new array", newArray2)
       console.log(heSoPhuThu)
       
       setTotalPricePerDay(DonGia);

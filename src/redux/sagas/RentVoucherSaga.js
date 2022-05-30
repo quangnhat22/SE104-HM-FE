@@ -23,10 +23,11 @@ function* actFetchListRentVoucher() {
         type: ActionTypes.GET_RENT_VOUCHER_LIST,
         rentList: newRentList,
       });
-      yield put({ type: ActionTypes.HIDE_LOADING });
     }
+    yield put({ type: ActionTypes.HIDE_LOADING });
   } catch (err) {
     console.log(err);
+    yield put({ type: ActionTypes.HIDE_LOADING });
   }
 }
 

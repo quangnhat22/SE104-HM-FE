@@ -27,6 +27,7 @@ export default function Room() {
     dispatch({ type: ActionSagaTypes.FETCH_LIST_STATE_ROOM_SAGA });
     dispatch({ type: ActionSagaTypes.GET_CONFIG_SAGA });
     dispatch({type: ActionSagaTypes.FETCH_LIST_SURCHARGE_SAGA});
+    dispatch({ type: ActionSagaTypes.FETCH_LIST_TYPE_CUSTOMER_SAGA });
   }, []);
 
   const [filterName, setFilterName] = useState("");

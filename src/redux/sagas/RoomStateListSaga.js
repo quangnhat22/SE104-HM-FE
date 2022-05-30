@@ -7,6 +7,7 @@ import * as SagaActionTypes from "../constants/constantSaga";
 
 function * actFetchListStateRoom() {
     try {
+        yield put({ type: ActionTypes.SHOW_LOADING });
         let {data, status} = yield call(()=> RoomStateService.getListRoomState());
         if(status === STATUS_SUCCESS) {
             yield put({
@@ -14,9 +15,11 @@ function * actFetchListStateRoom() {
                 roomStateList: data
             })
         }
+        yield put({ type: ActionTypes.SHOW_LOADING });
     }
     catch (err) {
         console.log(err);
+        yield put({ type: ActionTypes.SHOW_LOADING });
     }
 }
 

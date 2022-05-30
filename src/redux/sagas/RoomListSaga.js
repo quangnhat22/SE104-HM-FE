@@ -7,6 +7,7 @@ import { ADD_NEW_ROOM_SAGA, DELETE_ROOM_SAGA, EDIT_ROOM_SAGA, FETCH_LIST_ROOM_SA
 
 function * actFetchListRoom() {
     try {
+        yield put({ type: ActionTypes.SHOW_LOADING });
         let {data, status} = yield call(()=> RoomService.getListRoom());
         if(status === STATUS_SUCCESS) {
             yield put({
@@ -14,9 +15,10 @@ function * actFetchListRoom() {
                 roomList: data
             })
         }
+        yield put({ type: ActionTypes.HIDE_LOADING });
     }
     catch (err) {
-        console.log(err);
+        yield put({ type: ActionTypes.HIDE_LOADING });
     }
 }
 

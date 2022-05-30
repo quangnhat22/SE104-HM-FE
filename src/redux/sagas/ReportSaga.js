@@ -7,7 +7,9 @@ import { STATUS_SUCCESS } from "../../services/urlAPI";
 
 function* actFetchReport(action) {
   let { thang, nam } = action;
+  
   try {
+    yield put({ type: ActionTypes.SHOW_LOADING });
     let { data, status } = yield call(() =>
       ReportService.getReport(thang, nam)
     );
@@ -22,8 +24,10 @@ function* actFetchReport(action) {
     } else {
       toast.error("Vui lòng kiểm tra các giá trị nhập vào.")
     }
+    yield put({ type: ActionTypes.HIDE_LOADING });
   } catch (err) {
     toast.error("Vui lòng kiểm tra các giá trị nhập vào.")
+    yield put({ type: ActionTypes.HIDE_LOADING });
   }
 }
 

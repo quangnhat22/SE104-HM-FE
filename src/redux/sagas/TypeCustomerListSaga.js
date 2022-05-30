@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 
 function * actFetchListTypeCustomer() {
     try {
+        yield put({ type: ActionTypes.SHOW_LOADING });
         let {data, status} = yield call (()=> TypeCustomerService.getListTypeCustomer());
         if(status === STATUS_SUCCESS) {
             yield put({
@@ -14,8 +15,10 @@ function * actFetchListTypeCustomer() {
                 typeCustomerList: data
             })
         }
+        yield put({ type: ActionTypes.HIDE_LOADING });
     } catch (err) {
         console.log(err.message)
+        yield put({ type: ActionTypes.HIDE_LOADING });
     }
 }
 

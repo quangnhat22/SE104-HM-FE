@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 
 function * actFetchListTypeRoom() {
     try {
+        yield put({ type: ActionTypes.SHOW_LOADING });
         let {data, status} = yield call (()=> TypeRoomService.getListTypeRoom());
         if(status === STATUS_SUCCESS) {
             yield put({
@@ -14,9 +15,10 @@ function * actFetchListTypeRoom() {
                 typeList: data
             })
         }
+        yield put({ type: ActionTypes.HIDE_LOADING });
     }
     catch(err) {
-
+        yield put({ type: ActionTypes.HIDE_LOADING });
     }
 }
 

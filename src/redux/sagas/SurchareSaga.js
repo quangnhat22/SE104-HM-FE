@@ -7,6 +7,7 @@ import { ADD_NEW_SURCHARGE_SAGA, DELETE_SURCHARGE_SAGA, FETCH_LIST_SURCHARGE_SAG
 
 function * actFetchListSurcharge() {
     try {
+        yield put({ type: ActionTypes.SHOW_LOADING });
         let {data, status} = yield call(()=> SurchargeService.getListSurcharge());
         if(status === STATUS_SUCCESS) {
             yield put({
@@ -14,9 +15,11 @@ function * actFetchListSurcharge() {
                 surchargeList: data
             })
         }
+        yield put({ type: ActionTypes.HIDE_LOADING });
     }
     catch (err) {
         console.log(err);
+        yield put({ type: ActionTypes.HIDE_LOADING });
     }
 }
 
