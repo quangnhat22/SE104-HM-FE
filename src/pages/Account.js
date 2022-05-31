@@ -1,35 +1,16 @@
 import {
   Box,
   Button,
-  CircularProgress,
   Paper,
   Typography,
+  CircularProgress,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import AccountModal from "../components/Account/AccountModal";
 import TableAccount from "../components/Table/TableAccount";
+import * as ActionSagaTypes from "../redux/constants/constantSaga";
 import Search from "../ui-component/Search";
-import { toast } from "react-toastify";
-
-function createData(MaTaiKhoan, HoTen, TenNhom, Email, MaNhom) {
-  return { MaTaiKhoan, HoTen, TenNhom, Email, MaNhom };
-}
-
-const accountList = [
-  createData("232dsa", "Phú Quang", "Admin", "phuquang@gmail.com", "N001"),
-  createData("232dsa", "Đỗ Phú Quang", "Admin", "phuquang@gmail.com", "N001"),
-];
-
-const accountGroupList = [
-  {
-    MaNhom: "N001",
-    TenNhom: "Admin",
-  },
-  {
-    MaNhom: "N002",
-    TenNhom: "Nô tì",
-  },
-];
 
 export default function Account() {
   const [filterName, setFilterName] = useState("");
@@ -37,6 +18,16 @@ export default function Account() {
   const [openModify, setOpenModify] = useState(false);
   const [modifyingAccount, setModifyingAccount] = useState();
   const [modifyingAccountGroup, setModifyingAccountGroup] = useState(0);
+  const { userList } = useSelector((state) => state.UserReducer);
+  const { userGroupList } = useSelector((state) => state.UserGroupReducer);
+  const { loading } = useSelector((state) => state.LoadingReducer);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({ type: ActionSagaTypes.FETCH_LIST_USER_GROUP_SAGA });
+    dispatch({ type: ActionSagaTypes.FETCH_LIST_USER_SAGA });
+  }, []);
 
   const handleClose = () => {
     setOpenNew(false);
@@ -47,12 +38,8 @@ export default function Account() {
     setOpenNew(true);
   };
 
-  const handleNewPassword = () => {
-    toast.success("new password");
-  };
-
   const handleModify = (account) => {
-    let index = accountGroupList.findIndex(
+    let index = userGroupList.findIndex(
       (group) => group.MaNhom === account.MaNhom
     );
     setModifyingAccountGroup(index);
@@ -61,7 +48,10 @@ export default function Account() {
   };
 
   const handleDelete = (account) => {
-    toast.success("account deleted");
+    dispatch({
+      type: ActionSagaTypes.DELETE_USER_SAGA,
+      MaNguoiDung: account.MaNguoiDung,
+    });
   };
 
   const handleFilterByName = (event) => {
@@ -92,7 +82,7 @@ export default function Account() {
         <AccountModal
           handleClose={handleClose}
           type="new"
-          accountGroups={accountGroupList}
+          userGroupList={userGroupList}
         />
       )}
       {openModify && (
@@ -100,12 +90,12 @@ export default function Account() {
           handleClose={handleClose}
           type="modify"
           account={modifyingAccount}
-          accountGroups={accountGroupList}
-          groupIndex={modifyingAccountGroup}
+          userGroupList={userGroupList}
+          userGroupIndex={modifyingAccountGroup}
         />
       )}
-      {/* {loading ? (
-      <div
+      {loading ? (
+        <div
           style={{
             width: "100%",
             display: "flex",
@@ -116,15 +106,14 @@ export default function Account() {
         >
           <CircularProgress />
         </div>
-      ) : ( */}
-      <TableAccount
-        data={accountList}
-        filterName={filterName}
-        handleNewPassword={handleNewPassword}
-        handleModify={handleModify}
-        handleDelete={handleDelete}
-      />
-      {/* )} */}
+      ) : (
+        <TableAccount
+          data={userList}
+          filterName={filterName}
+          handleModify={handleModify}
+          handleDelete={handleDelete}
+        />
+      )}
     </Paper>
   );
 }

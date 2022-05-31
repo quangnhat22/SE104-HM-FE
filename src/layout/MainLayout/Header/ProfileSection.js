@@ -20,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 import MainCard from "../../../ui-component/cards/MainCard";
 import Transitions from "../../../ui-component/extended/Transitions";
 import showTextBasedOnTime from "../../../utils/showTextBasedOnTime";
+import Cookies from "js-cookie";
 
 const ProfileSection = () => {
   const theme = useTheme();
@@ -35,7 +36,9 @@ const ProfileSection = () => {
   const textHelloFromRealtime = showTextBasedOnTime();
 
   const handleLogout = async () => {
-    console.log("Logout");
+    Cookies.remove("level");
+    Cookies.remove("token");
+    navigate("/login", { replace: true });
   };
 
   const handleClose = (event) => {
@@ -144,7 +147,7 @@ const ProfileSection = () => {
                           {textHelloFromRealtime},
                         </Typography>
                         <Typography
-                          component="span" 
+                          component="span"
                           variant="h4"
                           sx={{ fontWeight: 400 }}
                         >
@@ -182,7 +185,7 @@ const ProfileSection = () => {
                         </ListItemIcon>
                         <ListItemText
                           primary={
-                            <Typography variant="body2">Logout</Typography>
+                            <Typography variant="body2">Đăng xuất</Typography>
                           }
                         />
                       </ListItemButton>

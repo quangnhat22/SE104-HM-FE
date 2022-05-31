@@ -31,7 +31,7 @@ export default function Receipt() {
           setFilterName={handleChangeFilterByName}
         />
       </Box>
-      <TableReceipt data={receiptList} filterName={filterName} />
+      {/* <TableReceipt data={receiptList} filterName={filterName} /> */}
     </Paper>
   );
 }
