@@ -14,6 +14,7 @@ const initialState = {
               DoanhThuTheoThang: 0,
               TiLe: 1,
               DaXoa: false,
+              RatePercent: 1,
               RoomType: {
                   MaLoaiPhong: "",
                   TenLoaiPhong: "",
@@ -30,6 +31,7 @@ export const ReportReducer = (state = initialState, action) => {
 
   case ActionTypes.GET_REPORT:
     state.report = action.report;
+    console.log(action.report);
     return { ...state }
 
   default:

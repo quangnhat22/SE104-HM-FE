@@ -6,6 +6,8 @@ export const ReportService = {
       },
 
     getReportExcel: (thang, nam) => {
-      return Axios.get(URL_GET_REPORT_EXCEL(thang,nam));
+      return Axios.get(URL_GET_REPORT_EXCEL(thang,nam), {
+        responseType: 'blob'
+      });
     }
 }

@@ -1,9 +1,10 @@
 import {
   Box,
-  Button, Paper,
+  Button,
+  Paper,
   TextField,
   Typography,
-  useMediaQuery
+  useMediaQuery,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -19,20 +20,28 @@ import TableRoomRevenue from "../components/Table/TableRoomRevenue";
 import * as SagaActionTypes from "../redux/constants/constantSaga";
 
 export default function MonthlyReport() {
-  const { month, year } = useParams();
+  //const { month, year } = useParams();
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down("sm"));
-  const [value, setValue] = useState(new Date());
+  const [value, setValue] = useState(new Date(`${(new Date()).getFullYear()}-${(new Date()).getMonth()}`));
+  const [monthState, setMonthState] = useState((new Date()).getMonth());
+  const [yearState, setYearState] = useState((new Date()).getFullYear());
   const { report } = useSelector((state) => state.ReportReducer);
   const dispatch = useDispatch();
-  // useEffect(()=> {
-  //   dispatch({
-  //     type: SagaActionTypes.FETCH_REPORT_SAGA,
-  //     thang: (new Date()).getMonth(),
-  //     nam: (new Date()).getFullYear()
-  //   })
-  //   setValue(new Date())
-  // }, [])
+  useEffect(() => {
+    dispatch({
+      type: SagaActionTypes.FETCH_REPORT_SAGA,
+      thang: monthState,
+      nam: yearState,
+    });
+  },[])
+  const handleClickBtnExcel = () => {
+    dispatch({
+      type: SagaActionTypes.GET_REPORT_EXCEL,
+      thang: monthState,
+      nam: yearState,
+    });
+  };
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", p: 5 }}>
       <Typography variant="h3" gutterBottom sx={{ mb: 4 }}>
@@ -47,8 +56,11 @@ export default function MonthlyReport() {
           maxDate={new Date("2100-12-01")}
           value={value}
           onChange={(newValue) => {
-            let month = newValue.getUTCMonth() + 1;
-            let year = newValue.getUTCFullYear();
+            console.log(newValue);
+            let month = newValue.getMonth() + 1;
+            let year = newValue.getFullYear();
+            setMonthState(monthState);
+            setYearState(yearState);
             setValue(newValue);
             dispatch({
               type: SagaActionTypes.FETCH_REPORT_SAGA,
@@ -72,6 +84,7 @@ export default function MonthlyReport() {
           form="surchargeRateForm"
           variant="outlined"
           sx={{ pt: "12px", pb: "12px", mt: "24px" }}
+          onClick={handleClickBtnExcel}
           startIcon={<IconTable />}
         >
           Xuất Excel

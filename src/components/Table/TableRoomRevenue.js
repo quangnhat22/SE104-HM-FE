@@ -19,7 +19,7 @@ import {
       minWidth: 170,
     },
     {
-      id: "TiLe",
+      id: "RatePercent",
       label: "Tỷ lệ",
       minWidth: 170,
     },
