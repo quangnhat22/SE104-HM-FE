@@ -2,9 +2,7 @@ import * as ActionTypes from "../constants/constant";
 
 const initialState = {
   resetState: 1,
-  userLogin: {
-    CapBac: 0,
-  },
+  userLogin: null,
   userList: [
     {
       MaNguoiDung: "",

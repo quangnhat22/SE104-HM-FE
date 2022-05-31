@@ -1,24 +1,25 @@
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import * as ActionTypes from "../../redux/constants/constant";
+import * as ActionSagaTypes from "../../redux/constants/constantSaga";
 import ResetForm from "./ResetForm";
 import SendEmailForm from "./SendEmailForm";
 
 export default function ResetPasswordModal({ handleClose }) {
-  const [resetState, setResetState] = useState("send");
-
-  const handleSendEmail = () => {
-    toast.success("Đã gửi mã xác nhận vào email. Vui lòng kiểm tra hòm thư!");
-    setResetState("reset");
+  const { resetState } = useSelector((state) => state.UserReducer);
+  const dispatch = useDispatch();
+  const handleSendEmail = (email) => {
+    dispatch({ type: ActionSagaTypes.FORGOT_PASSWORD_SAGA, email });
   };
 
-  const handleResetPassword = () => {
-    toast.success("Thay đổi mật khẩu thành công!");
+  const handleResetPassword = (resetContent) => {
+    dispatch({ type: ActionSagaTypes.RESET_PASSWORD_SAGA, resetContent });
     handleClose();
   };
 
   const handleBack = () => {
-    setResetState("send");
+    dispatch({ type: ActionTypes.SET_RESET_STATE_1 });
   };
 
   return (
@@ -27,7 +28,7 @@ export default function ResetPasswordModal({ handleClose }) {
         Thay đổi mật khẩu
       </DialogTitle>
       <DialogContent>
-        {resetState === "send" ? (
+        {resetState === 1 ? (
           <SendEmailForm
             handleClose={handleClose}
             handleSubmit={handleSendEmail}

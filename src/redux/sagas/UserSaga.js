@@ -11,7 +11,7 @@ import {
   FETCH_LIST_USER_SAGA,
   FORGOT_PASSWORD_SAGA,
   POST_USER_LOGIN_SAGA,
-  RESET_PASSWORD_SAGA
+  RESET_PASSWORD_SAGA,
 } from "../constants/constantSaga";
 
 function* actLogin(action) {
@@ -19,6 +19,7 @@ function* actLogin(action) {
   try {
     let { data, status } = yield call(() => UserService.postLogin(userLogin));
     if (status === STATUS_SUCCESS) {
+      toast.success("Đăng nhập thành công!");
       Cookies.set("token", data.token);
       Cookies.set("level", data.CapBac);
       yield put({
@@ -27,7 +28,7 @@ function* actLogin(action) {
       });
     }
   } catch (err) {
-    toast.error("Đăng nhập thất bại!")
+    toast.error("Đăng nhập thất bại!");
   }
 }
 

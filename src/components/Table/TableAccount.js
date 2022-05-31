@@ -13,7 +13,7 @@ import applySortFilter from "../../utils/table-sort-filter";
 import MoreMenu from "../Account/MoreMenu";
 
 const columns = [
-  { id: "MaTaiKhoan", label: "Mã tài khoản", minWidth: 120, align: "center" },
+  { id: "MaNguoiDung", label: "Mã người dùng", minWidth: 120, align: "center" },
   { id: "HoTen", label: "Họ và tên", minWidth: 200 },
   {
     id: "TenNhom",
@@ -32,7 +32,12 @@ const columns = [
   },
 ];
 
-export default function TableAccount({ data, filterName, handleNewPassword, handleModify, handleDelete }) {
+export default function TableAccount({
+  data,
+  filterName,
+  handleModify,
+  handleDelete,
+}) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [order, setOrder] = useState("");
@@ -70,29 +75,31 @@ export default function TableAccount({ data, filterName, handleNewPassword, hand
           <TableBody>
             {filteredData
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                  {columns.map((column) => {
-                    const value = row[column.id];
-                    return column.id === "more" ? (
-                      <TableCell align="center" key={row.id}>
-                        <MoreMenu
-                          account={row}
-                          handleNewPassword={handleNewPassword}
-                          handleModify={handleModify}
-                          handleDelete={handleDelete}
-                        />
-                      </TableCell>
-                    ) : (
-                      <TableCell key={column.id} align={column.align}>
-                        {column.format && typeof value === "number"
-                          ? column.format(value)
-                          : value}
-                      </TableCell>
-                    );
-                  })}
-                </TableRow>
-              ))}
+              .map((row) => {
+                const newRow = { ...row, TenNhom: row.UserGroup.TenNhom };
+                return (
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                    {columns.map((column) => {
+                      const value = newRow[column.id];
+                      return column.id === "more" ? (
+                        <TableCell align="center" key={newRow.id}>
+                          <MoreMenu
+                            account={newRow}
+                            handleModify={handleModify}
+                            handleDelete={handleDelete}
+                          />
+                        </TableCell>
+                      ) : (
+                        <TableCell key={column.id} align={column.align}>
+                          {column.format && typeof value === "number"
+                            ? column.format(value)
+                            : value}
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                );
+              })}
           </TableBody>
           {isUserNotFound && (
             <TableBody>
