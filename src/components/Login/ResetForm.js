@@ -12,14 +12,16 @@ export default function ResetForm({ handleClose, handleSubmit, handleBack }) {
   return (
     <Formik
       initialValues={{
-        resetCode: "",
-        password: "",
+        ResetCode: "",
+        MatKhau: "",
       }}
       validationSchema={Yup.object().shape({
-        resetCode: Yup.string().required("Vui lòng nhập mã xác nhận"),
-        password: Yup.string().max(255).required("Vui lòng nhập mật khẩu mới"),
+        ResetCode: Yup.string().required("Vui lòng nhập mã xác nhận"),
+        MatKhau: Yup.string().max(255).required("Vui lòng nhập mật khẩu mới"),
       })}
-      onSubmit={handleSubmit}
+      onSubmit={(values) =>
+        handleSubmit({ ResetCode: values.ResetCode, MatKhau: values.MatKhau })
+      }
     >
       {({
         errors,
@@ -32,34 +34,34 @@ export default function ResetForm({ handleClose, handleSubmit, handleBack }) {
         <form noValidate onSubmit={handleSubmit}>
           <FormControl
             fullWidth
-            error={Boolean(touched.resetCode && errors.resetCode)}
+            error={Boolean(touched.ResetCode && errors.ResetCode)}
             sx={{ mb: 3, mt: 1 }}
           >
             <TextField
               label="Mã xác nhận"
-              value={values.resetCode}
-              name="resetCode"
+              value={values.ResetCode}
+              name="ResetCode"
               onBlur={handleBlur}
               onChange={handleChange}
             />
-            {touched.resetCode && errors.resetCode && (
-              <FormHelperText error>{errors.resetCode}</FormHelperText>
+            {touched.ResetCode && errors.ResetCode && (
+              <FormHelperText error>{errors.ResetCode}</FormHelperText>
             )}
           </FormControl>
           <FormControl
             fullWidth
-            error={Boolean(touched.password && errors.password)}
+            error={Boolean(touched.MatKhau && errors.MatKhau)}
             sx={{ mb: 3, mt: 1 }}
           >
             <TextField
               label="Mật khẩu mới"
-              value={values.password}
-              name="password"
+              value={values.MatKhau}
+              name="MatKhau"
               onBlur={handleBlur}
               onChange={handleChange}
             />
-            {touched.password && errors.password && (
-              <FormHelperText error>{errors.password}</FormHelperText>
+            {touched.MatKhau && errors.MatKhau && (
+              <FormHelperText error>{errors.MatKhau}</FormHelperText>
             )}
           </FormControl>
           <Box sx={{ display: "flex", justifyContent: "end" }}>

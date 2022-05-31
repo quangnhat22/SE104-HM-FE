@@ -35,6 +35,9 @@ export default function SendEmailForm({ handleClose, handleSubmit }) {
             fullWidth
             error={Boolean(touched.email && errors.email)}
             sx={{ mb: 3, mt: 1, minWidth: "300px" }}
+            onSubmit={(values) => {
+              handleSubmit(values.email)
+            }}
           >
             <TextField
               label="Email"

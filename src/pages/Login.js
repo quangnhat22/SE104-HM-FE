@@ -1,10 +1,14 @@
 import { Grid, Stack, Typography, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import logo from "../assets/images/logo.png";
 import AuthLogin from "../components/Login/AuthLogin";
 import ResetPasswordModal from "../components/Login/ResetPasswordModal";
+import * as ActionTypes from "../redux/constants/constant";
 import AuthCardWrapper from "../ui-component/AuthCardWrapper";
 import AuthWrapper from "../ui-component/AuthWrapper";
 
@@ -12,14 +16,24 @@ const Login = () => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down("md"));
   const [openResetPassword, setOpenResetPassword] = useState(false);
+  const { userLogin } = useSelector((state) => state.UserReducer);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleCloseReset = () => {
     setOpenResetPassword(false);
   };
 
   const handleOpenReset = () => {
+    dispatch({ type: ActionTypes.SET_RESET_STATE_1 });
     setOpenResetPassword(true);
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (userLogin) navigate("/", { replace: true });
+    }, 1000);
+  }, [userLogin]);
 
   return (
     <>
@@ -49,7 +63,7 @@ const Login = () => {
                       <Link to="#">
                         <img
                           src={logo}
-                          alt="Berry"
+                          alt="Daijoubu"
                           width="100%"
                           height="60px"
                         />

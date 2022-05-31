@@ -5,6 +5,14 @@ export const appDrawerWidth = 320;
 //LOADING
 export const SHOW_LOADING = "SHOW_LOADING";
 export const HIDE_LOADING = "HIDE_LOADING";
+
+//USER
+export const GET_USER = "GET_USER"
+export const GET_USER_LIST = "GET_USER_LIST"
+export const GET_USER_GROUP_LIST = "GET_USER_GROUP_LIST"
+export const SET_RESET_STATE_1 = "SET_RESET_STATE_1"
+export const SET_RESET_STATE_2 = "SET_RESET_STATE_2"
+
 //ROOM
 export const GET_ROOM_LIST = "GET_ROOM_LIST";
 
