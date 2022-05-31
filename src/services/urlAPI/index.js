@@ -2,6 +2,16 @@ export const DOMAIN_NAME  = process.env.REACT_APP_BASE_URL;
 export const STATUS_SUCCESS = 200;
 export const STATUS_CREATE_SUCCESS = 201;
 
+//USER
+export const URL_POST_LOGIN = `${DOMAIN_NAME}/user/authentication/login`;
+export const URL_GET_LIST_USER = `${DOMAIN_NAME}/user/management`;
+export const URL_GET_LIST_USER_GROUP = `${DOMAIN_NAME}/user/management/user-group`;
+export const URL_ADD_NEW_USER = `${DOMAIN_NAME}/user/management`;
+export const URL_EDIT_USER = (MaNguoiDung) => `${DOMAIN_NAME}/user/management/${MaNguoiDung}`;
+export const URL_DELETE_USER = (MaNguoiDung) => `${DOMAIN_NAME}/user/management/${MaNguoiDung}`;
+export const URL_FORGOT_PASSWORD = `${DOMAIN_NAME}/user/authentication/forgot-password`;
+export const URL_RESET_PASSWORD = `${DOMAIN_NAME}/user/authentication/reset-password`;
+
 //ROOM
 export const URL_GET_LIST_ROOM = `${DOMAIN_NAME}/room`;
 export const URL_ADD_NEW_ROOM = `${DOMAIN_NAME}/room`;
