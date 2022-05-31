@@ -5,7 +5,7 @@ import {
   IconPencil,
   IconTrash,
 } from "@tabler/icons";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AlertModal from "../../ui-component/AlertModal";
 import * as ActionTypes from "../../redux/constants/constant";
@@ -17,7 +17,9 @@ export default function MoreMenu({
   SoKhachToiDa,
   SoKhachKhongPhuThu,
   surchargeList,
+  typeCustomerList
 }) {
+
   const [openDelete, setOpenDelete] = useState(false);
   const [enableNewVoucher, setEnableNewVoucher] = useState(false);
 
@@ -62,6 +64,7 @@ export default function MoreMenu({
                 SoKhachToiDa,
                 SoKhachKhongPhuThu,
                 surchargeList,
+                typeCustomerList
               }}
             >
               <Tooltip

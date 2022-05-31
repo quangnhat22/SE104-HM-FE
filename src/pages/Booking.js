@@ -31,55 +31,59 @@ export default function Booking() {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down("sm"));
   const location = useLocation();
-  const { DonGia, MaPhong, SoKhachToiDa, SoKhachKhongPhuThu, surchargeList } = location.state;
+  const {
+    DonGia,
+    MaPhong,
+    SoKhachToiDa,
+    SoKhachKhongPhuThu,
+    surchargeList,
+    typeCustomerList,
+  } = location.state;
   const [openNew, setOpenNew] = useState(false);
   const [openModify, setOpenModify] = useState(false);
   const [modifyingCustomer, setModifyingCustomer] = useState();
   const [modifyingCustomerType, setModifyingCustomerType] = useState(0);
   const { customerList } = useSelector((state) => state.CustomerReducerLocal);
-  const { typeCustomerList } = useSelector(
-    (state) => state.TypeCustomerReducer
-  );
   const [totalPricePerDay, setTotalPricePerDay] = useState(0);
+
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch({ type: SagaActionTypes.FETCH_LIST_TYPE_CUSTOMER_SAGA });
     setTotalPricePerDay(0);
   }, []);
-  
 
   useEffect(() => {
-      console.log(typeCustomerList)
-    // console.log("length:",customerList.length)
-    // console.log("ko phu thu: ", SoKhachKhongPhuThu)
-    if(customerList.length === 0) {
-      setTotalPricePerDay(0)
+    if (customerList.length === 0) {
+      setTotalPricePerDay(0);
+    } else {
+      //type customer to object
+      let typeCustomerObject = hashTypeCustomer(typeCustomerList);
+      let arrayCustomerList = _.uniqBy(customerList, "MaLoaiKhach");
+      let rateTypeCustomer = 1;
+      _.forEach(arrayCustomerList, (element) => {
+        rateTypeCustomer *= typeCustomerObject[element.TenLoaiKhach];
+      });
+
+      if (customerList.length <= SoKhachKhongPhuThu) {
+        setTotalPricePerDay(DonGia * rateTypeCustomer);
+      } else {
+        //tinh toan he so phu thu khi length vuot qua
+        let heSoPhuThu = _.find(surchargeList, (element) => {
+          return element.SoKhach === customerList.length;
+        })?.TiLePhuThu;
+        if (heSoPhuThu === undefined) {
+          heSoPhuThu = 1;
+        }
+        setTotalPricePerDay(DonGia * rateTypeCustomer * heSoPhuThu);
+      }
     }
-    else if(customerList.length <= SoKhachKhongPhuThu) {
-      setTotalPricePerDay(DonGia)   
-    } 
-    else {
-      let heSoPhuThu = _.find(surchargeList, (element) => {
-        return element.SoKhach === customerList.length
-      })?.TiLePhuThu
-      if(heSoPhuThu === undefined) {
-        heSoPhuThu = 1
-      } 
-      // let newArray1 = _.map(customerList, (element) => {
-      //   return {
-      //     MaLoaiKhach:
-      //   }
-      // })
-      let newArray2 = _.uniqBy(customerList, "MaLoaiKhach")
-      //let checkTypeCustomer = _.findIndex(customerList, (element) => element.MaLoaiKhach)
-      let heSoPhuThuNuocNgoai = 1;
-      
-      console.log("new array", newArray2)
-      console.log(heSoPhuThu)
-      
-      setTotalPricePerDay(DonGia);
-    }
-  }, [customerList])
+  }, [customerList]);
+
+  function hashTypeCustomer(typeCustomers) {
+    return _.chain(typeCustomers)
+      .keyBy("TenLoaiKhach")
+      .mapValues("HeSoPhuThu")
+      .value();
+  }
 
   const handleClose = () => {
     setOpenNew(false);
@@ -87,8 +91,8 @@ export default function Booking() {
   };
 
   const handleNewCustomer = () => {
-    if(customerList.length >= SoKhachToiDa) {
-      toast.warning("Không thể thêm khách mới vì phòng đã đầy!")
+    if (customerList.length >= SoKhachToiDa) {
+      toast.warning("Không thể thêm khách mới vì phòng đã đầy!");
     } else {
       setOpenNew(true);
     }
@@ -101,12 +105,14 @@ export default function Booking() {
     setModifyingCustomerType(index);
     setModifyingCustomer(customer);
     setOpenModify(true);
-   
   };
 
   const handleDeleteCustomer = (customer) => {
-    console.log(customer)
-    dispatch({type: ActionTypes.REMOVE_CLIENT_RENT_VOUCER, customer: customer});
+    console.log(customer);
+    dispatch({
+      type: ActionTypes.REMOVE_CLIENT_RENT_VOUCER,
+      customer: customer,
+    });
     toast.success("Xóa khách hàng thành công!");
   };
 
@@ -122,27 +128,30 @@ export default function Booking() {
           startDate: new Date().toISOString().slice(0, 10),
         }}
         onSubmit={async (values) => {
-          if(customerList.length > 0) {
-            const customers = _.map(customerList, customer => {
+          if (customerList.length > 0) {
+            const customers = _.map(customerList, (customer) => {
               return {
                 CMND: customer.CMND,
                 MaLoaiKhach: customer.MaLoaiKhach,
                 DiaChi: customer.DiaChi,
-                TenKhachHang: customer.TenKhachHang
-              }
-            })
+                TenKhachHang: customer.TenKhachHang,
+              };
+            });
             const newBookingValue = {
               MaPhong: values.MaPhong,
               NgayBatDauThue: values.startDate,
               CacKhachHang: customers,
-              DonGiaThueTrenNgay: Math.round(totalPricePerDay * 100) / 100
-            }
-            dispatch({type: SagaActionTypes.ADD_RENT_VOUCHER_SAGA, rentVoucher: newBookingValue});
+              DonGiaThueTrenNgay: Math.round(totalPricePerDay * 100) / 100,
+            };
+            dispatch({
+              type: SagaActionTypes.ADD_RENT_VOUCHER_SAGA,
+              rentVoucher: newBookingValue,
+            });
+          } else {
+            toast.error(
+              "Vui lòng thêm khách hàng trước khi tạo phiếu thuê phòng mới."
+            );
           }
-          else {
-            toast.error("Vui lòng thêm khách hàng trước khi tạo phiếu thuê phòng mới.");
-          }
-          
         }}
       >
         {({
@@ -214,15 +223,12 @@ export default function Booking() {
       </Box>
 
       <Box sx={{ display: "flex", justifyContent: "right" }}>
-              <Typography
-                variant="h3"
-                gutterBottom
-                sx={{ mt: 2 }}
-                color="secondary"
-              >
-                {`Tổng tiền: ${numberWithCommas(Math.round(totalPricePerDay * 100) / 100)} VNĐ`}
-              </Typography>
-            </Box>
+        <Typography variant="h3" gutterBottom sx={{ mt: 2 }} color="secondary">
+          {`Tổng tiền: ${numberWithCommas(
+            Math.round(totalPricePerDay * 100) / 100
+          )} VNĐ`}
+        </Typography>
+      </Box>
 
       <Box sx={{ display: "flex", justifyContent: "end" }}>
         <Button
@@ -248,7 +254,7 @@ export default function Booking() {
           handleClose={handleClose}
           type="modify"
           customer={modifyingCustomer}
-          indexType = {modifyingCustomerType}
+          indexType={modifyingCustomerType}
         />
       )}
     </Paper>

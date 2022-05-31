@@ -12,6 +12,7 @@ import TableRoom from "../components/Table/TableRoom";
 import Search from "../ui-component/Search";
 import * as ActionSagaTypes from "../redux/constants/constantSaga";
 import { useDispatch } from "react-redux";
+const _ = require("lodash");
 
 export default function Room() {
   const { roomList } = useSelector((state) => state.RoomReducer);
@@ -20,7 +21,9 @@ export default function Room() {
   const { loading } = useSelector((state) => state.LoadingReducer);
   const {SoKhachToiDa, SoKhachKhongPhuThu} = useSelector((state) => state.ConfigReducer);
   const {surchargeList} = useSelector(state => state.SurchargeReducer);
+  const {typeCustomerList} = useSelector(state => state.TypeCustomerReducer);
   const dispatch = useDispatch();
+  
   useEffect(() => {
     dispatch({ type: ActionSagaTypes.FETCH_LIST_ROOM_SAGA });
     dispatch({ type: ActionSagaTypes.FECTH_LIST_TYPE_ROOM_SAGA });
@@ -35,6 +38,7 @@ export default function Room() {
   const [openModify, setOpenModify] = useState(false);
   const [modifyingRoom, setModifyingRoom] = useState();
   const [modifyingRoomType, setModifyingRoomType] = useState(0);
+ 
   const handleClose = () => {
     setOpenNew(false);
     setOpenModify(false);
@@ -114,6 +118,7 @@ export default function Room() {
           SoKhachToiDa = {SoKhachToiDa.GiaTri}
           SoKhachKhongPhuThu = {SoKhachKhongPhuThu.GiaTri}
           surchargeList = {surchargeList}
+          typeCustomerList = {typeCustomerList}
         />
       )}
     </Paper>

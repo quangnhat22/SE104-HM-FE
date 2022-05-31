@@ -52,11 +52,14 @@ export default function TableRoom({
   SoKhachToiDa,
   SoKhachKhongPhuThu,
   surchargeList,
+  typeCustomerList
 }) {
+
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [order, setOrder] = useState("");
   const [orderBy, setOrderBy] = useState("number");
+
   const dispatch = useDispatch();
   const handleDelete = (room) => {
     dispatch({ type: SagaActionTypes.DELETE_ROOM_SAGA, maPhong: room.MaPhong });
@@ -109,6 +112,7 @@ export default function TableRoom({
                               SoKhachToiDa={SoKhachToiDa}
                               SoKhachKhongPhuThu={SoKhachKhongPhuThu}
                               surchargeList = {surchargeList}
+                              typeCustomerList = {typeCustomerList}
                             />
                           </TableCell>
                         );

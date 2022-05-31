@@ -31,6 +31,31 @@ function* actFetchReport(action) {
   }
 }
 
+function* actFetchReportExcel(action) {
+  let { thang, nam } = action;
+  
+  try {
+    let { data, status } = yield call(() =>
+      ReportService.getReportExcel(thang,nam)
+    );
+    data.ReportDetails.forEach(reportDetail => reportDetail.index = data.ReportDetails.indexOf(reportDetail) + 1);
+    data.ReportDetails.forEach(reportDetail => reportDetail.TenLoaiPhong = reportDetail.RoomType.TenLoaiPhong);
+    
+    if (status === STATUS_SUCCESS) {
+      yield put({
+        type: ActionTypes.GET_REPORT,
+        report: data,
+      });
+    } else {
+      toast.error("Vui lòng kiểm tra các giá trị nhập vào.")
+    }
+    yield put({ type: ActionTypes.HIDE_LOADING });
+  } catch (err) {
+    toast.error("Vui lòng kiểm tra các giá trị nhập vào.")
+    yield put({ type: ActionTypes.HIDE_LOADING });
+  }
+}
+
 export function* followActFetchReport() {
   yield takeLatest(FETCH_REPORT_SAGA, actFetchReport);
 }
