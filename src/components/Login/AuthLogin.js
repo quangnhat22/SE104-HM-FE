@@ -14,11 +14,14 @@ import {
 import { useTheme } from "@mui/material/styles";
 import { Formik } from "formik";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 import AnimateButton from "../../ui-component/extended/AnimateButton";
+import * as SagaActionTypes from "../../redux/constants/constantSaga";
 
 const Login = ({ handleOpenReset }) => {
   const theme = useTheme();
+  const dispatch = useDispatch()
 
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => {
@@ -28,6 +31,13 @@ const Login = ({ handleOpenReset }) => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+
+  const handleSubmit = (values) => {
+    dispatch({
+      type: SagaActionTypes.POST_USER_LOGIN_SAGA,
+      userLogin: values,
+    });
+  }
 
   return (
     <>
@@ -43,7 +53,7 @@ const Login = ({ handleOpenReset }) => {
             .required("Vui lòng nhập email"),
           password: Yup.string().max(255).required("Vui lòng nhập mật khẩu"),
         })}
-        onSubmit={() => {}}
+        onSubmit={(values) => handleSubmit(values)}
       >
         {({
           errors,

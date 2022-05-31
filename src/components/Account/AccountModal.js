@@ -7,26 +7,35 @@ import {
   DialogTitle,
   FormControl,
   FormHelperText,
-  TextField,
+  TextField
 } from "@mui/material";
 import { Formik } from "formik";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
+import * as SagaActionTypes from "../../redux/constants/constantSaga";
 
 export default function AccountModal({
   handleClose,
   type,
-  groupIndex,
   account,
-  accountGroups,
+  userGroupIndex,
+  userGroupList,
 }) {
+  const dispatch = useDispatch();
   const handleNewAccount = (values) => {
-    toast.success("new account");
+    dispatch({
+      type: SagaActionTypes.ADD_NEW_USER_SAGA,
+      user: values,
+    });
     handleClose();
   };
 
   const handleModifyAccount = (values) => {
-    toast.success("account modified");
+    dispatch({
+      type: SagaActionTypes.EDIT_USER_SAGA,
+      user: values,
+    });
     handleClose();
   };
 
@@ -38,16 +47,21 @@ export default function AccountModal({
       <DialogContent>
         <Formik
           initialValues={{
-            MaTaiKhoan: account ? account.MaTaiKhoan : "",
+            MaNguoiDung: account ? account.MaNguoiDung : "",
             HoTen: account ? account.HoTen : "",
             Email: account ? account.Email : "",
-            TenNhom: account ? account.TenNhom : accountGroups[0].TenNhom,
+            MaNhom: account
+              ? account.UserGroup.MaNhom
+              : userGroupList[0].MaNhom,
+            TenNhom: account
+              ? account.UserGroup.TenNhom
+              : userGroupList[0].TenNhom,
           }}
           validationSchema={Yup.object().shape({
             HoTen: Yup.string().required("Vui lòng nhập họ và tên"),
             Email: Yup.string().required("Vui lòng nhập email"),
           })}
-          onSubmit={async (values) => {
+          onSubmit={(values) => {
             if (type === "new") handleNewAccount(values);
             else handleModifyAccount(values);
           }}
@@ -95,18 +109,20 @@ export default function AccountModal({
                   <FormHelperText error>{errors.Email}</FormHelperText>
                 )}
               </FormControl>
+
               <FormControl fullWidth sx={{ mb: 3 }}>
                 <Autocomplete
                   name="TenNhom"
-                  options={accountGroups}
+                  options={userGroupList}
                   defaultValue={
-                    account ? accountGroups[groupIndex] : accountGroups[0]
+                    account ? userGroupList[userGroupIndex] : userGroupList[0]
                   }
                   disableClearable
                   getOptionLabel={(option) => option.TenNhom}
                   isOptionEqualToValue={(option, value) => option === value}
                   onChange={(event, value) => {
                     setFieldValue("TenNhom", value.TenNhom);
+                    setFieldValue("MaNhom", value.MaNhom);
                   }}
                   renderInput={(params) => (
                     <TextField
