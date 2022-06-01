@@ -31,7 +31,6 @@ export const ReportReducer = (state = initialState, action) => {
 
   case ActionTypes.GET_REPORT:
     state.report = action.report;
-    console.log(action.report);
     return { ...state }
 
   default:

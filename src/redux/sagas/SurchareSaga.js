@@ -3,7 +3,7 @@ import {call, takeLatest, put} from 'redux-saga/effects';
 import {SurchargeService} from "../../services/SurchargeService";
 import { STATUS_CREATE_SUCCESS, STATUS_SUCCESS } from '../../services/urlAPI';
 import * as ActionTypes from "../constants/constant";
-import { ADD_NEW_SURCHARGE_SAGA, DELETE_SURCHARGE_SAGA, FETCH_LIST_SURCHARGE_SAGA } from '../constants/constantSaga';
+import { ADD_NEW_SURCHARGE_SAGA, DELETE_SURCHARGE_SAGA, EDIT_SURCHARGE_SAGA, FETCH_LIST_SURCHARGE_SAGA } from '../constants/constantSaga';
 
 function * actFetchListSurcharge() {
     try {
@@ -18,7 +18,6 @@ function * actFetchListSurcharge() {
         yield put({ type: ActionTypes.HIDE_LOADING });
     }
     catch (err) {
-        console.log(err);
         yield put({ type: ActionTypes.HIDE_LOADING });
     }
 }
@@ -37,12 +36,24 @@ function * actNewSurcharge(action) {
     }
 }
 
+function * actEditSurcharge(action) {
+    let {SoKhach, TiLePhuThu} = action;
+    try {
+        let {status} = yield call(()=> SurchargeService.updateSurcharge(SoKhach, TiLePhuThu));
+        if(status === STATUS_SUCCESS) {
+            yield put ({type: FETCH_LIST_SURCHARGE_SAGA});
+            toast.success("Chỉnh sửa tỷ lệ phụ thu thành công!");
+        }
+    }
+    catch (err) {
+
+    }
+}
+
 function * actDeleteSurcharge(action) {
     let {SoKhach} = action;
-    console.log(SoKhach)
     try {
         let {status} = yield call(()=> SurchargeService.deleteSurcharge(SoKhach));
-        console.log(status);
         if (status === STATUS_SUCCESS) {
             yield put ({type: FETCH_LIST_SURCHARGE_SAGA});
             toast.success("Xóa tỷ lệ phụ thu thành công!");
@@ -59,6 +70,10 @@ export function * followActFetchListSurcharge() {
 
 export function * followActAddNewSurcharge() {
     yield takeLatest(ADD_NEW_SURCHARGE_SAGA, actNewSurcharge);
+}
+
+export function * followActEditSurcharge() {
+    yield takeLatest(EDIT_SURCHARGE_SAGA, actEditSurcharge);
 }
 
 export function * followActDeleteSurcharge() {

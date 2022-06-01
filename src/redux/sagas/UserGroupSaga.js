@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { call, put, takeLatest } from "redux-saga/effects";
 import { STATUS_SUCCESS } from "../../services/urlAPI";
 import { UserGroupService } from "../../services/UserGroupService";
@@ -14,9 +15,11 @@ function* actFetchListUserGroup() {
         type: ActionTypes.GET_USER_GROUP_LIST,
         userGroupList: data,
       });
+    } else {
+      toast.success("Đã có lỗi xảy ra!");
     }
   } catch (err) {
-    console.log(err);
+    toast.success("Đã có lỗi xảy ra!");
   }
 }
 

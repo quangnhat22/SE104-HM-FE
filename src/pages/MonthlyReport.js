@@ -56,7 +56,6 @@ export default function MonthlyReport() {
           maxDate={new Date("2100-12-01")}
           value={value}
           onChange={(newValue) => {
-            console.log(newValue);
             let month = newValue.getMonth() + 1;
             let year = newValue.getFullYear();
             setMonthState(monthState);

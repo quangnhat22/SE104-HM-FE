@@ -45,6 +45,7 @@ export default function* rootSaga() {
         ConfigSaga.followActUpdateNewConfig(),
         SurchargeSaga.followActFetchListSurcharge(),
         SurchargeSaga.followActAddNewSurcharge(),
+        SurchargeSaga.followActEditSurcharge(),
         SurchargeSaga.followActDeleteSurcharge()
     ]);
 }

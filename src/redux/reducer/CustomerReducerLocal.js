@@ -33,7 +33,6 @@ export const CustomerReducerLocal = (state = initialState, action) => {
       });
       return { ...state };
     case ActionTypes.UPDATE_CLIENT_RENT_VOUCHER:
-      console.log(action.newCustomer);
       state.customerList = _.map(state.customerList, (element) => {
         return element.STT === action.STT
           ? {
@@ -46,7 +45,6 @@ export const CustomerReducerLocal = (state = initialState, action) => {
             }
           : element;
       });
-      console.log(state);
       return { ...state };
     case ActionTypes.REMOVE_ALL_CLIENT_RENT_VOUCHER:
       //remove all element
