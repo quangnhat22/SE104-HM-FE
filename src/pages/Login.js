@@ -1,10 +1,10 @@
 import { Grid, Stack, Typography, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
 import logo from "../assets/images/logo.png";
 import AuthLogin from "../components/Login/AuthLogin";
 import ResetPasswordModal from "../components/Login/ResetPasswordModal";
@@ -31,7 +31,12 @@ const Login = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      if (userLogin) navigate("/", { replace: true });
+      if (userLogin) {
+        navigate("/", { replace: true });
+      } else {
+        Cookies.remove("level");
+        Cookies.remove("token");
+      }
     }, 1000);
   }, [userLogin]);
 
