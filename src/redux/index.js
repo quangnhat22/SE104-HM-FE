@@ -7,6 +7,7 @@ import { InvoiceReducer } from "./reducer/InvoiceReducer";
 import { InvoiceReducerLocal } from "./reducer/InvoiceReducerLocal";
 import { LoadingReducer } from "./reducer/LoadingReducer";
 import { RentVoucherReducer } from "./reducer/RentVoucherReducer";
+import { ReportInYearReducer } from "./reducer/ReportInYearReducer";
 import { ReportReducer } from "./reducer/ReportReducer";
 import { RoomReducer } from "./reducer/RoomReducer";
 import { RoomStateReducer } from "./reducer/RoomStateReducer";
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   TypeRoomReducer,
   TypeCustomerReducer,
   ReportReducer,
+  ReportInYearReducer,
   InvoiceReducer,
   RentVoucherReducer,
   InvoiceReducerLocal,

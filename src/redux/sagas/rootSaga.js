@@ -6,6 +6,7 @@ import * as TypeRoomSaga from "./TypeRoomListSaga";
 import * as TypeCustomerSaga from "./TypeCustomerListSaga";
 import * as RoomStateListSaga from "./RoomStateListSaga";
 import * as ReportSaga from "./ReportSaga";
+import * as ReportInYearSaga from "./ReportInYearSaga";
 import * as InvoiceSaga from "./InvoiceSaga";
 import * as RentVoucherSaga from "./RentVoucherSaga";
 import * as ConfigSaga from "./ConfigSaga"
@@ -36,6 +37,7 @@ export default function* rootSaga() {
         TypeCustomerSaga.followDeleteTypeCustomer(),
         ReportSaga.followActFetchReport(),
         ReportSaga.followActFetchReportExcel(),
+        ReportInYearSaga.followActFetchReportInYear(),
         InvoiceSaga.followActFetchInvoiceList(),
         InvoiceSaga.followActAddNewInvoice(),
         RentVoucherSaga.followActFetchListRentVoucher(),
