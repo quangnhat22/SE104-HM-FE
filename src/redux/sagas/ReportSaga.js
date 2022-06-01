@@ -15,7 +15,6 @@ function* actFetchReport(action) {
     );
     // data.ReportDetails.forEach(reportDetail => reportDetail.index = data.ReportDetails.indexOf(reportDetail) + 1);
     // data.ReportDetails.forEach(reportDetail => reportDetail.TenLoaiPhong = reportDetail.RoomType.TenLoaiPhong);
-    console.log("data: ", data)
     data.ReportDetails = _.map(data.ReportDetails, (element) => {
       return _.extend({}, element, {
         index: _.indexOf(data.ReportDetails, element) + 1,
@@ -45,7 +44,6 @@ function* actFetchReportExcel(action) {
     let res = yield call(() =>
       ReportService.getReportExcel(thang,nam)
     );
-    console.log(res.data);
     const url = window.URL.createObjectURL(new Blob([res.data]));
     const link = document.createElement("a");
     link.href = url;

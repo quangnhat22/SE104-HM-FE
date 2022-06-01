@@ -54,7 +54,6 @@ function * actDeleteTypeRoom(action) {
     let {typeDelete} = action;
     try {
         let {status} = yield call (()=> TypeRoomService.deleteTypeRoom(typeDelete.MaLoaiPhong));
-        console.log("status: ", status);
         if(status === STATUS_SUCCESS) {
             yield put({type: FECTH_LIST_TYPE_ROOM_SAGA});
             toast.success(`Xoá loại phòng ${typeDelete.TenLoaiPhong} thành công`);

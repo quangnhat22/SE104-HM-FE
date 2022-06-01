@@ -24,7 +24,6 @@ export default function SurchargeRateModal({
 }) {
   const dispatch = useDispatch();
   const handleNewTiLePhuThu = (values) => {
-    console.log(values.SoKhach, "-", soKhachToiDa);
     if (values.SoKhach > soKhachToiDa || values.SoKhach <= soKhachKhongPhuThu) {
       toast.error(
         "Số khách không được vượt quá số khách tối đa trong phòng, hoặc nhỏ hơn hoặc bằng số khách không phụ thu"
@@ -35,15 +34,17 @@ export default function SurchargeRateModal({
         SoKhach: values.SoKhach,
         TyLePhuThu: values.TiLePhuThu,
       });
-      toast.success(
-        `Thêm tỉ lệ phụ thu thành công với số khách ${values.SoKhach}`
-      );
       handleClose();
     }
   };
 
   const handleEditTiLePhuThu = (values) => {
-    toast.success("Chỉnh sửa tỉ lệ phụ thu");
+    dispatch({
+      type: SagaActionTypes.EDIT_SURCHARGE_SAGA,
+      SoKhach: values.SoKhach,
+      TiLePhuThu: values.TiLePhuThu,
+    });
+    handleClose();
   };
 
   return (

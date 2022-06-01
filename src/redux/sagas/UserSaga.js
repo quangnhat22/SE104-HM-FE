@@ -43,9 +43,11 @@ function* actFetchListUser() {
         userList: data,
       });
       yield put({ type: ActionTypes.HIDE_LOADING });
+    } else {
+      toast.success("Đã có lỗi xảy ra!");
     }
   } catch (err) {
-    console.log(err);
+    toast.success("Đã có lỗi xảy ra!");
   }
 }
 
@@ -56,8 +58,12 @@ function* actNewUser(action) {
     if (status === STATUS_CREATE_SUCCESS) {
       yield put({ type: FETCH_LIST_USER_SAGA });
       toast.success("Thêm tài khoản thành công!");
+    } else {
+      toast.success("Đã có lỗi xảy ra!");
     }
-  } catch (err) {}
+  } catch (err) {
+    toast.success("Đã có lỗi xảy ra!");
+  }
 }
 
 function* actEditUser(action) {
@@ -67,8 +73,12 @@ function* actEditUser(action) {
     if (status === STATUS_SUCCESS) {
       yield put({ type: FETCH_LIST_USER_SAGA });
       toast.success("Sửa thông tin tài khoản thành công!");
+    } else {
+      toast.success("Đã có lỗi xảy ra!");
     }
-  } catch (err) {}
+  } catch (err) {
+    toast.success("Đã có lỗi xảy ra!");
+  }
 }
 
 function* actDeleteUser(action) {
@@ -79,7 +89,12 @@ function* actDeleteUser(action) {
       yield put({ type: FETCH_LIST_USER_SAGA });
       toast.success("Xóa tài khoản thành công!");
     }
-  } catch (err) {}
+    else {
+      toast.success("Đã có lỗi xảy ra!");
+    }
+  } catch (err) {
+    toast.success("Đã có lỗi xảy ra!");
+  }
 }
 
 function* actForgotPassword(action) {
@@ -91,8 +106,12 @@ function* actForgotPassword(action) {
       toast.success(
         "Gửi yêu cầu đổi mật khẩu thành công! Vui lòng kiểm tra email!"
       );
+    } else {
+      toast.success("Đã có lỗi xảy ra!");
     }
-  } catch (err) {}
+  } catch (err) {
+    toast.success("Đã có lỗi xảy ra!");
+  }
 }
 
 function* actResetPassword(action) {

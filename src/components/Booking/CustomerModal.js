@@ -88,7 +88,6 @@ export default function CustomerModal({ handleClose, type, customer, typeCustome
                   getOptionLabel={(option) => option.TenLoaiKhach}
                   isOptionEqualToValue={(option, value) => option === value}
                   onChange={(event, value) => {
-                    console.log(value);
                     setFieldValue("MaLoaiKhach", value.MaLoaiKhach);
                     setFieldValue("TenLoaiKhach", value.TenLoaiKhach);
                   }}

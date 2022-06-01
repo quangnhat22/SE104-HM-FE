@@ -12,6 +12,7 @@ import MoreMenu from "../Payment/MoreMenu";
 
 const columns = [
   { id: "STT", label: "STT", minWidth: 50, align: "center" },
+  { id: "MaPhieuThuePhong", label: "Mã phiếu thuê", minWidth: 150 },
   { id: "TenPhong", label: "Phòng", minWidth: 150 },
   {
     id: "SoNgayThue",

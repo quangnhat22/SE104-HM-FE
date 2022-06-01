@@ -10,9 +10,9 @@ export const SurchargeService = {
       TiLePhuThu: TyLePhuThu,
     });
   },
-  updateSurcharge: (surcharge) => {
-    return Axios.put(URL_UPDATE_SURCHARGE(surcharge.SoKhach), {
-      TiLePhuThu: surcharge.TiLePhuThu,
+  updateSurcharge: (SoKhach, TiLePhuThu) => {
+    return Axios.put(URL_UPDATE_SURCHARGE(SoKhach), {
+      TiLePhuThu: TiLePhuThu,
     });
   },
   deleteSurcharge: (SoKhach) => {

@@ -37,7 +37,11 @@ export const InvoiceReducerLocal = (state = initialState, action) => {
         });
       });
       return { ...state };
-
+    case ActionTypes.REMOVE_ALL_ROOM_INVOICE_LOCAL:
+      _.remove(state.CacPhieuThuePhong, (phieuThuePhong) => true);
+      // add index in new array
+      state.TotalPrice = 0;
+      return { ...state };
     default:
       return state;
   }

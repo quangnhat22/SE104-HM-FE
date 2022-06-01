@@ -17,7 +17,6 @@ function * actFetchListTypeCustomer() {
         }
         yield put({ type: ActionTypes.HIDE_LOADING });
     } catch (err) {
-        console.log(err.message)
         yield put({ type: ActionTypes.HIDE_LOADING });
     }
 }

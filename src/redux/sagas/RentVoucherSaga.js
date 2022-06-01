@@ -26,7 +26,6 @@ function* actFetchListRentVoucher() {
     }
     yield put({ type: ActionTypes.HIDE_LOADING });
   } catch (err) {
-    console.log(err);
     yield put({ type: ActionTypes.HIDE_LOADING });
   }
 }
@@ -56,7 +55,6 @@ function* actFetchRentVoucherDetail(action) {
     let { data, status } = yield call(() =>
       RentVoucherService.getRentVoucherDetail(MaPhieuThuePhong)
     );
-    console.log(data);
     if (status === STATUS_SUCCESS) {
       yield put({ type: ActionTypes.GET_RENT_VOUCHER_DETAIL, rentDetail: data });
     } else {
@@ -64,7 +62,6 @@ function* actFetchRentVoucherDetail(action) {
     }
     yield put({ type: ActionTypes.HIDE_LOADING });
   } catch (err) {
-    console.log(err);
     yield put({ type: ActionTypes.HIDE_LOADING });
   }
 }

@@ -39,8 +39,6 @@ const TotalRevenueChart = ({ isLoading }) => {
     setMonthRevenueList(tempMonthRevenueList);
   }, [reportList]);
 
-  console.log(monthRevenueList);
-
   useEffect(() => {
     const newChartData = {
       ...chartConfig.options,

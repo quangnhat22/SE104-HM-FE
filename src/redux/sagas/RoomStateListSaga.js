@@ -18,7 +18,6 @@ function * actFetchListStateRoom() {
         yield put({ type: ActionTypes.SHOW_LOADING });
     }
     catch (err) {
-        console.log(err);
         yield put({ type: ActionTypes.SHOW_LOADING });
     }
 }
