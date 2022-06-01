@@ -43,6 +43,7 @@ export default function Booking() {
   const [openModify, setOpenModify] = useState(false);
   const [modifyingCustomer, setModifyingCustomer] = useState();
   const [modifyingCustomerType, setModifyingCustomerType] = useState(0);
+  const [rateTotal, setRateToTal] = useState(0);
   const { customerList } = useSelector((state) => state.CustomerReducerLocal);
   const [totalPricePerDay, setTotalPricePerDay] = useState(0);
 
@@ -62,8 +63,8 @@ export default function Booking() {
       _.forEach(arrayCustomerList, (element) => {
         rateTypeCustomer *= typeCustomerObject[element.TenLoaiKhach];
       });
-
       if (customerList.length <= SoKhachKhongPhuThu) {
+        setRateToTal(rateTypeCustomer)
         setTotalPricePerDay(DonGia * rateTypeCustomer);
       } else {
         //tinh toan he so phu thu khi length vuot qua
@@ -73,7 +74,8 @@ export default function Booking() {
         if (heSoPhuThu === undefined) {
           heSoPhuThu = 1;
         }
-        setTotalPricePerDay(DonGia * rateTypeCustomer * heSoPhuThu);
+        setRateToTal(rateTypeCustomer * (heSoPhuThu+1))
+        setTotalPricePerDay(DonGia * rateTypeCustomer * (heSoPhuThu+1));
       }
     }
   }, [customerList]);
@@ -221,6 +223,20 @@ export default function Booking() {
         </Button>
       </Box>
 
+      {/* <Box sx={{ display: "flex", justifyContent: "right" }}>
+        <Typography variant="h5" gutterBottom sx={{ mt: 2}} color="secondary">
+          {`Giá phòng: ${numberWithCommas(
+            Math.round(DonGia * 100) / 100
+          )}`}
+        </Typography>
+      </Box>
+
+      <Box sx={{ display: "flex", justifyContent: "right" }}>
+        <Typography variant="h5" gutterBottom sx={{ mt: 2}} color="secondary">
+          {`Hệ số phụ thu: ${rateTotal}`}
+        </Typography>
+      </Box> */}
+      
       <Box sx={{ display: "flex", justifyContent: "right" }}>
         <Typography variant="h3" gutterBottom sx={{ mt: 2 }} color="secondary">
           {`Tổng tiền: ${numberWithCommas(
