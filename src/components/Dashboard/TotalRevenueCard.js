@@ -2,9 +2,14 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import { Avatar, Box, Grid, Typography } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import EarningIcon from "../../assets/images/icons/earning.svg";
 import MainCard from "../../ui-component/cards/MainCard";
 import SkeletonEarningCard from "../../ui-component/cards/Skeleton/EarningCard";
+import numberWithCommas from "../../utils/number-with-commas"
+
+const _ = require("lodash");
 
 const CardWrapper = styled(MainCard)(({ theme }) => ({
   backgroundColor: theme.palette.secondary.dark,
@@ -44,6 +49,12 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
 
 const TotalRevenueCard = ({ isLoading }) => {
   const theme = useTheme();
+  const { invoiceList } = useSelector((state) => state.InvoiceReducer);
+  const [totalRevenue, setTotalRevenue] = useState(0);
+
+  useEffect(() => {
+    setTotalRevenue(_.sumBy(invoiceList, (invoice) => invoice.TongTien));
+  }, [invoiceList]);
 
   return (
     <>
@@ -81,7 +92,7 @@ const TotalRevenueCard = ({ isLoading }) => {
                         mb: 0.75,
                       }}
                     >
-                      $500.00
+                      {`${numberWithCommas(totalRevenue)} VNĐ`}
                     </Typography>
                   </Grid>
                   <Grid item>

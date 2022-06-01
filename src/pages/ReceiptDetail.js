@@ -28,7 +28,7 @@ export default function Payment() {
             {`Mã hóa đơn: ${receipt.MaHoaDon}  -  Ngày lập: ${receipt.NgayLap}`}
           </Typography>
           <Grid container spacing={matchDownSM ? 0 : 2}>
-            <Grid item xs={12} sx={{ mt: 2 }}>
+            <Grid item xs={12}>
               <Typography variant="h4" display="inline">
                 Khách hàng / Cơ quan:
               </Typography>

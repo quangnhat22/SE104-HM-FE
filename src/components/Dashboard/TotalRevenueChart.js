@@ -9,17 +9,9 @@ import { useNavigate } from "react-router";
 import chartConfig from "../../chart-config/total-revenue-of-year-chart";
 import MainCard from "../../ui-component/cards/MainCard";
 import SkeletonTotalGrowthBarChart from "../../ui-component/cards/Skeleton/TotalGrowthBarChart";
+import numberWithCommas from "../../utils/number-with-commas";
 
-const status = [
-  {
-    value: "2021",
-    label: "2021",
-  },
-  {
-    value: "2022",
-    label: "2022",
-  },
-];
+const _ = require("lodash");
 
 const TotalRevenueChart = ({ isLoading }) => {
   const [year, setYear] = useState("2021");
@@ -31,6 +23,35 @@ const TotalRevenueChart = ({ isLoading }) => {
   const grey200 = theme.palette.grey[200];
   const grey500 = theme.palette.grey[500];
   const primaryDark = theme.palette.primary.dark;
+  const { invoiceList } = useSelector((state) => state.InvoiceReducer);
+  const [totalRevenue, setTotalRevenue] = useState(0);
+  const [yearList, setYearList] = useState([]);
+  const [monthRevenueList, setMonthRevenueList] = useState([]);
+
+  useEffect(() => {
+    setTotalRevenue(_.sumBy(invoiceList, (invoice) => invoice.TongTien));
+    let rawYearList = _.map(invoiceList, (invoice) =>
+      invoice.NgayLap.slice(0, 4)
+    );
+    setYearList(_.uniq(rawYearList));
+    let tempMonthRevenueList = [];
+    for (let i = 1; i <= 12; i++) {
+      tempMonthRevenueList.push(
+        _.reduce(
+          invoiceList,
+          (sum, invoice) => {
+            return parseInt(invoice.NgayLap.slice(5, 7)) === i
+              ? sum + invoice.TongTien
+              : sum;
+          },
+          0
+        )
+      );
+    }
+    setMonthRevenueList(tempMonthRevenueList);
+  }, [invoiceList]);
+
+  console.log(monthRevenueList);
 
   useEffect(() => {
     const newChartData = {
@@ -82,7 +103,7 @@ const TotalRevenueChart = ({ isLoading }) => {
         <SkeletonTotalGrowthBarChart />
       ) : (
         <MainCard>
-          <Grid container spacing={3} >
+          <Grid container spacing={3}>
             <Grid item xs={12}>
               <Grid
                 container
@@ -97,19 +118,21 @@ const TotalRevenueChart = ({ isLoading }) => {
                       </Typography>
                     </Grid>
                     <Grid item>
-                      <Typography variant="h3">2,324,000 VNĐ</Typography>
+                      <Typography variant="h3">{`${numberWithCommas(
+                        totalRevenue
+                      )} VNĐ`}</Typography>
                     </Grid>
                   </Grid>
                 </Grid>
                 <Grid item>
                   <TextField
                     select
-                    value={year}
+                    value={yearList[0]}
                     onChange={(e) => setYear(e.target.value)}
                   >
-                    {status.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
+                    {yearList.map((option) => (
+                      <MenuItem key={option} value={option}>
+                        {option}
                       </MenuItem>
                     ))}
                   </TextField>
@@ -122,7 +145,7 @@ const TotalRevenueChart = ({ isLoading }) => {
                 series={[
                   {
                     name: "Doanh thu",
-                    data: [35, 15, 150, 35, 650, 40, 80, 25, 15, 85, 25, 75],
+                    data: monthRevenueList,
                   },
                 ]}
               />
