@@ -15,18 +15,20 @@ import {
 import { useTheme } from "@mui/material/styles";
 import { IconLogout, IconSettings } from "@tabler/icons";
 import { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import MainCard from "../../../ui-component/cards/MainCard";
 import Transitions from "../../../ui-component/extended/Transitions";
 import showTextBasedOnTime from "../../../utils/showTextBasedOnTime";
 import Cookies from "js-cookie";
+import * as ActionTypes from "../../../redux/constants/constant";
+import profileImg from "../../../assets/images/profile.png"
 
 const ProfileSection = () => {
   const theme = useTheme();
   const customization = useSelector((state) => state.customization);
   const { userLogin } = useSelector((state) => state.UserReducer);
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
@@ -38,6 +40,7 @@ const ProfileSection = () => {
   const handleLogout = async () => {
     Cookies.remove("level");
     Cookies.remove("token");
+    dispatch({ type: ActionTypes.GET_USER, userLogin: null });
     navigate("/login", { replace: true });
   };
 
@@ -85,7 +88,7 @@ const ProfileSection = () => {
         }}
         icon={
           <Avatar
-            src={userLogin?.avatar}
+            src={profileImg}
             sx={{
               ...theme.typography.mediumAvatar,
               margin: "8px 0 8px 8px !important",
@@ -144,7 +147,7 @@ const ProfileSection = () => {
                     <Stack>
                       <Stack direction="row" spacing={0.5} alignItems="center">
                         <Typography variant="h4">
-                          {textHelloFromRealtime},
+                          {textHelloFromRealtime}
                         </Typography>
                         <Typography
                           component="span"
