@@ -49,12 +49,12 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
 
 const TotalRevenueCard = ({ isLoading }) => {
   const theme = useTheme();
-  const { invoiceList } = useSelector((state) => state.InvoiceReducer);
+  const { reportList } = useSelector((state) => state.ReportInYearReducer);
   const [totalRevenue, setTotalRevenue] = useState(0);
 
   useEffect(() => {
-    setTotalRevenue(_.sumBy(invoiceList, (invoice) => invoice.TongTien));
-  }, [invoiceList]);
+    setTotalRevenue(_.sumBy(reportList, (report) => parseInt(report.TongDoanhThu)));
+  }, [reportList]);
 
   return (
     <>

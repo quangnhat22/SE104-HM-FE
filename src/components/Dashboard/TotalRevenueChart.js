@@ -1,4 +1,4 @@
-import { Grid, MenuItem, TextField, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import ApexCharts from "apexcharts";
 import PropTypes from "prop-types";
@@ -14,7 +14,7 @@ import numberWithCommas from "../../utils/number-with-commas";
 const _ = require("lodash");
 
 const TotalRevenueChart = ({ isLoading }) => {
-  const [year, setYear] = useState("2021");
+  const [year, setYear] = useState("2022");
   const theme = useTheme();
   const customization = useSelector((state) => state.customization);
   const navigate = useNavigate();
@@ -23,33 +23,21 @@ const TotalRevenueChart = ({ isLoading }) => {
   const grey200 = theme.palette.grey[200];
   const grey500 = theme.palette.grey[500];
   const primaryDark = theme.palette.primary.dark;
-  const { invoiceList } = useSelector((state) => state.InvoiceReducer);
+  const { reportList } = useSelector((state) => state.ReportInYearReducer);
   const [totalRevenue, setTotalRevenue] = useState(0);
-  const [yearList, setYearList] = useState([]);
   const [monthRevenueList, setMonthRevenueList] = useState([]);
 
   useEffect(() => {
-    setTotalRevenue(_.sumBy(invoiceList, (invoice) => invoice.TongTien));
-    let rawYearList = _.map(invoiceList, (invoice) =>
-      invoice.NgayLap.slice(0, 4)
+    setTotalRevenue(
+      _.sumBy(reportList, (report) => parseInt(report.TongDoanhThu))
     );
-    setYearList(_.uniq(rawYearList));
-    let tempMonthRevenueList = [];
-    for (let i = 1; i <= 12; i++) {
-      tempMonthRevenueList.push(
-        _.reduce(
-          invoiceList,
-          (sum, invoice) => {
-            return parseInt(invoice.NgayLap.slice(5, 7)) === i
-              ? sum + invoice.TongTien
-              : sum;
-          },
-          0
-        )
-      );
-    }
+    let tempMonthRevenueList = _.map(
+      reportList,
+      (report) => report.TongDoanhThu
+    );
+    while (tempMonthRevenueList.length < 12) tempMonthRevenueList.push(0);
     setMonthRevenueList(tempMonthRevenueList);
-  }, [invoiceList]);
+  }, [reportList]);
 
   console.log(monthRevenueList);
 
@@ -114,7 +102,7 @@ const TotalRevenueChart = ({ isLoading }) => {
                   <Grid container direction="column" spacing={1}>
                     <Grid item>
                       <Typography variant="subtitle2">
-                        Tổng doanh thu của năm
+                        Tổng doanh thu của năm 2022
                       </Typography>
                     </Grid>
                     <Grid item>
@@ -123,19 +111,6 @@ const TotalRevenueChart = ({ isLoading }) => {
                       )} VNĐ`}</Typography>
                     </Grid>
                   </Grid>
-                </Grid>
-                <Grid item>
-                  <TextField
-                    select
-                    value={yearList[0]}
-                    onChange={(e) => setYear(e.target.value)}
-                  >
-                    {yearList.map((option) => (
-                      <MenuItem key={option} value={option}>
-                        {option}
-                      </MenuItem>
-                    ))}
-                  </TextField>
                 </Grid>
               </Grid>
             </Grid>

@@ -1,11 +1,10 @@
 import { Grid } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import RoomBookingStatusCard from "../components/Dashboard/RoomBookingStatusCard";
 import TotalRevenueCard from "../components/Dashboard/TotalRevenueCard";
 import TotalRevenueChart from "../components/Dashboard/TotalRevenueChart";
 import * as ActionSagaTypes from "../redux/constants/constantSaga";
-const _ = require("lodash");
 
 const Dashboard = () => {
   const [isLoading, setLoading] = useState(true);
@@ -17,7 +16,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     dispatch({ type: ActionSagaTypes.FETCH_LIST_ROOM_SAGA });
-    dispatch({ type: ActionSagaTypes.FETCH_LIST_INVOICE_SAGA });
+    dispatch({ type: ActionSagaTypes.FETCH_REPORT_IN_YEAR_SAGA });
   }, []);
 
   return (
@@ -33,7 +32,7 @@ const Dashboard = () => {
                 <TotalRevenueCard isLoading={isLoading} />
               </Grid>
               <Grid item xs={12}>
-                <RoomBookingStatusCard isLoading={isLoading}/>
+                <RoomBookingStatusCard isLoading={isLoading} />
               </Grid>
             </Grid>
           </Grid>
