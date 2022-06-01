@@ -16,7 +16,7 @@ import { useTheme } from "@mui/material/styles";
 import { IconPlus } from "@tabler/icons";
 import { Formik } from "formik";
 import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import TableCustomer from "../components/Table/TableCustomer";
 import CustomerModal from "../components/Booking/CustomerModal";
@@ -27,6 +27,7 @@ import numberWithCommas from "../utils/number-with-commas";
 const _ = require("lodash");
 
 export default function Booking() {
+  let navigate = useNavigate();
   const { id } = useParams();
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -43,12 +44,15 @@ export default function Booking() {
   const [openModify, setOpenModify] = useState(false);
   const [modifyingCustomer, setModifyingCustomer] = useState();
   const [modifyingCustomerType, setModifyingCustomerType] = useState(0);
-  const [rateTotal, setRateToTal] = useState(0);
+  const [rateTotal, setRateToTal] = useState(1);
   const { customerList } = useSelector((state) => state.CustomerReducerLocal);
   const [totalPricePerDay, setTotalPricePerDay] = useState(0);
 
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch({
+      type: ActionTypes.REMOVE_ALL_CLIENT_RENT_VOUCHER
+    })
     setTotalPricePerDay(0);
   }, []);
 
@@ -148,6 +152,12 @@ export default function Booking() {
               type: SagaActionTypes.ADD_RENT_VOUCHER_SAGA,
               rentVoucher: newBookingValue,
             });
+            setTotalPricePerDay(0);
+            setRateToTal(1);
+            dispatch({
+              type: ActionTypes.REMOVE_ALL_CLIENT_RENT_VOUCHER
+            })
+            navigate("/room", { replace: true });
           } else {
             toast.error(
               "Vui lòng thêm khách hàng trước khi tạo phiếu thuê phòng mới."
@@ -223,11 +233,9 @@ export default function Booking() {
         </Button>
       </Box>
 
-      {/* <Box sx={{ display: "flex", justifyContent: "right" }}>
+      <Box sx={{ display: "flex", justifyContent: "right" }}>
         <Typography variant="h5" gutterBottom sx={{ mt: 2}} color="secondary">
-          {`Giá phòng: ${numberWithCommas(
-            Math.round(DonGia * 100) / 100
-          )}`}
+          {(customerList.length !== 0) ? `Đơn giá: ${numberWithCommas(Math.round(DonGia * 100) / 100)}` : `Đơn giá: ${0}`}
         </Typography>
       </Box>
 
@@ -235,7 +243,7 @@ export default function Booking() {
         <Typography variant="h5" gutterBottom sx={{ mt: 2}} color="secondary">
           {`Hệ số phụ thu: ${rateTotal}`}
         </Typography>
-      </Box> */}
+      </Box>
       
       <Box sx={{ display: "flex", justifyContent: "right" }}>
         <Typography variant="h3" gutterBottom sx={{ mt: 2 }} color="secondary">

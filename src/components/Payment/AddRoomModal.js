@@ -10,16 +10,9 @@ import {
 } from "@mui/material";
 import { Formik } from "formik";
 import * as ActionTypes from "../../redux/constants/constant";
+import * as SagaActionTypes from "../../redux/constants/constantSaga";
 import { useDispatch } from "react-redux";
 import { differenceInDays } from "date-fns";
-
-const roomList = [
-  { id: 1, TenPhong: "A010" },
-  { id: 2, TenPhong: "A011" },
-  { id: 3, TenPhong: "A012" },
-  { id: 4, TenPhong: "A013" },
-  { id: 5, TenPhong: "A014" },
-];
 
 export default function AddRoomModal({ handleClose, rentList }) {
   const dispatch = useDispatch();
@@ -65,6 +58,7 @@ export default function AddRoomModal({ handleClose, rentList }) {
               type: ActionTypes.ADD_ROOM_INVOICE_LOCAL,
               PhieuThuePhong: submitValue,
             });
+            //dispatch({ type: SagaActionTypes.FETCH_LIST_RENT_VOUCHER_SAGA });
           }}
         >
           {({ handleSubmit, setFieldValue, values }) => (

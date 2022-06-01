@@ -25,31 +25,17 @@ import PrintIcon from "@mui/icons-material/Print";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import * as SagaActionTypes from "../redux/constants/constantSaga";
+import * as ActionTypes from "../redux/constants/constant";
+import { useNavigate } from "react-router";
 const _ = require("lodash");
 
-function createData(
-  id,
-  number,
-  TenPhong,
-  numberOfRentalDays,
-  price,
-  totalPrice
-) {
-  return { id, number, TenPhong, numberOfRentalDays, price, totalPrice };
-}
-
-const customerList = [
-  createData(1, 1, "India", 1, 100000, 100000),
-  createData(2, 2, "China", 2, 200000, 400000),
-];
-
 export default function Payment() {
+  // let navigate = useNavigate();
   const { loading } = useSelector((state) => state.LoadingReducer);
   const { rentList } = useSelector((state) => state.RentVoucherReducer);
   const { CacPhieuThuePhong, TotalPrice } = useSelector(
     (state) => state.InvoiceReducerLocal
   );
-
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down("sm"));
   const componentRef = useRef(null);
@@ -60,6 +46,7 @@ export default function Payment() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch({type: ActionTypes.REMOVE_ALL_ROOM_INVOICE_LOCAL});
     dispatch({ type: SagaActionTypes.FETCH_LIST_RENT_VOUCHER_SAGA });
   }, []);
 
@@ -120,11 +107,11 @@ export default function Payment() {
               //set value state for print template
               setCoQuan(invoiceSubmit.KhachHang_CoQuan);
               setDiaChi(invoiceSubmit.DiaChi);
-
               dispatch({
                 type: SagaActionTypes.ADD_NEW_INVOICE_SAGA,
                 invoiceSubmit: invoiceSubmit,
               });
+              // navigate("/receipt", { replace: true });
             }
           }}
         >
