@@ -1,5 +1,5 @@
 import Axios from "axios";
-import { URL_ADD_NEW_RENT_VOUCHER, URL_GET_RENT_VOUCHER } from "./urlAPI";
+import { URL_ADD_NEW_RENT_VOUCHER, URL_GET_RENT_VOUCHER, URL_GET_RENT_VOUCHER_BY_KEY } from "./urlAPI";
 
 export const RentVoucherService = {
     getRentVoucherList: () => {
@@ -7,5 +7,8 @@ export const RentVoucherService = {
     },
     addNewRentVoucher: (newRentVoucher) => {
         return Axios.post(URL_ADD_NEW_RENT_VOUCHER, newRentVoucher);
+    },
+    getRentVoucherDetail: (MaPhieuThuePhong) => {
+        return Axios.get(URL_GET_RENT_VOUCHER_BY_KEY(MaPhieuThuePhong));
     }
 }

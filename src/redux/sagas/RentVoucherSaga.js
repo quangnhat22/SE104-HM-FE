@@ -1,9 +1,9 @@
 import { toast } from "react-toastify";
-import { call, takeLatest, put } from "redux-saga/effects";
-import * as ActionTypes from "../constants/constant";
-import * as SagaActionTypes from "../constants/constantSaga";
+import { call, put, takeLatest } from "redux-saga/effects";
 import { RentVoucherService } from "../../services/RentVoucherService";
 import { STATUS_CREATE_SUCCESS, STATUS_SUCCESS } from "../../services/urlAPI";
+import * as ActionTypes from "../constants/constant";
+import * as SagaActionTypes from "../constants/constantSaga";
 const _ = require("lodash");
 
 function* actFetchListRentVoucher() {
@@ -31,19 +31,41 @@ function* actFetchListRentVoucher() {
   }
 }
 
-function * actNewRentVoucher(action) {
-  let {rentVoucher} = action;
+function* actNewRentVoucher(action) {
+  let { rentVoucher } = action;
   try {
-      let {status} = yield call(()=> RentVoucherService.addNewRentVoucher(rentVoucher));
-      if(status === STATUS_CREATE_SUCCESS) {
-        yield put ({type: SagaActionTypes.FETCH_LIST_ROOM_SAGA});
-        toast.success("Tạo phiếu thuê phòng thành công!");
-      } else {
-        toast.error("Đã có lỗi xảy ra vui lòng thử lại!");
-      }
-  }
-  catch (err) {
+    let { status } = yield call(() =>
+      RentVoucherService.addNewRentVoucher(rentVoucher)
+    );
+    if (status === STATUS_CREATE_SUCCESS) {
+      yield put({ type: SagaActionTypes.FETCH_LIST_ROOM_SAGA });
+      toast.success("Tạo phiếu thuê phòng thành công!");
+    } else {
+      toast.error("Đã có lỗi xảy ra vui lòng thử lại!");
+    }
+  } catch (err) {
     toast.error("Đã có lỗi xảy ra vui lòng thử lại!");
+  }
+}
+
+function* actFetchRentVoucherDetail(action) {
+  let { MaPhieuThuePhong } = action;
+  try {
+    yield put({ type: ActionTypes.SHOW_LOADING });
+
+    let { data, status } = yield call(() =>
+      RentVoucherService.getRentVoucherDetail(MaPhieuThuePhong)
+    );
+    console.log(data);
+    if (status === STATUS_SUCCESS) {
+      yield put({ type: ActionTypes.GET_RENT_VOUCHER_DETAIL, rentDetail: data });
+    } else {
+      toast.error("Đã có lỗi xảy ra vui lòng thử lại!");
+    }
+    yield put({ type: ActionTypes.HIDE_LOADING });
+  } catch (err) {
+    console.log(err);
+    yield put({ type: ActionTypes.HIDE_LOADING });
   }
 }
 
@@ -54,6 +76,11 @@ export function* followActFetchListRentVoucher() {
   );
 }
 
-export function * followActNewRentVoucher() {
+export function* followActNewRentVoucher() {
   yield takeLatest(SagaActionTypes.ADD_RENT_VOUCHER_SAGA, actNewRentVoucher);
 }
+
+export function* followActFetchRentVoucherDetail() {
+  yield takeLatest(SagaActionTypes.FETCH_RENT_VOUCHER_DETAIL_SAGA, actFetchRentVoucherDetail);
+}
+

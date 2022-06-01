@@ -8,6 +8,7 @@ const Payment = Loadable(lazy(() => import("../../pages/Payment")));
 const Receipt = Loadable(lazy(() => import("../../pages/Receipt")));
 const ReceiptDetail = Loadable(lazy(() => import("../../pages/ReceiptDetail")));
 const MonthlyReport = Loadable(lazy(() => import("../../pages/MonthlyReport")));
+const RentVoucherDetail = Loadable(lazy(() => import("../../pages/RentVoucherDetail")));
 
 const CommonRoutes = [
   {
@@ -41,6 +42,10 @@ const CommonRoutes = [
   {
     path: "/receipt/:id",
     element: <ReceiptDetail />,
+  },
+  {
+    path: "/rent-voucher-detail/:id",
+    element: <RentVoucherDetail />,
   },
 ];
 

@@ -40,6 +40,7 @@ export default function* rootSaga() {
         InvoiceSaga.followActAddNewInvoice(),
         RentVoucherSaga.followActFetchListRentVoucher(),
         RentVoucherSaga.followActNewRentVoucher(),
+        RentVoucherSaga.followActFetchRentVoucherDetail(),
         ConfigSaga.followActFetchConfig(),
         ConfigSaga.followActUpdateNewConfig(),
         SurchargeSaga.followActFetchListSurcharge(),
