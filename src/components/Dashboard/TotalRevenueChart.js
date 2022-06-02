@@ -70,11 +70,9 @@ const TotalRevenueChart = ({ isLoading }) => {
       },
       chart: {
         ...chartConfig.options.chart,
-        events: {
-          click(event, chartContext, config) {
-            navigate(`./monthly-report/${year}/${config.dataPointIndex + 1}`);
-          },
-        },
+        toolbar: {
+          show: false
+        }
       },
     };
 

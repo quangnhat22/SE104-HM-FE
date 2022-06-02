@@ -117,6 +117,7 @@ export default function AccountModal({
                   defaultValue={
                     account ? userGroupList[userGroupIndex] : userGroupList[0]
                   }
+                  disabled
                   disableClearable
                   getOptionLabel={(option) => option.TenNhom}
                   isOptionEqualToValue={(option, value) => option === value}

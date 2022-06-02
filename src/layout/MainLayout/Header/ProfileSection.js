@@ -10,19 +10,19 @@ import {
   Paper,
   Popper,
   Stack,
-  Typography,
+  Typography
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { IconLogout, IconSettings } from "@tabler/icons";
+import Cookies from "js-cookie";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import profileImg from "../../../assets/images/profile.png";
+import * as ActionTypes from "../../../redux/constants/constant";
 import MainCard from "../../../ui-component/cards/MainCard";
 import Transitions from "../../../ui-component/extended/Transitions";
 import showTextBasedOnTime from "../../../utils/showTextBasedOnTime";
-import Cookies from "js-cookie";
-import * as ActionTypes from "../../../redux/constants/constant";
-import profileImg from "../../../assets/images/profile.png"
 
 const ProfileSection = () => {
   const theme = useTheme();
@@ -149,17 +149,7 @@ const ProfileSection = () => {
                         <Typography variant="h4">
                           {textHelloFromRealtime}
                         </Typography>
-                        <Typography
-                          component="span"
-                          variant="h4"
-                          sx={{ fontWeight: 400 }}
-                        >
-                          {userLogin?.fullName}
-                        </Typography>
                       </Stack>
-                      <Typography variant="subtitle2">
-                        {userLogin?.role}
-                      </Typography>
                     </Stack>
                   </Box>
                   <Box sx={{ px: 2, pb: 1 }}>

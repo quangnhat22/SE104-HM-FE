@@ -3,7 +3,7 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-  TableRow
+  TableRow,
 } from "@mui/material";
 import { useState } from "react";
 import CustomTableHead from "../../ui-component/CustomTableHead";
@@ -24,11 +24,7 @@ const columns = [
   },
 ];
 
-export default function TableSurchargeRate({
-  data,
-  handleModify,
-  handleDelete,
-}) {
+export default function TableSurchargeRate({ data, handleModify }) {
   const [order, setOrder] = useState("");
   const [orderBy, setOrderBy] = useState("number");
 
@@ -56,11 +52,7 @@ export default function TableSurchargeRate({
                 const value = row[column.id];
                 return column.id === "more" ? (
                   <TableCell align="center" key={row.id}>
-                    <MoreMenu
-                      surchargeRate={row}
-                      handleModify={handleModify}
-                      handleDelete={handleDelete}
-                    />
+                    <MoreMenu surchargeRate={row} handleModify={handleModify} />
                   </TableCell>
                 ) : (
                   <TableCell key={column.id} align={column.align}>

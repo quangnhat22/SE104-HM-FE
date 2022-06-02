@@ -50,13 +50,6 @@ export default function SurchargeRateSetting() {
     setOpenNew(true);
   };
 
-  const handleDelete = (surchargeRate) => {
-    dispatch({
-      type: SagaActionTypes.DELETE_SURCHARGE_SAGA,
-      SoKhach: surchargeRate.SoKhach,
-    });
-  };
-
   const handleModify = (surchargeRate) => {
     setModifyingSurchargeRate(surchargeRate);
     setOpenModify(true);
@@ -225,7 +218,6 @@ export default function SurchargeRateSetting() {
                 <TableSurchargeRate
                   data={surchargeList}
                   handleModify={handleModify}
-                  handleDelete={handleDelete}
                 />
                 <Box sx={{ display: "flex", justifyContent: "center" }}>
                   <Button

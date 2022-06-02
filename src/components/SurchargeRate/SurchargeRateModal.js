@@ -112,11 +112,6 @@ export default function SurchargeRateModal({
                   name="TiLePhuThu"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">%</InputAdornment>
-                    ),
-                  }}
                 />
                 {touched.TiLePhuThu && errors.TiLePhuThu && (
                   <FormHelperText error>{errors.TiLePhuThu}</FormHelperText>

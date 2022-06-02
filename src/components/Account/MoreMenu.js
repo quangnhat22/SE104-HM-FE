@@ -38,8 +38,9 @@ export default function MoreMenu({ account, handleModify, handleDelete }) {
             variant="text"
             color="error"
             onClick={handleOpenDelete}
+            disabled={account.UserGroup.CapBac === 0}
           >
-            <IconTrash color="#F44336" />
+            <IconTrash color={account.UserGroup.CapBac === 0 ? "#adb5bd": "#F44336" } />
           </IconButton>
         </Tooltip>
       </Box>
