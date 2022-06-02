@@ -52,10 +52,10 @@ export default function AccountModal({
             Email: account ? account.Email : "",
             MaNhom: account
               ? account.UserGroup.MaNhom
-              : userGroupList[0].MaNhom,
+              : userGroupList[1].MaNhom,
             TenNhom: account
               ? account.UserGroup.TenNhom
-              : userGroupList[0].TenNhom,
+              : userGroupList[1].TenNhom,
           }}
           validationSchema={Yup.object().shape({
             HoTen: Yup.string().required("Vui lòng nhập họ và tên"),
