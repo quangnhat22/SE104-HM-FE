@@ -110,9 +110,6 @@ export default function SurchargeRateSetting() {
                         soKhachToiDa: values.SoKhachToiDa,
                         soKhachKhongPhuThu: values.SoKhachKhongPhuThu,
                       });
-                      dispatch({
-                        type: SagaActionTypes.FETCH_LIST_SURCHARGE_SAGA,
-                      });
                     } else {
                       toast.error(
                         "Số khách tối đa phải lớn hơn hoặc bằng số khác không phụ thu"

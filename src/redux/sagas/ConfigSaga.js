@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { call, takeLatest, put } from "redux-saga/effects";
+import { call, takeLatest, put, all } from "redux-saga/effects";
 import { STATUS_SUCCESS } from "../../services/urlAPI";
 import * as ActionTypes from "../constants/constant";
 import * as SagaActionTypes from "../constants/constantSaga";
@@ -49,7 +49,10 @@ function* actUpdateNewConfig(action) {
     );
     if(stSKTD === STATUS_SUCCESS && stSKKPT === STATUS_SUCCESS) {
         toast.success("Cập nhập hệ số phụ thu thành công. Vui lòng đối chiếu với bảng phụ thu để tránh sai sót!")
-        yield put ({type: SagaActionTypes.GET_CONFIG_SAGA})
+        yield all([
+          put ({type: SagaActionTypes.GET_CONFIG_SAGA}),
+          put ({type:SagaActionTypes.FETCH_LIST_SURCHARGE_SAGA})
+        ])
     }
   } catch (err) {}
 }
