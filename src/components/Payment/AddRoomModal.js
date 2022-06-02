@@ -11,11 +11,14 @@ import {
 import { Formik } from "formik";
 import * as ActionTypes from "../../redux/constants/constant";
 import * as SagaActionTypes from "../../redux/constants/constantSaga";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { differenceInDays } from "date-fns";
+import { toast } from "react-toastify";
+const _ = require("lodash");
 
 export default function AddRoomModal({ handleClose, rentList }) {
   const dispatch = useDispatch();
+  const {CacPhieuThuePhong} = useSelector(state => state.InvoiceReducerLocal);
 
   const handleCheckOutTime = (ngayBatDauThue) => {
     const temp = new Date(ngayBatDauThue);
@@ -54,10 +57,14 @@ export default function AddRoomModal({ handleClose, rentList }) {
                   distanceDate * values.PhieuThuePhong.DonGiaThueTrenNgay * 100
                 ) / 100,
             };
-            dispatch({
-              type: ActionTypes.ADD_ROOM_INVOICE_LOCAL,
-              PhieuThuePhong: submitValue,
-            });
+            if(_.find(CacPhieuThuePhong, {MaPhieuThuePhong: submitValue.MaPhieuThuePhong})) {
+              toast.warning("Mã phiếu thuê phòng đã được thêm!");
+            } else {
+              dispatch({
+                type: ActionTypes.ADD_ROOM_INVOICE_LOCAL,
+                PhieuThuePhong: submitValue,
+              });
+            }
             //dispatch({ type: SagaActionTypes.FETCH_LIST_RENT_VOUCHER_SAGA });
           }}
         >

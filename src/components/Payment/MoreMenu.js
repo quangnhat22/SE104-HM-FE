@@ -18,7 +18,7 @@ export default function MoreMenu({ room, handleDelete }) {
   };
 
   const handleDeleteRoom = (room) => {
-    dispatch({type: ActionTypes.REMOVE_ROOM_INVOICE_LOCAL, MaPhieuThuePhong: room.MaPhieuThuePhong});
+    dispatch({type: ActionTypes.REMOVE_ROOM_INVOICE_LOCAL, roomDelete: room});
     handleDelete(room);
     handleClose();
   };
