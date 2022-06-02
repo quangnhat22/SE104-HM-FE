@@ -5,7 +5,7 @@ const initialState = {
       SoKhach: 0,
       TiLePhuThu: 0
     }
-  ]
+  ],
 };
 
 export const SurchargeReducer = (state = initialState, action) => {

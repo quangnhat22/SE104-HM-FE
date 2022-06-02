@@ -7,7 +7,8 @@ import { ConfigService } from "../../services/ConfigService";
 
 function* actFetchConfig() {
   try {
-    yield put({ type: ActionTypes.SHOW_LOADING });
+    yield put({ type: ActionTypes.REQUEST_CONFIG });
+    
     let { data, status } = yield call(() => ConfigService.getListConfig());
     if (status === STATUS_SUCCESS) {
       //handle data before dispatch reducer
@@ -23,11 +24,12 @@ function* actFetchConfig() {
         type: ActionTypes.GET_CONFIG,
         SoKhachToiDa: soKhachToiDa,
         SoKhachKhongPhuThu: soKhachKhongPhuThu,
-      });   
+      });
+      yield put({ type: ActionTypes.SUCCESS_CONFIG });   
     }
-    yield put({ type: ActionTypes.HIDE_LOADING });
   } catch (err) {
-    yield put({ type: ActionTypes.HIDE_LOADING });
+    yield put({ type: ActionTypes.SUCCESS_CONFIG }); 
+    toast.error("Có lỗi đã xảy ra")
   }
 }
 
