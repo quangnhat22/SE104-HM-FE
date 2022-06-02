@@ -8,14 +8,12 @@ import {
   Paper,
   TextField,
   Typography,
-  useMediaQuery,
+  useMediaQuery
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { IconPlus } from "@tabler/icons";
 import { Formik } from "formik";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 import SurchargeRateModal from "../components/SurchargeRate/SurchargeRateModal";
@@ -23,7 +21,6 @@ import TableSurchargeRate from "../components/Table/TableSurchargeRate";
 import * as SagaActionTypes from "../redux/constants/constantSaga";
 
 export default function SurchargeRateSetting() {
-  let navigate = useNavigate();
   const theme = useTheme();
   const dispatch = useDispatch();
   const matchDownSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -31,7 +28,6 @@ export default function SurchargeRateSetting() {
   const { SoKhachToiDa, SoKhachKhongPhuThu, showLoading } = useSelector(
     (state) => state.ConfigReducer
   );
-  const [openNew, setOpenNew] = useState(false);
   const [openModify, setOpenModify] = useState(false);
   const [modifyingSurchargeRate, setModifyingSurchargeRate] = useState();
   const { surchargeList } = useSelector((state) => state.SurchargeReducer);
@@ -42,12 +38,7 @@ export default function SurchargeRateSetting() {
   }, []);
 
   const handleClose = () => {
-    setOpenNew(false);
     setOpenModify(false);
-  };
-
-  const handleNewRoomType = () => {
-    setOpenNew(true);
   };
 
   const handleModify = (surchargeRate) => {
@@ -219,23 +210,6 @@ export default function SurchargeRateSetting() {
                   data={surchargeList}
                   handleModify={handleModify}
                 />
-                <Box sx={{ display: "flex", justifyContent: "center" }}>
-                  <Button
-                    sx={{ mt: 4 }}
-                    startIcon={<IconPlus />}
-                    onClick={handleNewRoomType}
-                  >
-                    Thêm tỉ lệ phụ thu
-                  </Button>
-                </Box>
-                {openNew && (
-                  <SurchargeRateModal
-                    type="new"
-                    handleClose={handleClose}
-                    soKhachToiDa={SoKhachToiDa.GiaTri}
-                    soKhachKhongPhuThu={SoKhachKhongPhuThu.GiaTri}
-                  />
-                )}
                 {openModify && (
                   <SurchargeRateModal
                     type="modify"
