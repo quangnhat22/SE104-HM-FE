@@ -58,8 +58,8 @@ export default function MonthlyReport() {
           onChange={(newValue) => {
             let month = newValue.getMonth() + 1;
             let year = newValue.getFullYear();
-            setMonthState(monthState);
-            setYearState(yearState);
+            setMonthState(month);
+            setYearState(year);
             setValue(newValue);
             dispatch({
               type: SagaActionTypes.FETCH_REPORT_SAGA,
