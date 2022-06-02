@@ -94,6 +94,7 @@ export default function SurchargeRateModal({
                   name="SoKhach"
                   onBlur={handleBlur}
                   onChange={handleChange}
+                  disabled={type !== 'new'}
                 />
                 {touched.SoKhach && errors.SoKhach && (
                   <FormHelperText error>{errors.SoKhach}</FormHelperText>
