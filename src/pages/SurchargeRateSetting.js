@@ -77,10 +77,12 @@ export default function SurchargeRateSetting() {
                   }}
                   validationSchema={Yup.object().shape({
                     SoKhachToiDa: Yup.number()
+                      .integer("Vui lòng nhập số nguyên dương")
                       .typeError("Số không hợp lệ")
                       .min(1, "Giá trị không thể nhỏ hơn 1")
                       .required("Vui lòng nhập số lượng khách tối đa"),
                     SoKhachKhongPhuThu: Yup.number()
+                      .integer("Vui lòng nhập số nguyên dương")
                       .typeError("Số không hợp lệ")
                       .min(1, "Giá trị không thể nhỏ hơn 1")
                       .required("Vui lòng nhập số lượng khách không phụ thu"),
