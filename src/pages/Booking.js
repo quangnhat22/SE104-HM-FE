@@ -206,6 +206,7 @@ export default function Booking() {
                       showToolbar={false}
                       value={values.startDate}
                       name="startDate"
+                      disabled={true}
                       onChange={(value) => {
                         setFieldValue("startDate", value);
                       }}
