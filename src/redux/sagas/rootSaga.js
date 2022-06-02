@@ -11,7 +11,7 @@ import * as InvoiceSaga from "./InvoiceSaga";
 import * as RentVoucherSaga from "./RentVoucherSaga";
 import * as ConfigSaga from "./ConfigSaga"
 import * as SurchargeSaga from "./SurchareSaga";
-
+import * as AllRoomSaga from "./AllRoomSaga";
 export default function* rootSaga() {
     yield all([
         UserSaga.followActLogin(),
@@ -26,6 +26,7 @@ export default function* rootSaga() {
         RoomListSaga.followActNewRoom(),
         RoomListSaga.followActEditRoom(),
         RoomListSaga.followActDeleteRoom(),
+        AllRoomSaga.followActFetchAllInforForRoom(),
         RoomStateListSaga.followFecthStateRoomList(),
         TypeRoomSaga.followActFetchListTypeRoom(),
         TypeRoomSaga.followActAddTypeRoom(),

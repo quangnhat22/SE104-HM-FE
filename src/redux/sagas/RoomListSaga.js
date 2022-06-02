@@ -54,10 +54,14 @@ function * actEditRoom(action) {
     let {editRoom} = action; 
     try {
         let {status} = yield call(()=> RoomService.editRoom(editRoom));
-        yield put ({type: FETCH_LIST_ROOM_SAGA});
+        if(status === STATUS_SUCCESS) {
+            yield put ({type: FETCH_LIST_ROOM_SAGA});
             toast.success("Sửa thông tin phòng thành công!");
+        } else {
+            toast.error("Sửa phòng không thành công!");
+        }
     } catch (err) {
-
+        toast.error("Đã có lỗi xảy ra!");
     }
 }
 
