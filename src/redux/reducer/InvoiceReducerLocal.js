@@ -28,7 +28,7 @@ export const InvoiceReducerLocal = (state = initialState, action) => {
       _.remove(
         state.CacPhieuThuePhong,
         (phieuThuePhong) =>
-          phieuThuePhong.MaPhieuThuePhong === action.MaPhieuThuePhong
+          phieuThuePhong.MaPhieuThuePhong === action.roomDelete.MaPhieuThuePhong
       );
       // add index in new array
       state.CacPhieuThuePhong = _.map(state.CacPhieuThuePhong, (element) => {
@@ -36,6 +36,7 @@ export const InvoiceReducerLocal = (state = initialState, action) => {
           STT: _.indexOf(state.CacPhieuThuePhong, element) + 1,
         });
       });
+      state.TotalPrice -= action.roomDelete.ThanhTien;
       return { ...state };
     case ActionTypes.REMOVE_ALL_ROOM_INVOICE_LOCAL:
       _.remove(state.CacPhieuThuePhong, (phieuThuePhong) => true);
