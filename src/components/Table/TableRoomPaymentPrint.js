@@ -12,12 +12,12 @@ import {
   
   const columns = [
     { id: "STT", label: "STT", minWidth: 50, align: "center" },
-    { id: "MaPhieuThuePhong", label: "Mã phiếu thuê", minWidth: 150 },
-    { id: "TenPhong", label: "Phòng", minWidth: 150 },
+    { id: "MaPhieuThuePhong", label: "Mã phiếu thuê", minWidth: 100 },
+    { id: "TenPhong", label: "Phòng", minWidth: 100 },
     {
       id: "SoNgayThue",
       label: "Số ngày thuê",
-      minWidth: 120,
+      minWidth: 100,
     },
     {
       id: "DonGia",
