@@ -43,8 +43,8 @@ const Login = ({ handleOpenReset }) => {
     <>
       <Formik
         initialValues={{
-          email: "daijoubuteam@gmail.com",
-          password: "123456",
+          email: "",
+          password: "",
         }}
         validationSchema={Yup.object().shape({
           email: Yup.string()
