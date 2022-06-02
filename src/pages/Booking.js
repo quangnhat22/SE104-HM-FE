@@ -108,7 +108,6 @@ export default function Booking() {
   };
 
   const handleDeleteCustomer = (customer) => {
-    console.log(customer);
     dispatch({
       type: ActionTypes.REMOVE_CLIENT_RENT_VOUCER,
       customer: customer,

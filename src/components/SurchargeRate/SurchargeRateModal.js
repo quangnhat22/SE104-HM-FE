@@ -64,8 +64,8 @@ export default function SurchargeRateModal({
               .required("Vui lòng nhập số khách"),
             TiLePhuThu: Yup.number()
               .typeError("Số không hợp lệ")
-              .min(1, "Giá trị không thể nhỏ hơn 1")
-              .max(100, "Giá trị không thể lớn hơn 100")
+              .min(0, "Giá trị không thể nhỏ hơn 0")
+              .max(1, "Giá trị không thể lớn hơn 1")
               .required("Vui lòng nhập tỷ lệ phụ thu"),
           })}
           onSubmit={async (values) => {
