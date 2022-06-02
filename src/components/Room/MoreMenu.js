@@ -61,6 +61,7 @@ export default function MoreMenu({
               state={{
                 DonGia: room.DonGia,
                 MaPhong: room.MaPhong,
+                TenPhong: room.TenPhong,
                 SoKhachToiDa,
                 SoKhachKhongPhuThu,
                 surchargeList,

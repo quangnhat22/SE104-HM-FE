@@ -39,6 +39,7 @@ export default function Booking() {
     SoKhachKhongPhuThu,
     surchargeList,
     typeCustomerList,
+    TenPhong,
   } = location.state;
   const [openNew, setOpenNew] = useState(false);
   const [openModify, setOpenModify] = useState(false);
@@ -125,12 +126,12 @@ export default function Booking() {
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", p: 5 }}>
       <Typography variant="h3" gutterBottom sx={{ mb: 4 }}>
-        Phiếu thuê phòng: {id}
+        Mã phòng: {id}
       </Typography>
       <Formik
         initialValues={{
           MaPhong: MaPhong,
-          TenPhong: id,
+          TenPhong: TenPhong,
           startDate: new Date().toISOString().slice(0, 10),
         }}
         onSubmit={async (values) => {

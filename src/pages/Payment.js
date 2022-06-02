@@ -27,6 +27,7 @@ import { useEffect } from "react";
 import * as SagaActionTypes from "../redux/constants/constantSaga";
 import * as ActionTypes from "../redux/constants/constant";
 import { useNavigate } from "react-router";
+import TableRoomPaymentPrint from "../components/Table/TableRoomPaymentPrint";
 const _ = require("lodash");
 
 export default function Payment() {
@@ -260,7 +261,7 @@ export default function Payment() {
               `Ngày lập: ${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`
             }
           </Typography>
-          <TableRoomPayment
+          <TableRoomPaymentPrint
             data={CacPhieuThuePhong}
             handleDelete={handleDeleteRoom}
           />
