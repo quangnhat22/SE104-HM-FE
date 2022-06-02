@@ -5,5 +5,6 @@ import MainRoutes from "./MainRoutes";
 import NotFoundRoute from "./NotFoundRoute";
 
 export default function Routes() {
-  return useRoutes([MainRoutes, AuthenticationRoutes, NotFoundRoute], config.basename);
+  const NewMainRoutes = MainRoutes()
+  return useRoutes([NewMainRoutes, AuthenticationRoutes, NotFoundRoute], config.basename);
 }
