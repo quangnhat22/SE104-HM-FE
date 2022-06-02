@@ -15,10 +15,10 @@ function * actFetchListStateRoom() {
                 roomStateList: data
             })
         }
-        yield put({ type: ActionTypes.SHOW_LOADING });
+        yield put({ type: ActionTypes.HIDE_LOADING });
     }
     catch (err) {
-        yield put({ type: ActionTypes.SHOW_LOADING });
+        yield put({ type: ActionTypes.HIDE_LOADING });
     }
 }
 
