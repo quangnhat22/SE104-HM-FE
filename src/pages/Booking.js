@@ -63,23 +63,24 @@ export default function Booking() {
       //type customer to object
       let typeCustomerObject = hashTypeCustomer(typeCustomerList);
       let arrayCustomerList = _.uniqBy(customerList, "MaLoaiKhach");
-      let rateTypeCustomer = 1;
+
+      let rateTypeCustomer = 0;
       _.forEach(arrayCustomerList, (element) => {
-        rateTypeCustomer *= typeCustomerObject[element.TenLoaiKhach];
+        rateTypeCustomer += (typeCustomerObject[element.TenLoaiKhach]-1);
       });
       if (customerList.length <= SoKhachKhongPhuThu) {
-        setRateToTal(rateTypeCustomer)
-        setTotalPricePerDay(DonGia * rateTypeCustomer);
+        setRateToTal(rateTypeCustomer +1 )
+        setTotalPricePerDay(DonGia * (rateTypeCustomer+1));
       } else {
         //tinh toan he so phu thu khi length vuot qua
         let heSoPhuThu = _.find(surchargeList, (element) => {
           return element.SoKhach === customerList.length;
         })?.TiLePhuThu;
         if (heSoPhuThu === undefined) {
-          heSoPhuThu = 1;
+          heSoPhuThu = 0;
         }
-        setRateToTal(rateTypeCustomer * (heSoPhuThu+1))
-        setTotalPricePerDay(DonGia * rateTypeCustomer * (heSoPhuThu+1));
+        setRateToTal(rateTypeCustomer + heSoPhuThu + 1)
+        setTotalPricePerDay(DonGia * (rateTypeCustomer + heSoPhuThu + 1));
       }
     }
   }, [customerList]);
