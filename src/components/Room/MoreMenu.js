@@ -72,7 +72,7 @@ export default function MoreMenu({
                 title={
                   enableNewVoucher
                     ? "Thuê phòng"
-                    : "Thuê phòng (Lưu ý: Thời gian đặt phòng sẽ bắt đầu tính sau 14:00)"
+                    : "Thuê phòng (Lưu ý: Thời gian đặt phòng sẽ bắt đầu tính từ 12:00)"
                 }
               >
                 <IconButton variant="text" size="large" color="success">

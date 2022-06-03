@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import AlertModal from "../../ui-component/AlertModal";
 import * as ActionTypes from "../../redux/constants/constant";
 
-export default function MoreMenu({ room, handleDelete }) {
+export default function MoreMenu({ room, handleDelete, disableStatus }) {
   const [openDelete, setOpenDelete] = useState(false);
   const dispatch = useDispatch();
 
@@ -31,9 +31,13 @@ export default function MoreMenu({ room, handleDelete }) {
             variant="text"
             color="error"
             size="large"
+            disabled={disableStatus}
             onClick={handleOpen}
           >
-            <IconTrash color="#F44336" />
+            {
+              !disableStatus ? (<IconTrash color="#F44336" />) : (<IconTrash color="#868E96" />) 
+            }
+            
           </IconButton>
         </Tooltip>
       </Box>

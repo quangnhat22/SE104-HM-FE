@@ -36,7 +36,7 @@ const columns = [
   },
 ];
 
-export default function TableRoomPayment({ data, handleDelete }) {
+export default function TableRoomPayment({ data, handleDelete, disableStatus }) {
   const [order, setOrder] = useState("");
   const [orderBy, setOrderBy] = useState("number");
 
@@ -64,7 +64,7 @@ export default function TableRoomPayment({ data, handleDelete }) {
                 const value = row[column.id];
                 return column.id === "more" ? (
                   <TableCell align="center" key={row.id}>
-                    <MoreMenu room={row} handleDelete={handleDelete} />
+                    <MoreMenu room={row} handleDelete={handleDelete} disableStatus={disableStatus} />
                   </TableCell>
                 ) : (
                   <TableCell key={column.id} align={column.align}>
