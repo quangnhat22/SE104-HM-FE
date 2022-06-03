@@ -4,11 +4,28 @@ import {
   FormControl,
   FormHelperText,
   TextField,
+  InputLabel,
+  OutlinedInput,
+  InputAdornment,
+  IconButton,
 } from "@mui/material";
+
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { useState } from "react";
 
 export default function ResetForm({ handleClose, handleSubmit, handleBack }) {
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <Formik
       initialValues={{
@@ -50,15 +67,30 @@ export default function ResetForm({ handleClose, handleSubmit, handleBack }) {
           </FormControl>
           <FormControl
             fullWidth
+            variant="outlined"
             error={Boolean(touched.MatKhau && errors.MatKhau)}
             sx={{ mb: 3, mt: 1 }}
           >
-            <TextField
-              label="Mật khẩu mới"
+            <InputLabel htmlFor="password-field">Mật khẩu</InputLabel>
+            <OutlinedInput
+              id="password-field"
+              type={showPassword ? "text" : "password"}
               value={values.MatKhau}
               name="MatKhau"
               onBlur={handleBlur}
               onChange={handleChange}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {!showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="Mật khẩu"
             />
             {touched.MatKhau && errors.MatKhau && (
               <FormHelperText error>{errors.MatKhau}</FormHelperText>
