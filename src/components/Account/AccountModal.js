@@ -115,7 +115,7 @@ export default function AccountModal({
                   name="TenNhom"
                   options={userGroupList}
                   defaultValue={
-                    account ? userGroupList[userGroupIndex] : userGroupList[0]
+                    account ? userGroupList[userGroupIndex] : userGroupList[1]
                   }
                   disabled
                   disableClearable
