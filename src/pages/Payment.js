@@ -141,6 +141,7 @@ export default function Payment() {
                       name="customerName"
                       onBlur={handleBlur}
                       onChange={handleChange}
+                      disabled={disableStatus}
                     />
                     {touched.customerName && errors.customerName && (
                       <FormHelperText error>
@@ -161,6 +162,7 @@ export default function Payment() {
                       name="address"
                       onBlur={handleBlur}
                       onChange={handleChange}
+                      disabled={disableStatus}
                     />
                     {touched.address && errors.address && (
                       <FormHelperText error>{errors.address}</FormHelperText>
@@ -190,11 +192,13 @@ export default function Payment() {
             <TableRoomPayment
               data={CacPhieuThuePhong}
               handleDelete={handleDeleteRoom}
+              disableStatus = {disableStatus}
             />
             <Box sx={{ display: "flex", justifyContent: "center" }}>
               <Button
                 sx={{ mt: 4 }}
                 startIcon={<IconPlus />}
+                disabled={disableStatus}
                 onClick={handleOpen}
               >
                 Thêm phòng
