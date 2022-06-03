@@ -44,9 +44,11 @@ export default function Payment() {
   const [totalPrice, setTotalPrice] = useState(0);
   const [CoQuan, setCoQuan] = useState("TBA");
   const [DiaChi, setDiaChi] = useState("TBA");
+  const [disableStatus, setDisableStatus] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
+    setDisableStatus(false);
     dispatch({type: ActionTypes.REMOVE_ALL_ROOM_INVOICE_LOCAL});
     dispatch({ type: SagaActionTypes.FETCH_LIST_RENT_VOUCHER_SAGA });
   }, []);
@@ -105,6 +107,7 @@ export default function Payment() {
                 CacPhieuThuePhong: listInvoice,
               };
 
+              setDisableStatus(true);
               //set value state for print template
               setCoQuan(invoiceSubmit.KhachHang_CoQuan);
               setDiaChi(invoiceSubmit.DiaChi);
@@ -232,6 +235,7 @@ export default function Payment() {
                   variant="outlined"
                   form="booking-form"
                   type="submit"
+                  disabled={disableStatus}
                   sx={{ ml: 4 }}
                 >
                   Xác nhận
